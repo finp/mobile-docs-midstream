@@ -1,0 +1,439 @@
+:org-name: AeroGear
+
+:product-name: Mobile Services
+
+:release-number: 1.0.0
+:showcase-version: 0.8.0
+:installer-release-number: 2.0.0
+:xamarin-sdk-release-number: 2.0.1
+:ios-sdk-release-number: 2.0.0
+:android-sdk-release-number: 2.0.0
+
+:service-name:
+
+:mobile-client: Mobile App
+:mobile-client-openshift: Mobile Client in your OpenShift project
+:mobile-cli: Mobile CLI
+
+// Metrics Service
+:metrics-service: Mobile Metrics
+:grafana-ui: Grafana
+:prometheus-ui: Prometheus
+
+// IDM Service
+:keycloak-service: Identity Management
+:keycloak-ui: Keycloak Admin UI
+:keycloak-dashboard: Auth Dashboard
+:idm-name: Keycloak
+:idm-docs-link: https://www.keycloak.org/documentation.html
+
+// Push Service
+
+:unifiedpush-service: Push Notifications
+:push-ui: Unified Push Admin UI
+:push-notification: push notification
+
+// Build Service
+:mobile-ci-cd-service: Mobile CI/CD
+:mobilecicd-ui: Jenkins UI
+
+// Device Security
+:device-security-service: Device Checks
+:app-security-service: Mobile Security
+
+// Sync Service
+:sync-service: Data Sync
+:sync-server: Voyager Server
+:sync-client: Voyager Client
+
+// TODO: fix this. There are versions on the backend framework libs
+// And a version on the sync client (independent of each other also)
+// :data-sync-version:
+
+:SDK: AeroGear SDK
+:ios-sdk: AeroGear SDK for iOS
+:android-sdk: AeroGear SDK for Android
+:js-sdk: AeroGear SDK for Cordova
+:xamarin-sdk: AeroGear SDK for Xamarin
+
+:mobile-developer-console: Mobile Developer Console
+
+// links
+
+:link-product-doc-home: https://docs.aerogear.org/aerogear/latest
+//:rn-link: {link-product-doc-home}/1.0_release_notes
+:idm-guide-link: {link-product-doc-home}/identity-management.html
+:metrics-guide-link: {link-product-doc-home}/mobile-metrics.html
+:push-guide-link: {link-product-doc-home}/push-notifications.html
+:device-security-guide-link: {link-product-doc-home}/device-security.html
+:getting-started-guide-link: {link-product-doc-home}/getting-started.html
+
+:data-sync-guide-link: {link-product-doc-home}/data-sync.html
+:data-sync-queries-link: {link-product-doc-home}/ds-query.html
+:data-sync-auth-link: {link-product-doc-home}/ds-auth.html
+
+
+:toc:
+:toclevels: 4
+:numbered:
+:imagesdir: shared/images
+
+:ProductName: Red Hat Managed Integration
+:ProductShortName: Mobile Developer Services
+:ProductRelease: 1.0
+:ProductVersion: 1
+:LatestVersion: 1.0
+
+:DocInfoProductName: mobile_services
+:DocInfoProductNumber: 1
+
+:org-name: Red Hat
+:product-name: Mobile Developer Services
+
+:keycloak-ui: Red Hat SSO Admin UI
+:idm-name: Red Hat Single Sign-On
+:idm-docs-link:  https://access.redhat.com/products/red-hat-single-sign-on
+
+
+
+:context: downstream
+
+// ENVIRONMENT / CP SERVER - stage, qa, or production
+// default env is prod
+// ifndef::cp-server[]
+:cp-server: access.redhat.com
+// endif::[]
+
+// BUILD LANGUAGE
+// default language is en
+// ifndef::language[]
+:language: en-us
+// endif::[]
+
+// FORMAT AND PAGING
+// default paging is single
+:paging: html-single
+
+// paged only for html format, all other formats (pdf, epub, single) use single
+// ifeval::["{format}" == "html"]
+:paging: html
+// endif::[]
+
+:link-product-doc-home: https://{cp-server}/documentation/{language}/{DocInfoProductName}
+:rn-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/1.0_release_notes
+:idm-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_identity_management_mobile_service
+:metrics-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_mobile_metrics_mobile_service
+:push-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_push_notifications_mobile_service
+:device-security-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_device_security_service
+:getting-started-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/getting_started
+
+:data-sync-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app
+:data-sync-queries-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#querying_a_data_sync_server_using_a_data_sync_client
+:data-sync-auth-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#auth_data-sync
+
+
+:upstream-location: https://mobile-docs.netlify.com
+// :upstream-location: ../../mobile-docs/build/site
+
+
+:toc:
+
+= Using the Showcase Mobile App
+:page-partial:
+
+:leveloffset: 1
+
+
+
+= About the Showcase App
+
+Showcase apps demonstrate many features of {product-name}.
+
+These mobile apps are ready to work with the mobile services, and present an easy
+starting point for the developers.
+
+:leveloffset!:
+
+
+:leveloffset: 2
+
+
+= Using the Showcase Apps
+
+Showcase apps demonstrate many features of {product-name}. To see these features:
+
+. Set up the appropriate services as described in xref:setting-up-mobile-services-to-demonstrate-showcase-apps[].
+. Set up the showcase app as described in xref:app[].
+. Register your showcase app as described in link:{getting-started-guide-link}[Registering a Mobile App].
+. Bind your {mobile-client} to the appropriate services as described in xref:binding[]
+. Copy the `mobile-services.json` file to your IDE as described in xref:downloading-the-mobile-services-configuration-file[]
+. Build and run your showcase app  as described in xref:build[].
+
+[[setting-up-mobile-services-to-demonstrate-showcase-apps]]
+== Setting up Mobile Services to Demonstrate Showcase Apps
+
+
+.Procedure
+
+
+. To demonstrate {keycloak-service}:
+
+
+.. link:{idm-guide-link}#configuring-the-service[Set up the {keycloak-service} service].
+
+.. Create a new user to authenticate using the link:{idm-docs-link}[{keycloak-service} documentation].
+
+.. Set credentials for the created user. Follow the steps link:{idm-docs-link}[documentation].
+
++
+For more information about features, see link:{idm-guide-link}[{keycloak-service} Service]
+
+
+. To demonstrate {unifiedpush-service}, see link:{push-guide-link}[{unifiedpush-service} Service]
+
+. To demonstrate {sync-service}, perform the Data Sync solution pattern available from the Solution Explorer.
+
+
+
+
+
+[[setting-up-the-showcase-app]]
+[#app]
+== Setting Up the Showcase App
+
+[discrete]
+.Prerequisites
+
+xref:setting-up-mobile-services-to-demonstrate-showcase-apps[Setting up Mobile Services to Demonstrate Showcase Apps]
+
+[discrete]
+.Procedure
+
+1. Clone the showcase app and checkout the release tag {showcase-version}
++
+
+[tabs]
+====
+Ionic::
++
+--
+[source,bash,subs="attributes"]
+----
+$ git clone https://github.com/aerogear/ionic-showcase.git
+$ cd ionic-showcase
+$ git checkout{showcase-version}
+----
+--
+====
+
+// TODO: fix link and numbering
+[start=2]
+. The following steps will help you enable Push Notifications in a showcase application.
++
+[tabs]
+====
+Ionic::
++
+--
+. You will need to create a project on link:https://firebase.google.com/[Firebase^].
+. Follow steps outlined link:https://support.google.com/firebase/answer/7015592?hl=en[here^] to download `google-services.json` from your Firebase project.
+. Overwrite the file `app/google-services.json` with the `google-services.json` file you downloaded from
+Firebase Cloud Messaging console.
+--
+////
+Android::
++
+--
+. You will need to create a project on link:https://firebase.google.com/[Firebase^].
+. Follow steps outlined link:https://support.google.com/firebase/answer/7015592?hl=en[here^] to download `google-services.json` from your Firebase project.
+. Overwrite the file `app/google-services.json` with the `google-services.json` file you downloaded from
+Firebase Cloud Messaging console.
+--
+iOS::
++
+--
+. Follow the link:https://help.apple.com/xcode/mac/current/#/devdfd3d04a1[official guide^] to enable push notifications for your Xcode project.
+
+. Follow  the link:https://help.apple.com/developer-account/#/dev82a71386a[official guide^] to generate an APNs client TLS certificate and export the client TLS identity from your Mac.
++
+NOTE: Make sure to protect the p12 file with a password.
++
+NOTE: The exported p12 file with the password will be used later when binding your {mobile-client} to the {unifiedpush-service}.
+--
+Xamarin::
++
+--
+{unifiedpush-service} Service is not supported on Xamarin.
+--
+////
+====
+
+[#binding]
+== Binding the Showcase {mobile-client} to {product-name}
+
+
+. link:{idm-guide-link}#binding-a-mobile-client-with-the-identity-management-service[Bind the {mobile-client} to the {keycloak-service} service] if you want to demonstrate authentication.
+. link:{push-guide-link}#binding-a-mobile-client-with-the-push-notifications-service[Bind the {mobile-client} to the {unifiedpush-service} service] if you want to demonstrate {unifiedpush-service}.
++
+NOTE: This step also creates a variant as described in link:{push-guide-link}[ {unifiedpush-service} Service] terminology.
+
+. link:{data-sync-guide-link}#sync-server-binding[Bind the {mobile-client} to the {sync-service} app] if you want to demonstrate {sync-service}.
+
+[[downloading-the-mobile-services-configuration-file]]
+= Downloading the Mobile Services Configuration File
+
+. Open your {mobile-client} in Mobile Developer Console.
+. Copy the `mobile-services.json` configuration to your clipboard.
+ Save the contents of the clipboard to a new file called `mobile-services.json`.
++
+NOTE: The mobile-services.json file is the link between the mobile services running on OpenShift and the mobile app you are developing. The mobile-services.json file provides all required configuration to initialise the various SDKs and connect them to the back-end services.
++
+. Copy the contents of the `mobile-services.json` file into the `mobile-services.json` file located in `src`.
+
+
+
+[[building-and-deploying-the-showcase-apps]]
+[#build]
+== Building and Running the Showcase App
+
+. Build the Mobile App
+
+[tabs]
+====
+Ionic::
++
+--
+[source,bash,subs="attributes"]
+----
+$ npm install
+$ npm run ionic:build
+----
+--
+====
+
+[start=2]
+. Run the Mobile App
+
+[tabs]
+====
+Ionic::
++
+--
+To run the showcase app, use these commands:
+
+[source,bash,subs="attributes"]
+----
+$ npm run ionic:android # to run on an Android device or emulator
+$ npm run ionic:ios # to run on an iOS device or emulator
+----
+
+These commands would run the app on a device if connected or on the emulator if no device is connected.
+
+Alternatively, you can use Cordova commands directly to specify the target:
+
+[source,bash,subs="attributes"]
+----
+$ ionic cordova run android --device      # run on a connected device
+$ ionic cordova run android --emulator    # run on the Android emulator
+----
+--
+====
+
+:leveloffset!:
+
+
+
+[#features]
+== Demonstrating the ShowCase App features
+
+:leveloffset: 2
+
+
+
+= {keycloak-service}
+
+.Prerequisite
+
+Make sure you have created a user and set up credentials for that user as describe in the link:{idm-docs-link}[{idm-name} Documentation].
+
+
+From the showcase app:
+
+[tabs]
+====
+Ionic::
++
+--
+. To log in, click the *Login* button.
+. A login page is displayed, enter your credentials.
+. Once the login is successful, navigate to *User Profile* page and see the roles and basic information about the user.
+--
+====
+
+
+:leveloffset!:
+
+:leveloffset: 2
+
+= {sync-service}
+
+NOTE: This is only available in the Cordova showcase app.
+
+NOTE: To demonstrate all the features that {sync-service} offers, it's best to run the same app on multiple devices at the same time.
+
+From the showcase app:
+
+. Press the *Manage Tasks* menu item.
+. View tasks created by other people and try to edit them. See them changed on other devices.
+. Create new tasks and see them show up on other devices.
+. Bring the device offline by switching to *Airplane Mode*, create a few more tasks and edit a few existing tasks. Then switch the device back online and see them changed on other devices.
+
+:leveloffset!:
+
+:leveloffset: 2}
+
+= Security Services
+
+== {device-security-service}
+
+Device Trust page will check the mobile device for and give a security rating for the device based on the following checks
+
+- Debugger Detected
+- Root Access Detected
+- Emulator Access Detected
+- No Device Lock Enabled
+
+To use Device Trust in the showcase app:
+
+. Press the *Security* menu item.
+. From the drop down press *Device Trust*.
+. View the results of the Device security checks.
+
+== {app-security-service} Service
+
+Application Trust allows you to connect to the Mobile Security Service and that allows you to enable or disable a mobile app from the {app-security-service} console.
+
+To use Application Trust in the showcase app:
+
+. Press the *Security* menu item.
+. From the drop down press *Application Trust*.
+. Navigate to the Mobile Security Service link to set the enable/disable message as described in link:{app-security-service}#monitoring[Using the App Security Console].
+. Press the *CHECK THE SECURITY SERVICE* button to check the message from the service.
+
+:leveloffset!:
+
+:leveloffset: 2}
+
+
+
+= {unifiedpush-service}
+
+
+. Send a push notification as described in
+link:{push-guide-link}#sending[Sending a Push Notification]
+. Launch the showcase app and view the notification.
+
+:leveloffset!:
+
+
+//include::../../mobile-docs/build/site/showcase-apps.adoc[tags=!excludeDownstream]

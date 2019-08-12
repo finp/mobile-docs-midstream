@@ -1,0 +1,634 @@
+:org-name: AeroGear
+
+:product-name: Mobile Services
+
+:release-number: 1.0.0
+:showcase-version: 0.8.0
+:installer-release-number: 2.0.0
+:xamarin-sdk-release-number: 2.0.1
+:ios-sdk-release-number: 2.0.0
+:android-sdk-release-number: 2.0.0
+
+:service-name:
+
+:mobile-client: Mobile App
+:mobile-client-openshift: Mobile Client in your OpenShift project
+:mobile-cli: Mobile CLI
+
+// Metrics Service
+:metrics-service: Mobile Metrics
+:grafana-ui: Grafana
+:prometheus-ui: Prometheus
+
+// IDM Service
+:keycloak-service: Identity Management
+:keycloak-ui: Keycloak Admin UI
+:keycloak-dashboard: Auth Dashboard
+:idm-name: Keycloak
+:idm-docs-link: https://www.keycloak.org/documentation.html
+
+// Push Service
+
+:unifiedpush-service: Push Notifications
+:push-ui: Unified Push Admin UI
+:push-notification: push notification
+
+// Build Service
+:mobile-ci-cd-service: Mobile CI/CD
+:mobilecicd-ui: Jenkins UI
+
+// Device Security
+:device-security-service: Device Checks
+:app-security-service: Mobile Security
+
+// Sync Service
+:sync-service: Data Sync
+:sync-server: Voyager Server
+:sync-client: Voyager Client
+
+// TODO: fix this. There are versions on the backend framework libs
+// And a version on the sync client (independent of each other also)
+// :data-sync-version:
+
+:SDK: AeroGear SDK
+:ios-sdk: AeroGear SDK for iOS
+:android-sdk: AeroGear SDK for Android
+:js-sdk: AeroGear SDK for Cordova
+:xamarin-sdk: AeroGear SDK for Xamarin
+
+:mobile-developer-console: Mobile Developer Console
+
+// links
+
+:link-product-doc-home: https://docs.aerogear.org/aerogear/latest
+//:rn-link: {link-product-doc-home}/1.0_release_notes
+:idm-guide-link: {link-product-doc-home}/identity-management.html
+:metrics-guide-link: {link-product-doc-home}/mobile-metrics.html
+:push-guide-link: {link-product-doc-home}/push-notifications.html
+:device-security-guide-link: {link-product-doc-home}/device-security.html
+:getting-started-guide-link: {link-product-doc-home}/getting-started.html
+
+:data-sync-guide-link: {link-product-doc-home}/data-sync.html
+:data-sync-queries-link: {link-product-doc-home}/ds-query.html
+:data-sync-auth-link: {link-product-doc-home}/ds-auth.html
+
+
+:toc:
+:toclevels: 4
+:numbered:
+:imagesdir: shared/images
+
+:ProductName: Red Hat Managed Integration
+:ProductShortName: Mobile Developer Services
+:ProductRelease: 1.0
+:ProductVersion: 1
+:LatestVersion: 1.0
+
+:DocInfoProductName: mobile_services
+:DocInfoProductNumber: 1
+
+:org-name: Red Hat
+:product-name: Mobile Developer Services
+
+:keycloak-ui: Red Hat SSO Admin UI
+:idm-name: Red Hat Single Sign-On
+:idm-docs-link:  https://access.redhat.com/products/red-hat-single-sign-on
+
+
+
+:context: downstream
+
+// ENVIRONMENT / CP SERVER - stage, qa, or production
+// default env is prod
+// ifndef::cp-server[]
+:cp-server: access.redhat.com
+// endif::[]
+
+// BUILD LANGUAGE
+// default language is en
+// ifndef::language[]
+:language: en-us
+// endif::[]
+
+// FORMAT AND PAGING
+// default paging is single
+:paging: html-single
+
+// paged only for html format, all other formats (pdf, epub, single) use single
+// ifeval::["{format}" == "html"]
+:paging: html
+// endif::[]
+
+:link-product-doc-home: https://{cp-server}/documentation/{language}/{DocInfoProductName}
+:rn-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/1.0_release_notes
+:idm-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_identity_management_mobile_service
+:metrics-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_mobile_metrics_mobile_service
+:push-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_push_notifications_mobile_service
+:device-security-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_device_security_service
+:getting-started-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/getting_started
+
+:data-sync-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app
+:data-sync-queries-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#querying_a_data_sync_server_using_a_data_sync_client
+:data-sync-auth-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#auth_data-sync
+
+
+:upstream-location: https://mobile-docs.netlify.com
+:upstream-location: ../../mobile-docs/build/site
+
+:toclevels: 4
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+:context: idm
+:parent-context: {context}
+:installation-link: getting-started.html
+:docs-link: https://www.keycloak.org/documentation.html
+[id='a-collection-of-modules']
+= Using the {keycloak-service} Mobile Service
+:toc:
+
+[[introduction]]
+The {keycloak-service} service allows you to add authentication and authorization to your mobile app.
+
+* Secure your mobile app using the industry standard OpenID Connect protocol
+* Add access control to your app based on user’s group membership
+* Easily implement SSO, multi-factor authentication and Social Login support
+* Back-end support for identity brokering and user federation
+
+:leveloffset: +1
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='reference-material-{context}']
+= {keycloak-service} Service terminology
+
+This section describes terminology that is associated with Identity Management.
+
+.Identity Management Terminology
+SSO:: Single Sign On, the ability to share a login between multiple services
+
+OpenID Connect:: A standard for providing identity on top of OAuth 2.0
+
+Keycloak:: Red Hat’s implementation of SSO and OpenID used as the identity provider
+
+Client ID:: Is the client identifier for OpenID Connect requests, a simple alpha-numeric string
+
+User Attributes:: Additional properties for user accounts (besides name and email) managed by Keycloak
+
+:leveloffset!:
+
+.Prerequisites
+
+// TODO: need to rewrite the following
+// * You are running OpenShift with {product-name} as described in xref:getting-started.adoc[Setting up AeroGear {product-name} on OpenShift].
+* You have provisioned Mobile Developer Console as described in link:{installation-link}[Provisioning Mobile Developer Console].
+
+// TODO: could we include this here in the assembly?
+// * Read the xref:reference-material-{context}[{keycloak-service} Service terminology].
+
+[[setting-up-the-idm-service]]
+== Setting Up the {keycloak-service} Service
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='binding-an-app-to-{context}']
+= Binding a {mobile-client} with the {keycloak-service} Service
+
+To use mobile services, you must represent your mobile app in *Mobile Developer Console*, and that app must be associated with the mobile service.
+This association is called *binding* and it is necessary for your mobile app to use that service.
+
+This section describes how to set up the {keycloak-service} service.
+
+.Prerequisites
+
+* You have created a {mobile-client}.
+
+.Procedure
+
+To bind a {mobile-client} with a mobile service:
+
+. Launch {mobile-developer-console}.
+
+. Click on the {mobile-client} on the Overview screen.
+
+. Navigate to *Mobile Services* tab.
++
+image::mobile-clients-services-all-unbound.png[]
+
++
+NOTE: It is possible to bind a {mobile-client} with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.
+
+. Click *Bind to App* for {keycloak-service}.
+
+. Fill out the binding parameters required by the {keycloak-service} Service.
+
++
+image::mobile-clients-services-idm-parameters.png[]
+NOTE: Use `Public` when binding a {mobile-client} to a {keycloak-service}. When binding mobile services to each other, use `Bearer`.
+
+The {keycloak-service} service will now be expandable, details about the service can be viewed.
+
+image::mobile-clients-services-all-idm-provisioned.png[]
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+
+:docs-create-user: https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#create-new-user
+:docs-user-creds: https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#user_credentials
+
+
+[id='configuring-{context}']
+= Configuring the {keycloak-service} Service
+
+This section guides you through configuring the redirect url and web origin for a client in {idm-name}.
+This is required to enable OpenID authentication.
+For an explanation of these terms, see link:{idm-docs-link}[{idm-name} Documentation].
+
+.Prerequisites
+
+* An understanding of link:https://openid.net/[OpenID^]
+
+.Procedure
+
+. Log into the {mobile-developer-console} and navigate to the {mobile-client} screen.
+
+. Select the *Mobile Services* tab.
+
+. If a binding to the {keycloak-service} service is in progress, a spinning icon is displayed to the right of the {keycloak-service} entry. Wait for the binding process to complete.
+
+. If the _{idm-name} Realm URL_ URL is not visible, expand the Identity Management Service by clicking the > icon.
+
+. Click on the *{idm-name} Realm URL* link to open the {idm-name} Administration Console.
++
+. Log in to the Administration console (default admin/admin).
+
+
+. Select `Clients` from the left navigation menu.
++
+// TODO: with a cordova app, I didn't see mobile development platform
+. Select your client from the list of clients. The name of your client is derived from the name of the {mobile-client}, the name of the mobile development platform and the client type, for example `myapp-android-public`.
+
+
+. Add an additional entry to *Valid Redirect URIs*.
++
+[tabs]
+====
+Set the additional value to `http://localhost*`.
+====
+
+. Add an additional entry to *Web Origins*.
++
+[tabs]
+====
+Set additional value to `http://localhost*`.
+====
+
+
+. Save your changes.
+
+. Creating a new user account as described in link:{docs-create-user}[Creating a New User].
+
+. Set up credentials for the new user as described in link:{docs-user-creds}[User Credentials].
+
+:leveloffset!:
+== Configuring your development environment for the {keycloak-service} Service
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='downloading-the-configuration-file-{context}']
+= Downloading the Configuration File
+
+The `mobile-services.json` file provides the information for your mobile app to communicate with services.
+After you change any configuration in the {mobile-developer-console}, it is important to update that file in your IDE.
+
+.Prerequisites
+
+* The configuration of your {mobile-client} in {mobile-developer-console} is up-to-date.
+* You have set up your mobile app development environment.
+
+.Procedure
+
+. Open your {mobile-client} in Mobile Developer Console.
+. Copy the `mobile-services.json` configuration to your clipboard.
+. Save the contents of the clipboard to a new file called `mobile-services.json`.
++
+NOTE: The `mobile-services.json` file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.
+. Move mobile-services.json to the following location in your application project:
++
+[tabs]
+====
+`src/mobile-services.json`
+====
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='setting-up-sdk-{context}']
+= Setting up the {keycloak-service} Service SDK
+
+This section helps you to set up the {keycloak-service} service SDK in your App.
+It describes how to set up and initialize the {keycloak-service} service SDK.
+
+.Prerequisites
+
+* Your local `mobile-services.json` file is up-to-date.
+
+.Procedure
+
+. Import the libraries.
++
+[tabs]
+====
+. Add the following code to `index.html` located in `src/` :
++
+[source,html]
+----
+<meta http-equiv="Content-Security-Policy" content="default-src * file: 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+----
+. Install the link:https://www.npmjs.com/package/@aerogear/auth[AeroGear Auth] package from link:https://www.npmjs.com/[NPM^]:
++
+[source,bash]
+----
+$ npm install @aerogear/auth
+----
+. Install cordova-plugin-inappbrowser:
++
+[source,bash]
+----
+$ cordova plugin add cordova-plugin-inappbrowser
+----
+Use a JavaScript bundler, for example, `browserify` so that you can use node modules in Cordova. {org-name} recommends using the `require` statement rather than `import` for the the @aerogear/auth module as shown below:
+
+====
+
+. Initialize the SDK.
++
+[tabs]
+====
+
+. Import and initialize Auth.
++
+[source,javascript]
+----
+const Auth = require('@aerogear/auth').Auth;
+const authService = new Auth(app.config);
+const initOptions = { onLoad: "login-required" };
+
+authService.init(initOptions)
+    .then(() => {
+        // successful init & authentication
+    })
+    .catch((err) => {
+        // initialization error
+    });
+----
+
+You can pass `login-required` or `check-sso` to the init function. `login-required` will authenticate the client if the user is logged in to Keycloak or display the login page if not. `check-sso` will only authenticate the client if the user is already logged in. If the user is not logged in the browser will be redirected back to the application and remain unauthenticated. By default, the `check-sso` option is used.
+
+NOTE: Initialization also enables authentication.
+
+====
+
+:leveloffset!:
+
+[[adding-user-authentication-to-your-mobile-app]]
+== Adding User Authentication to your Mobile App
+// include::_partials/keycloak/getting-started-with-user-authentication.adoc[leveloffset=+2]
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='implementing-authentication-{context}']
+= Implementing authentication
+
+.Prerequisites
+
+* The `mobile-services.json` file is up-to-date in your development environment.
+
+.Procedure
+
+To implement authentication using the Aerogear SDK:
+
+[tabs]
+====
+Authentication is enabled during initialization as described in the section xref:setting-up-sdk-{context}[]. To manually redirect to the login screen, use:
+[source,javascript]
+----
+authService.login().then(() => {
+    // Login success
+}).catch(() => {
+    // Login error
+});;
+----
+====
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+
+:docs-timeout: https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#timeouts
+
+
+[id='refreshing-the-authentication-token-{context}']
+= Refreshing the authentication token
+
+When a user is authenticated, an access token and a refresh token are generated by the authentication server.
+See the link:{docs-timeout}[{idm-name} documentation] for information about configuring the lifespan of these tokens.
+If the refresh token is still valid, the authentication token can be refreshed even if the authentication token has expired.
+
+.Prerequisites
+
+* A working mobile app that uses authentication with the {keycloak-service} service.
+
+.Procedure
+
+To automatically refresh the authenticate token :
+
+[tabs]
+====
+Retrieve the keycloak adapter object and refresh the access token, when possible and required:
+
+[source,javascript]
+----
+authService.extract().updateToken(30).then(() => {
+    // Token has been refreshed
+});
+----
+
+More information about the keycloak javascript adapter can be found link:https://www.keycloak.org/docs/3.0/securing_apps/topics/oidc/javascript-adapter.html[here]
+====
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+
+:docs-oicd: https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#openid_connect_v1_0_identity_providers
+
+[id='adding-log-out-option-{context}']
+
+= Adding Log Out Option to your Mobile App
+
+The following section describes how to perform a logout.
+
+NOTE: To perform *backchannel or federated logouts*, you must enable the Backchannel Logout option for the federated identity provider.
+More information is available in the {idm-name} documentation under link:{docs-oicd}[OICD Identity Providers^].
+
+.Prerequisites
+
+*  A working mobile app that uses authentication with the {keycloak-service} service.
+
+.Procedure
+
+To enable users of the mobile app log out from the service.
+
+[tabs]
+====
+
+Invoke the `logout` function:
+
+[source,javascript]
+----
+authService.logout().then(() => {
+    // User Logged Out Successfully and local Auth tokens were Deleted
+});
+----
+====
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+
+:docs-oicd: https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#openid_connect_v1_0_identity_providers
+
+[id='authenticating-with-a-back-end-service-{context}']
+= Authenticating with a back end service
+
+In a typical scenario, you not only want the user to authenticate on the mobile app, you also want that user to authenticate with a back end service.
+
+.Prerequisites
+
+*  A working mobile app that uses authentication with the {keycloak-service} service.
+
+.Procedure
+
+. Add an additional token:
++
+[source]
+----
+Authorization: BEARER Yourtoken
+----
+
+. Add code to authenticate with a back end service:
++
+[tabs]
+====
+The AeroGear Cordova SDK doesn't provide an HTTP layer, therefore it cannot provide an Auth Header Provider.
+You must manually attach the `Bearer` header to your HTTP requests.
+
+[source,javascript]
+----
+req.setRequestHeader('Accept', 'application/json');
+req.setRequestHeader('Authorization', 'Bearer ' + authService.extract().token);
+----
+--
+====
+
+.Additional resources
+
+
+* link:{docs-oicd}[{idm-name} OICD Providers^]
+
+:leveloffset!:
+
+:leveloffset: 2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='adding-access-control']
+= Adding Access Control to your Mobile App
+
+Once a `UserPrincipal` has been retrieved, the link:http://www.keycloak.org/docs/latest/server_admin/index.html#roles[roles^] of the user can be listed and checked.
+This can be used to perform client side access control, such as hiding UI components related to actions the user doesn't have permissions to perform.
+Roles are divided into two types. Resource roles which belong to the client the user has authenticated against, and Realm roles which belong to the realm the client is in.
+
+.Prerequisites
+
+* A working mobile app that uses authentication with the {keycloak-service} service.
+
+.Procedure
+
+To add Access Control:
+
+[tabs]
+====
+Get the realm roles from the auth service:
+
+[source,javascript]
+----
+const realmRoles = authService.getRealmRoles();
+----
+
+NOTE: No function to retrieve the resource roles is currently exported but you can use `extract` to get a handle to the underlying keycloak-js instance to retrieve the roles from there. Have a look at their documentation link:https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter[here^].
+====
+
+:leveloffset!:
+
+[[adding-sso-to-your-mobile-app]]
+== Adding SSO to your Mobile App
+// include::_partials/keycloak/getting-started-with-sso.adoc[leveloffset=+2]
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='using-sso-{context}']
+// The `context` attribute enables module reuse. Every module's ID includes {context}, which ensures that the module has a unique ID even if it is reused multiple times in a guide.
+= Using SSO with the Device Browser
+
+The {org-name} mobile SDK uses OpenID Connect link:http://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth[Authorization Code Flow] to implement SSO using a mobile device browser.
+
+.Prerequisites
+
+* You have completed all steps in xref:adding-access-control[Adding Access Control to your Mobile App].
+* Two {mobile-client}s bound to the {keycloak-service} service.
+* Two Mobile Apps built and running on the same device that are using the AeroGear SDK Auth module.
+
+.Procedure
+
+In the following procedure, the two apps are named **Email App** and **Messaging App**.
+Substitute the appropriate names for your SSO scenario.
+
+. Ensure the "Remember Me" option in {idm-name} is turned on. In the admin UI click on *Realm Settings* section on the left hand side, and then click on *Login*. Turn on *Remember Me*.
+
+. Now that your two apps and {idm-name} clients are setup, sign into the *Email App* with the user you have previously created. You should be redirected to your device browser which should have loaded the {idm-name} login page.
+
+. Next, enter in your credentials, make sure check the *Remember Me* option and login. You have now been authenticated on the *Email App* via the browser.
+
+. Finally, try sign into the *Messaging App* and you should be automatically logged in as you have been previously authenticated in the *Email App* via the *_same_* browser.
+
+.Additional resources
+
+With iOS 11 and later, Apple has introduced SFAuthenticationSession for apps to perform SSO, instead of using the system Safari browser and there are known issues with this new feature.
+Sometimes, the user may have to enter their credentials again, even if they have logged in previously in another app.
+
+:leveloffset!:
+
+
+== Additional resources
+
+* For more information about OpenID, see the link:https://openid.net/[OpenID Foundation^] website.
+* See the link:{docs-link}[{idm-name} documentation^] for more info.
+
+// Restore the context to what it was before this assembly.
+:context: {parent-context}

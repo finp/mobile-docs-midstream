@@ -1,0 +1,681 @@
+:org-name: AeroGear
+
+:product-name: Mobile Services
+
+:release-number: 1.0.0
+:showcase-version: 0.8.0
+:installer-release-number: 2.0.0
+:xamarin-sdk-release-number: 2.0.1
+:ios-sdk-release-number: 2.0.0
+:android-sdk-release-number: 2.0.0
+
+:service-name:
+
+:mobile-client: Mobile App
+:mobile-client-openshift: Mobile Client in your OpenShift project
+:mobile-cli: Mobile CLI
+
+// Metrics Service
+:metrics-service: Mobile Metrics
+:grafana-ui: Grafana
+:prometheus-ui: Prometheus
+
+// IDM Service
+:keycloak-service: Identity Management
+:keycloak-ui: Keycloak Admin UI
+:keycloak-dashboard: Auth Dashboard
+:idm-name: Keycloak
+:idm-docs-link: https://www.keycloak.org/documentation.html
+
+// Push Service
+
+:unifiedpush-service: Push Notifications
+:push-ui: Unified Push Admin UI
+:push-notification: push notification
+
+// Build Service
+:mobile-ci-cd-service: Mobile CI/CD
+:mobilecicd-ui: Jenkins UI
+
+// Device Security
+:device-security-service: Device Checks
+:app-security-service: Mobile Security
+
+// Sync Service
+:sync-service: Data Sync
+:sync-server: Voyager Server
+:sync-client: Voyager Client
+
+// TODO: fix this. There are versions on the backend framework libs
+// And a version on the sync client (independent of each other also)
+// :data-sync-version:
+
+:SDK: AeroGear SDK
+:ios-sdk: AeroGear SDK for iOS
+:android-sdk: AeroGear SDK for Android
+:js-sdk: AeroGear SDK for Cordova
+:xamarin-sdk: AeroGear SDK for Xamarin
+
+:mobile-developer-console: Mobile Developer Console
+
+// links
+
+:link-product-doc-home: https://docs.aerogear.org/aerogear/latest
+//:rn-link: {link-product-doc-home}/1.0_release_notes
+:idm-guide-link: {link-product-doc-home}/identity-management.html
+:metrics-guide-link: {link-product-doc-home}/mobile-metrics.html
+:push-guide-link: {link-product-doc-home}/push-notifications.html
+:device-security-guide-link: {link-product-doc-home}/device-security.html
+:getting-started-guide-link: {link-product-doc-home}/getting-started.html
+
+:data-sync-guide-link: {link-product-doc-home}/data-sync.html
+:data-sync-queries-link: {link-product-doc-home}/ds-query.html
+:data-sync-auth-link: {link-product-doc-home}/ds-auth.html
+
+
+:toc:
+:toclevels: 4
+:numbered:
+:imagesdir: shared/images
+
+:ProductName: Red Hat Managed Integration
+:ProductShortName: Mobile Developer Services
+:ProductRelease: 1.0
+:ProductVersion: 1
+:LatestVersion: 1.0
+
+:DocInfoProductName: mobile_services
+:DocInfoProductNumber: 1
+
+:org-name: Red Hat
+:product-name: Mobile Developer Services
+
+:keycloak-ui: Red Hat SSO Admin UI
+:idm-name: Red Hat Single Sign-On
+:idm-docs-link:  https://access.redhat.com/products/red-hat-single-sign-on
+
+
+
+:context: downstream
+
+// ENVIRONMENT / CP SERVER - stage, qa, or production
+// default env is prod
+// ifndef::cp-server[]
+:cp-server: access.redhat.com
+// endif::[]
+
+// BUILD LANGUAGE
+// default language is en
+// ifndef::language[]
+:language: en-us
+// endif::[]
+
+// FORMAT AND PAGING
+// default paging is single
+:paging: html-single
+
+// paged only for html format, all other formats (pdf, epub, single) use single
+// ifeval::["{format}" == "html"]
+:paging: html
+// endif::[]
+
+:link-product-doc-home: https://{cp-server}/documentation/{language}/{DocInfoProductName}
+:rn-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/1.0_release_notes
+:idm-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_identity_management_mobile_service
+:metrics-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_mobile_metrics_mobile_service
+:push-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_push_notifications_mobile_service
+:device-security-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_device_security_service
+:getting-started-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/getting_started
+
+:data-sync-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app
+:data-sync-queries-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#querying_a_data_sync_server_using_a_data_sync_client
+:data-sync-auth-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#auth_data-sync
+
+
+:upstream-location: https://mobile-docs.netlify.com
+// :upstream-location: ../../mobile-docs/build/site
+
+:toclevels: 4
+
+
+:toc:
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+:context: push
+:parent-context: {context}
+
+[id='a-collection-of-modules']
+= Using the {unifiedpush-service} Mobile Service
+:page-partial:
+
+[[introduction]]
+The {unifiedpush-service} service allows you to send native push notifications to different mobile operating systems.
+
+* Code once and push notifications to iOS and Android.
+* Push notifications to defined groups.
+* Push notifications to either iOS only or Android only.
+* Push notifications to different variants of a mobile app.
+* Push notifications from different back-end apps to the same mobile app.
+
+
+Currently the service supports:
+
+* link:https://developer.apple.com/notifications/[Apple Push Notification Service^]
+* link:https://firebase.google.com/products/cloud-messaging/[Firebase Cloud Messaging^]
+
+
+The {unifiedpush-service} service offers a unified Notification Service API to the above mentioned Push Network Services.
+It can be seen as a _broker_ that distributes push messages to different 3rd party Push Networks.
+
+[NOTE]
+====
+* The payload of the push notification is delivered to 3rd party Push Network providers, Google or Apple. {org-name} recommends that users do not send any sensitive personal or confidential information (for example, a social security number, financial account or transactional information) as part of any Push Notification. Users of push notifications should not have an expectation of secure transmission.
+
+* For analytic purposes, the service stores the content of the +alert+ key sent to the UnifiedPush Server.
+The content of the +alert+ key belongs to the metadata, which is deleted after 30 days, using a nightly job within the UnifiedPush Server.
+
+* You are only able to send push notifications to a real device, sending push notifications to an emulator fails.
+
+* Push is a signalling mechanism and is not suitable to be used as a data carrying system, for example, a chat application.
+====
+
+.Prerequisites
+
+* You understand {unifiedpush-service}.
+* You have logged into the OpenShift console and the Mobile Developer Console.
+
+.Additional resources
+
+* link:https://developer.apple.com/notifications/[Apple Push Notification Service^]
+* link:https://firebase.google.com/products/cloud-messaging/[Firebase Cloud Messaging^]
+
+:leveloffset: +1
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='push-terminology-{context}']
+= {unifiedpush-service} Terminology
+
+This section describes terminology that is associated with {unifiedpush-service}.
+
+Push Application:: A logical construct that represents an Mobile App, for example, _Mobile HR_.
+
+Push Notification Message:: A simple message to be sent to a Push Application.
+
+Sender Endpoint API:: A RESTful API that receives Push Notification Message requests for a PushApplication or some of its different Variants. The Server translates this request into the platform specific details and delivers the payload to the 3rd party cloud providers, which eventually might deliver the message to the physical device.
+
+Variant:: A variant of the Push Application, representing a specific mobile platform, like iOS or Android, or even more fine-grained differentiation like iPad or iPhone.
+There can be multiple variants for a single Push Application (for example, _Mobile HR Android_, _Mobile HR iPad_, _Mobile HR iOS free_ or _Mobile HR iOS premium).
+Each supported variant type contains some platform specific properties, such as a Google API key (Android) or passphrase and certificate (Apple).
+
+APNs:: link:https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/APNSOverview.html#//apple_ref/doc/uid/TP40008194-CH8-SW1[Apple Push Notification service].
+
+Installation:: Represents an actual device, registered with the UnifiedPush Server. User1 running _HR Android_ app, while User2 runs _HR iPhone premium_ on his phone.
+
+Administrative User Interface:: (AUI) The {push-ui} Web UI that allows you manage Push Applications and Variants, view statistics and send Push Notifications to devices.
+
+:leveloffset!:
+[[setting-up-the-push-service]]
+== Setting Up the {unifiedpush-service} Mobile Service
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='obtaining_firebase_cloud_messaging_credentials-{context}']
+= Obtaining Firebase Cloud Messaging Credentials
+
+This procedure describes how to obtain Firebase Cloud Messaging Credentials.
+
+.Prerequisites
+
+Before the Android application is able to receive the notifications, you must set up access to Firebase Cloud Messaging.
+The following credentials are necessary to set up Firebase Cloud Messaging for your app:
+
+ ** **Server key**
+ ** **Sender ID**
+ ** `google-services.json` file containing the credentials required to connect your app to Firebase and Google services.
+
+.Procedure
+
+. From the _Project Settings_ screen, switch to the _Cloud Messaging_ tab, where you can find the **Server key** and **Sender ID** (known in GCM as **Project Number**). There is also a _Legacy server key_ but it should not be used for new projects.
+
+. Download the `google-services.json` file as described in the link:https://support.google.com/firebase/answer/7015592?hl=en[Google Documentation^].
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='enable_push_notifications_for_ios_app-{context}']
+= Obtaining Apple Push Notification Service Credentials
+
+This procedure describes how to enable {unifiedpush-service} for your iOS application and get the credentials required for push from Apple.
+
+.Procedure
+
+. Follow the link:https://help.apple.com/xcode/mac/current/#/devdfd3d04a1[official Apple guide] to enable push notifications for your Xcode project.
+
+. Follow the link:https://help.apple.com/developer-account/#/dev82a71386a[official Apple guide] to generate an APNs client TLS certificate and export the client TLS identity from your Mac.
++
+[NOTE]
+====
+Make sure to protect the p12 file with a password.
+
+The exported p12 file with the password will be used later when binding your {mobile-client} to the {unifiedpush-service}.
+====
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='provisioning-the-{context}']
+= Provisioning the {unifiedpush-service} Service
+
+This section describes how to set up the {unifiedpush-service} Mobile Service.
+
+.Procedure
+
+. Log into the OpenShift console.
+. Create a new project or choose an existing project.
+. Click *Add to Project* and choose *Browse Catalog* from the options.
++
+You can filter the catalog items to only show mobile specific items by clicking the *Mobile* tab.
+. Click *Services* and choose the {service-name} service.
++
+image::catalog-mobile-services.png[]
+
+. Follow the wizard for provisioning that service.
++
+NOTE: If prompted to *Create a Binding*, choose *Do not bind at this time*
+
+Once the wizard steps are completed, navigate to the Project Overview in OpenShift to see the newly provisioned service.
+Provisioning a service may take some time.
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+:service-name: {unifiedpush-service}
+[id='binding-an-app-to-{context}']
+= Binding a {mobile-client} with the {unifiedpush-service} Service
+
+To use mobile services, you must represent your mobile app in *Mobile Developer Console*, and that app must be associated with the mobile service.
+This association is called *binding* and it is necessary for your mobile app to use that service.
+
+.Prerequisites
+
+* You have created a {mobile-client}.
+
+[tabs]
+====
+Android::
++
+--
+* [x] Google account
+* [x] Access to the Firebase console. Refer to link:https://firebase.google.com/docs/[Firebase Docs].
+--
+iOS::
++
+--
+* [x] Apple Developer account
+* [x] APNs client TLS certificate. Refer to link:https://help.apple.com/developer-account/#/dev82a71386a[official Apple guide].
+--
+====
+
+.Procedure
+
+To bind a {mobile-client} with a mobile service:
+
+. Log in to the {mobile-developer-console}.
+
+. Click on the {mobile-client} on the Overview screen.
+
+. Navigate to *Mobile Services* tab.
++
+image::mobile-clients-services-all-unbound.png[]
+
++
+NOTE: It is possible to bind a {mobile-client} with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.
+
+. Press *Bind to App* in the {service-name}.
+. Fill out the binding parameters required by the {service-name} Service.
++
+When you bind a mobile client to the {unifiedpush-service} service, a variant is created to store the credentials required to communicate with a push network.
+Those credentials need to be provided in the binding dialog.
++
+Choose a *Mobile Client Type* and fill out the required fields:
++
+[tabs]
+====
+Android::
++
+--
+- Select `Android` from in the `Mobile Client Type` list.
+- Enter a *Server Key* and a *Sender ID*. Both are present in the Firebase console.
+
+image::mobile-clients-services-push-parameters-android.png[]
+--
+iOS::
++
+--
+- Select `iOS` from the `Mobile Client Type` list.
+- Obtain an APNs client TLS certificate. Refer to link:https://help.apple.com/developer-account/#/dev82a71386a[official Apple guide].
+- Encode the certificate using base64 and paste the encoded certificate into the field labeled `iOS .p12 file`.
++
+If you are using macOS:
++
+----
+cat <path/to/your/.p12> | base64
+----
++
+If you are using Linux and a version of `base64` that wraps lines, disable line wrapping as follows:
++
+----
+cat <path/to/your/.p12> | base64 --wrap=0
+----
+
+image::mobile-clients-services-push-parameters-ios.png[]
+--
+====
++
+After clicking *Create* your variant will be created in UPS and you should see a new binding for your mobile client. A variant is used for the storage of the credentials provided in the Binding procedure.
+
+:leveloffset!:
+[[setting-up-the-push-client-app]]
+== Configuring your client app
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='downloading-the-configuration-file-{context}']
+= Downloading the Configuration File
+
+The `mobile-services.json` file provides the information for your mobile app to communicate with services.
+After you change any configuration in the {mobile-developer-console}, it is important to update that file in your IDE.
+
+.Prerequisites
+
+* The configuration of your {mobile-client} in {mobile-developer-console} is up-to-date.
+* You have set up your mobile app development environment.
+
+.Procedure
+
+. Open your {mobile-client} in Mobile Developer Console.
+. Copy the `mobile-services.json` configuration to your clipboard.
+. Save the contents of the clipboard to a new file called `mobile-services.json`.
++
+NOTE: The `mobile-services.json` file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.
+. Move `mobile-services.json` to the following location in your application project:
++
+[tabs]
+====
+`src/mobile-services.json`
+====
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='setting-up-sdk-{context}']
+= Setting up the {unifiedpush-service} Service SDK
+
+This section helps you to set up the {unifiedpush-service} service SDK in your App.
+It describes how to set up and initialize the {unifiedpush-service} service SDK.
+
+.Prerequisites
+
+* Your local `mobile-services.json` file is up-to-date.
+
+[tabs]
+====
+====
+
+.Procedure
+
+. Import the libraries
++
+[tabs]
+====
+. Install `cordova-plugin-aerogear-push`:
++
+[source,bash]
+----
+$ cordova plugin add @aerogear/cordova-plugin-aerogear-push
+----
+
+. Install the Unified Push Server package needed for device registration:
++
+[source,bash]
+----
+$ npm install --save @aerogear/push
+----
+
+--
+====
+
+
+:leveloffset!:
+:leveloffset: +1
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='registering-device']
+= Registering device on {unifiedpush-service} Service
+
+To receive native push notifications from a Push Network, for example APNs or FCM, the mobile device is identified with a unique device-token assigned by that Push Network.
+This device-token is passed, by the operating system, to the mobile application.
+Refer to the operating system and Push Network documentation for further details.
+
+Every time a user launches a mobile app,  that app receives the  `device-token`, from a _platform-specific_ method (or callback).
+Since the Push Network  may assign a new token to a device, {org-name} recommends that the app registers the `device-token` with the UnifiedPush Server each time.
+
+The required metadata for an `Installation`:
+
+* *deviceToken:* _Identifies the device/user-agent within its Push Network.
+* *variantID:* The ID of the variant, where the client belongs to
+* *variantSecret:* Password of the actual variant
+
+The AeroGear UnifiedPush Server is able to store some user-specific metadata as well:
+
+* *deviceType:* The device type of the device or the user agent.
+* *operatingSystem:* The name of the underlying Operating System.
+* *osVersion:* The version of the used Operating System.
+* *alias:* Application specific alias to identify users with the system. For instance an `email address` or a `username`.
+* *categories:* Used to apply one or more "tags".
+
+The device-token needs to be registered with the AeroGear UnifiedPush Server, to indicate there is a new Installation for a Variant. This registration is performed by calling an endpoint of the server.
+
+[tabs]
+====
+Cordova::
++
+--
+[source,javascript]
+----
+import { PushRegistration } from "@aerogear/push";
+
+new PushRegistration(app.config).register().then(() => {
+    // Registration with UPS successful, you can now send push notifications from the UPS UI
+}).catch(err => {
+    // Error on device registration
+});
+----
+--
+====
+
+:leveloffset!:
+:leveloffset: +1
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='sending-a-push-notification-{context}']
+= Sending a Push Notification using the {push-ui}
+
+The {push-ui} allows you to send Push Notifications.
+
+.Prerequisites
+
+ * Make sure the {unifiedpush-service} service is provisioned.
+ * Select a route in OpenShift.
+ * Login with your OpenShift credentials.
+
+NOTE: On first login you need to provide the OpenShift OAuth service permissions to read your user account.
+
+[tabs]
+====
+Admin UI::
++
+--
+. Open the {push-ui} in a browser.
+
+. Select the target application from the home page and click *Send Notification To This App*.
++
+image::send1.png[Send a Push]
+
+. When the _Send Push_ dialog displays, enter text in the *Message* form.
++
+image::send2.png[Enter the payload]
+
+. Click *Send Push Notification* to send the message to the target application.
+--
+Java API::
++
+--
+. Add https://github.com/aerogear/aerogear-unifiedpush-java-client/[unifiedpush-java-client] as a dependency to your project.
+
++
+[source,xml]
+----
+<dependency>
+  <groupId>org.jboss.aerogear</groupId>
+  <artifactId>unifiedpush-java-client</artifactId>
+  <version>[version]</version>
+</dependency>
+----
+
+. Send the message to the target application.
+
++
+[source,java]
+----
+final PushSender sender = DefaultPushSender
+        .withRootServerURL("<pushServerURL e.g http(s)//host:port/context>")
+        .pushApplicationId("<pushApplicationId e.g. 1234456-234320>")
+        .masterSecret("<masterSecret e.g. 1234456-234320>")
+        .build();
+
+final UnifiedMessage unifiedMessage = UnifiedMessage
+        .withMessage()
+        .alert("Hello from Java Sender API!")
+        .build();
+
+sender.send(unifiedMessage, () -> {
+    //do cool stuff
+});
+----
+--
+Node.js API::
++
+--
+. Add https://github.com/aerogear/aerogear-unifiedpush-nodejs-client/[unifiedpush-node-sender] as a dependency to your project.
+
++
+[source,bash]
+----
+npm i unifiedpush-node-sender
+----
+
+. Send the message to the target application.
+
++
+[source,javascript]
+----
+const agSender = require('unifiedpush-node-sender');
+
+const settings = {
+  url: "<pushServerURL e.g http(s)//host:port/context>",
+  applicationId: "<pushApplicationId e.g. 1234456-234320>",
+  masterSecret: "<masterSecret e.g. 1234456-234320>"
+
+};
+
+const message = {
+  alert: "Hello from the Node.js Sender API!"
+};
+
+const options = {
+  config: {
+    ttl: 3600
+  }
+};
+
+agSender(settings).then((client) => {
+  client.sender.send(message, options).then((response) => {
+    console.log('success', response);
+  }).catch((error) => {
+    console.log('error', error);
+  })
+});
+----
+--
+REST::
++
+. Send the message to the target application.
++
+--
+[source,bash]
+----
+curl -u "<pushApplicationId>:<masterSecret>"  \
+   -v -H "Accept: application/json" -H "Content-type: application/json"  \
+   -X POST  -d \
+  '{
+     "message": {
+      "alert": "Hello from the curl HTTP Sender!",
+      "sound": "default"
+     }
+   }'  \
+   <pushServerURL>/rest/sender
+----
+--
+====
+
+NOTE: The 3rd party Push Network is responsible for delivering the Push Notification to the target application.
+
+
+:leveloffset!:
+:leveloffset: +1
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='handling-push-notifications-{context}']
+= Handling Incoming Push Notifications
+
+This section describes how to handle incoming {push-notification}s in your foregrounded application.
+
+NOTE: Push notifications that arrive when the application is in the background are always handled by the OS.
+
+.Procedure
+
+[tabs]
+====
+
+Add the following code to your app:
+
+[source,bash]
+----
+PushRegistration.onMessageReceived((notification: any) => {
+  console.log('Received a push notification', notification);
+});
+----
+
+--
+====
+
+:leveloffset!:
+
+
+// Restore the context to what it was before this assembly.
+:context: {parent-context}

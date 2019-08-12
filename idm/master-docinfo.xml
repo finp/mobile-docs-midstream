@@ -1,0 +1,12 @@
+<title>Using the {keycloak-service} Mobile Service</title>
+<productname>{ProductName}</productname>
+<productnumber>{DocInfoProductNumber}</productnumber>
+<subtitle>For {ProductName} {ProductRelease}</subtitle>
+<release>{DocInfoProductNumber}</release>
+<abstract>
+    <para>This document provides a comprehensive description and usage instructions for the {keycloak-service} service, {ProductName} {ProductRelease}.</para>
+</abstract>
+<authorgroup>
+    <orgname>Red Hat Customer Content Services</orgname>
+</authorgroup>
+<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />

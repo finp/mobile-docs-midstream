@@ -1,0 +1,43 @@
+include::https://raw.githubusercontent.com/aerogear/mobile-docs/master/modules/ROOT/pages/_partials/attributes.adoc[]
+
+include::shared/downstream-attributes.adoc[]
+
+:context: data-sync
+:parent-context: {context}
+:service-name: {sync-service}
+
+:upstream-location: https://mobile-docs.netlify.com
+// :upstream-location: ../../mobile-docs/build/site
+
+
+[id='a-collection-of-modules']
+= Developing a {sync-service} App
+
+include::{upstream-location}/ds-introduction.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+include::{upstream-location}/data-sync.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+
+
+include::{upstream-location}/ds-getting-started.adoc[leveloffset=+1, tags=!excludeDownstream]
+include::{upstream-location}/ds-query.adoc[leveloffset=+1, tags=!excludeDownstream]
+include::{upstream-location}/ds-mutation.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+include::{upstream-location}/ds-offline.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+include::{upstream-location}/ds-realtime.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+include::{upstream-location}/ds-auth.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+// include::{upstream-location}/ds-metric.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+include::{upstream-location}/ds-files.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+include::{upstream-location}/ds-audit.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+include::{upstream-location}/ds-advanced.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+include::{upstream-location}/ds-openshift.adoc[leveloffset=+1, tags=!excludeDownstream]
+
+
+

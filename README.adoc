@@ -1,0 +1,72 @@
+= Mobile Services Downstream Documentation
+
+This repo is used to publish content from https://github.com/aerogear/mobile-docs/
+All content must be edited upstream.
+
+
+* link:getting-started/master.adoc[Getting Started]
+* link:sync/master.adoc[Data Sync]
+* link:push/master.adoc[Push Notifications]
+* link:idm/master.adoc[Identity Management]
+* link:security/master.adoc[Security]
+* link:showcase/master.adoc[Showcase App]
+
+
+.Updating documentation
+
+To update all files, run the following script while in the root folder:
+
+----
+./bin/fetch-all.sh
+----
+
+
+To update downstream documentation:
+
+----
+./bin/fetch-upstream.sh <directory>/<guide-name>.adoc
+----
+
+This updates the `master.adoc` file:
+
+* if upstream-location is set to remote, it picks up the adoc from mobile-docs:master.
+* if upstream-location is set to local, it picks up the adoc from a specified local directory.
+
+NOTE: For pushing to pantheon, always use a remote location, eg:
+
+----
+:upstream-location: https://mobile-docs.netlify.com
+// :upstream-location: ../../mobile-docs/build/site
+----
+
+.Making changes upstream and previewing the results
+
+NOTE: You must have `mobile-docs` and `mobile-docs-downstream` in the same parent directory.
+
+To make changes upstream and preview them downstream:
+
+. Edit the upstream docs, eg
++
+----
+cd ../mobile-docs
+atom .
+----
+
+. Preview the upstream site:
++
+----
+cd bin
+./netlify-build.sh
+----
++
+This generates the required adoc in the mobile-docs/build/site directory.
+
+. Update the `master.adoc`:
++
+----
+cd ../../mobile-docs-downstream
+./bin/fetch-upstream.sh <directory>/<guide-name>.adoc
+----
+
+. Run ccutil.
+

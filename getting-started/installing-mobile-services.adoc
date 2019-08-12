@@ -1,0 +1,124 @@
+= Setting up {org-name} {product-name} on OpenShift
+
+{product-name} run natively on link:https://www.openshift.org/[OpenShift^].
+
+[[prerequisites]]
+.Prerequisites
+
+* OpenShift 3.11 instance
++
+** This instance must have Service Catalog, Ansible Service Broker and Template Service Broker services installed.
++
+** You need to have full access to this OpenShift instance, i.e. user with `cluster-admin` privileges.
++
+** OpenShift Container Platform 3.11 currently supports `registry.access.redhat.com` and `registry.redhat.io`.
+However, {ProductName} images are only available from the new registry, `registry.redhat.io`. For information on accessing the new registry, see the link:https://docs.openshift.com/container-platform/3.11/install_config/configuring_red_hat_registry.html[OpenShift documentation].
++
+** Create a secret to store the credentials that can access the registry, as described in link:https://docs.openshift.com/container-platform/3.11/install_config/oab_broker_configuration.html#oab-config-registry-storing-creds[OpenShift Ansible Broker Configuration].
+
+.Procedure
+
+. Log in to the OpenShift console as a user with `cluster-admin` privileges using the `oc` command.
+. Create a Custom Resource Definition file:
++
+[source,bash]
+----
+cat > /tmp/crd.yaml << EOF
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: mobileclients.mobile.k8s.io
+spec:
+  group: mobile.k8s.io
+  version: v1alpha1
+  scope: Namespaced
+  names:
+    plural: mobileclients
+    singular: mobileclient
+    kind: MobileClient
+    shortNames:
+    - mc
+  validation:
+    openAPIV3Schema:
+      properties:
+        spec:
+          properties:
+            apiKey:
+              type: string
+              pattern: '(\w{8}-\w{4}-\w{4}-\w{4}-\w{11})'
+            name:
+              type: string
+              pattern: '([\w-])'
+            dmzUrl:
+              type: string
+              nullable: true
+EOF
+----
+. Run the following commands to setup the Custom Resource on OpenShift:
++
+[source,bash,subs="attributes"]
+----
+oc create -f /tmp/crd.yaml
+oc create clusterrole mobileclient-admin --verb=create,delete,get,list,patch,update,watch --resource=mobileclients
+oc adm policy add-cluster-role-to-group mobileclient-admin system:authenticated
+----
+
+. Update the configuration of the OpenShift Ansible Service Broker to add new registries:
+
+.. Edit the config map object using `oc`
++
+[source,bash,subs="attributes"]
+----
+oc edit configmap broker-config -n openshift-ansible-service-broker
+----
+.. Add the following new registries to the `registry` section of the config, and replace the value for `auth_name` with the name of the secret that stores the registry access credential.
++
+[source,yaml]
+----
+---
+registry:
+  - type: rhcc
+    name: rhcc-mobile
+    auth_name: <name of the secret>
+    auth_type: "secret"
+    tag: "1.0"
+    url: "https://registry.redhat.io"
+    white_list:
+      - mobile-.*-apb$
+----
+
+.. Update the following attributes in the `openshift` section of the config:
++
+[source,yaml,subs="attributes"]
+----
+openshift:
+  image_pull_policy: Always
+  sandbox_role: admin
+----
+.. Update the following attributes in the `broker` section of the config:
++
+[source,yaml,subs="attributes"]
+----
+broker:
+  launch_apb_on_bind: true
+----
+
+.. Save the configmap object, and restart the Ansible Service Broker:
++
+[source,bash,subs="attributes"]
+----
+oc rollout latest asb -n openshift-ansible-service-broker
+----
+
+. Verify the installation:
++
+.. Browse to the Web console of your OpenShift instance and log in.
+
+.. Check that the _Mobile_ tab is displayed in the service catalog. If this tab is not displayed, wait a few minutes to make sure that the installation process has completed. You can also force the service catalog to refresh by running the following commands:
++
+[source,bash,subs="attributes"]
+----
+oc get clusterservicebroker ansible-service-broker -o=json > broker.json
+oc delete clusterservicebroker ansible-service-broker
+oc create -f broker.json
+----

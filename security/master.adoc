@@ -1,0 +1,899 @@
+:org-name: AeroGear
+
+:product-name: Mobile Services
+
+:release-number: 1.0.0
+:showcase-version: 0.8.0
+:installer-release-number: 2.0.0
+:xamarin-sdk-release-number: 2.0.1
+:ios-sdk-release-number: 2.0.0
+:android-sdk-release-number: 2.0.0
+
+:service-name:
+
+:mobile-client: Mobile App
+:mobile-client-openshift: Mobile Client in your OpenShift project
+:mobile-cli: Mobile CLI
+
+// Metrics Service
+:metrics-service: Mobile Metrics
+:grafana-ui: Grafana
+:prometheus-ui: Prometheus
+
+// IDM Service
+:keycloak-service: Identity Management
+:keycloak-ui: Keycloak Admin UI
+:keycloak-dashboard: Auth Dashboard
+:idm-name: Keycloak
+:idm-docs-link: https://www.keycloak.org/documentation.html
+
+// Push Service
+
+:unifiedpush-service: Push Notifications
+:push-ui: Unified Push Admin UI
+:push-notification: push notification
+
+// Build Service
+:mobile-ci-cd-service: Mobile CI/CD
+:mobilecicd-ui: Jenkins UI
+
+// Device Security
+:device-security-service: Device Checks
+:app-security-service: Mobile Security
+
+// Sync Service
+:sync-service: Data Sync
+:sync-server: Voyager Server
+:sync-client: Voyager Client
+
+// TODO: fix this. There are versions on the backend framework libs
+// And a version on the sync client (independent of each other also)
+// :data-sync-version:
+
+:SDK: AeroGear SDK
+:ios-sdk: AeroGear SDK for iOS
+:android-sdk: AeroGear SDK for Android
+:js-sdk: AeroGear SDK for Cordova
+:xamarin-sdk: AeroGear SDK for Xamarin
+
+:mobile-developer-console: Mobile Developer Console
+
+// links
+
+:link-product-doc-home: https://docs.aerogear.org/aerogear/latest
+//:rn-link: {link-product-doc-home}/1.0_release_notes
+:idm-guide-link: {link-product-doc-home}/identity-management.html
+:metrics-guide-link: {link-product-doc-home}/mobile-metrics.html
+:push-guide-link: {link-product-doc-home}/push-notifications.html
+:device-security-guide-link: {link-product-doc-home}/device-security.html
+:getting-started-guide-link: {link-product-doc-home}/getting-started.html
+
+:data-sync-guide-link: {link-product-doc-home}/data-sync.html
+:data-sync-queries-link: {link-product-doc-home}/ds-query.html
+:data-sync-auth-link: {link-product-doc-home}/ds-auth.html
+
+
+:toc:
+:toclevels: 4
+:numbered:
+:imagesdir: shared/images
+
+:ProductName: Red Hat Managed Integration
+:ProductShortName: Mobile Developer Services
+:ProductRelease: 1.0
+:ProductVersion: 1
+:LatestVersion: 1.0
+
+:DocInfoProductName: mobile_services
+:DocInfoProductNumber: 1
+
+:org-name: Red Hat
+:product-name: Mobile Developer Services
+
+:keycloak-ui: Red Hat SSO Admin UI
+:idm-name: Red Hat Single Sign-On
+:idm-docs-link:  https://access.redhat.com/products/red-hat-single-sign-on
+
+
+
+:context: downstream
+
+// ENVIRONMENT / CP SERVER - stage, qa, or production
+// default env is prod
+// ifndef::cp-server[]
+:cp-server: access.redhat.com
+// endif::[]
+
+// BUILD LANGUAGE
+// default language is en
+// ifndef::language[]
+:language: en-us
+// endif::[]
+
+// FORMAT AND PAGING
+// default paging is single
+:paging: html-single
+
+// paged only for html format, all other formats (pdf, epub, single) use single
+// ifeval::["{format}" == "html"]
+:paging: html
+// endif::[]
+
+:link-product-doc-home: https://{cp-server}/documentation/{language}/{DocInfoProductName}
+:rn-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/1.0_release_notes
+:idm-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_identity_management_mobile_service
+:metrics-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_mobile_metrics_mobile_service
+:push-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_push_notifications_mobile_service
+:device-security-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_device_security_service
+:getting-started-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/getting_started
+
+:data-sync-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app
+:data-sync-queries-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#querying_a_data_sync_server_using_a_data_sync_client
+:data-sync-auth-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#auth_data-sync
+
+
+:upstream-location: https://mobile-docs.netlify.com
+// :upstream-location: ../../mobile-docs/build/site
+
+
+= Securing your mobile app
+:page-partial:
+
+This guide does not address all mobile security topics. See the link:https://www.owasp.org/index.php/OWASP_Mobile_Security_Project[OWASP Mobile Security Project] for an introduction to mobile security.
+{org-name} helps you achieve security:
+
+* xref:app-security[Using the {app-security-service} service] - remotely disable specific app variants
+* xref:device-checks[Adding {device-security-service} to your mobile app] - for example, disable app on rooted devices
+
+
+:leveloffset: 1
+
+
+
+:context: security-service
+
+:installation-link: getting-started.html
+
+[id='app-security']
+
+= Using the {app-security-service} Service
+:page-partial:
+
+
+[[app-setup]]
+== Setting Up the {app-security-service} Service
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='provisioning-the-{context}']
+= Provisioning the {app-security-service} Service
+
+This section describes how to set up the {app-security-service} Service.
+
+.Prerequisites
+
+* You have logged into the OpenShift console and the {mobile-developer-console}.
+
+.Procedure
+
+. Log into the OpenShift console.
+. Create a new project or choose an existing project.
+. Click *Add to Project* and choose *Browse Catalog* from the options.
++
+You can filter the catalog items to only show mobile specific items by clicking the *Mobile* tab.
+. Click *Services* and choose the {app-security-service} service.
++
+image::catalog-mobile-services.png[]
+
+. Follow the wizard for provisioning that service.
++
+NOTE: If prompted to *Create a Binding*, choose *Do not bind at this time*
++
+Once the wizard steps are completed, navigate to the Project Overview in OpenShift to see the newly provisioned service.
+Provisioning a service may take some time.
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='binding-an-app-to-{context}']
+= Binding a {mobile-client} with the {app-security-service} Service
+
+To use mobile services, you must represent your mobile app in *Mobile Developer Console*, and that app must be associated with the mobile service.
+This association is called *binding* and it is necessary for your mobile app to use that service.
+
+This section describes how to set up the {app-security-service} service.
+
+.Prerequisites
+
+* You have created a {mobile-client}.
+
+.Procedure
+
+To bind a {mobile-client} with a mobile service:
+
+. Launch {mobile-developer-console}.
+
+. Click on the {mobile-client} on the Overview screen.
+
+. Navigate to *Mobile Services* tab.
++
+image::mobile-clients-services-all-unbound.png[]
+
++
+NOTE: It is possible to bind a {mobile-client} with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.
+
+. Click *Bind to App* for {app-security-service}.
+
+. Fill out the binding parameters required by the {app-security-service} Service.
+
+
+The {app-security-service} service will now be expandable, details about the service can be viewed.
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='configuring-{context}']
+= Configuring the {app-security-service} Service
+
+
+.Prerequisites
+
+* An understanding of link:https://openid.net/[OpenID^]
+
+.Procedure
+
+. Log into the {mobile-developer-console} and navigate to the {mobile-client} screen.
+
+. Select the *Mobile Services* tab.
+
+. If a binding to the {app-security-service}service is in progress, a spinning icon is displayed to the right of the {app-security-service}entry. Wait for the binding process to complete.
+
+
+. Save your changes.
+
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+= Configuring your Development Environment for the {app-security-service} Service
+
+:service-name: App Security
+
+== Downloading the Mobile Services Configuration File
+
+. Open your {mobile-client} in Mobile Developer Console.
+. Copy the `mobile-services.json` configuration to your clipboard.
+. Save the contents of the clipboard to a new file called `mobile-services.json`.
++
+NOTE: The mobile-services.json file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.
+. Follow the platform-specific instructions:
+
+[tabs]
+====
+Cordova::
++
+--
+
+Move mobile-services.json to the following location in your application project:
+
+`src/mobile-services.json`
+
+--
+====
+
+== Setting up {app-security-service} service SDK
+
+=== Importing the libraries
+
+[tabs]
+====
+
+Cordova::
++
+--
+
+. Install the link:https://www.npmjs.com/package/@aerogear/security[AeroGear Security] package from link:https://www.npmjs.com/[NPM^]:
++
+[source,bash]
+----
+$ npm install @aerogear/security --save
+----
+
+. Add the link:https://www.npmjs.com/package/@aerogear/cordova-plugin-aerogear-security[AeroGear Security plugin^] for Cordova:
++
+[source,bash]
+----
+$ cordova plugin add @aerogear/cordova-plugin-aerogear-security
+----
+
+. Import and instantiate `SecurityService` to start using the SDK:
++
+[source,javascript]
+----
+const SecurityService = require("@aerogear/security");
+
+const appSecurity = new SecurityService.AppSecurity(app.config);
+----
++
+NOTE: Any new instantiation of `SecurityService` returns the same instance.
+
+--
+====
+
+:leveloffset!:
+
+[[app-coding]]
+:leveloffset: +1
+
+= Implementing the {app-security-service} service in your mobile app
+
+Call the appSecurity clientInit function to implement the App Security Service.
+Call this service on application initialization, for example:
+
+[source,javascript]
+----
+appSecurity.clientInit()
+.then(clientInit => {
+  /**
+    You can use clientInit.data.disabled boolean
+    to check if app has been disabled by admin.
+
+    The disabled message is returned if the app is
+    disabled at clientInit.data.disabledMessage
+    This contains a string with a disabled message
+    from the server set by the admin.
+  */
+}).catch(err  => {
+  /**
+    You can handle errors connecting to the
+    mobile security service here. i.e. if the
+    client is offline that error will be caught
+    here and you can return a response at this
+    point
+    */
+});
+----
+
+:leveloffset!:
+
+[[console]]
+:leveloffset: +1
+
+= Managing mobile apps using the Mobile Security Console
+
+To access the {app-security-service} Console:
+
+. Retrieve the console URL from the list of available services in the Mobile Developer Console (MDC).
+. Open the URL in a browser.
+
+
+.Overview of the Mobile Security Console
+
+The {app-security-service} Console allows you to monitor applications, their respective versions, and disable versions of those applications.
+
+Opening the console lists all applications. Click on an application to view version details for that application.
+
+Below is a detailed description of each of these views and the information you can expect each to contain.
+
+.Application details view
+
+This view provides statistics and information about each deployed version of an application:
+
+
+* *App Version*: The version of the application.
+* *Current Installs*: Total number of current installed versions of this version of the application.
+* *Launches*: Total number of launches of this version of the application.
+* *Last launched*: The last time this application version was launched.
+* *Disable on Startup*: Whether this application version is disabled on startup.
+* *Custom Disable Message*: A custom message that is displayed when this version of the mobile app is disabled.
+
+== Enabling and disabling mobile app versions
+
+To enable/disable one or more versions of the application:
+
+. Toggle the checkbox for that version in the *Disable on Startup* column.
+. Confirm these changes by clicking the *Save* button to persist these changes.
+
+Navigating away from this screen with unsaved changes prompts you to save or discard these changes.
+
+To disable all versions of an application:
+
+* Click the *Disable App* button.
+
+== Adding or updating a custom disabled message
+
+To add or update a custom message for the version(s) of an application:
+
+. Enter the message in the text field for that version under the *Custom Disable Message* column.
+. Confirm these changes by clicking the *Save* button to persist these changes.
+
+Navigating away from this screen with unsaved changes prompts you to save or discard these changes.
+
+:leveloffset!:
+
+
+// Restore the context to what it was before this assembly.
+:!context:
+
+:leveloffset!:
+:leveloffset: 1
+
+
+
+:context: security
+
+[id='device-checks']
+= Implementing {device-security-service} in your mobile app
+:page-partial:
+
+The Device Security service allows you to easily configure and manage device security, and trust checks for your mobile application.
+
+* Perform a range of device trust checks on the mobile device, such as checking if the device is rooted, and allows you take proactive action based on the results.
+* Distribute SSL certificates with a Mobile App to create a direct chain of trust (certificate pinning).
+
+NOTE: Device Security is not currently associated with an OpenShift service, so there are no provisioning or binding tasks associated with using Device Security.
+
+.Prerequisites
+
+* You understand {device-security-service}.
+* You have logged into the OpenShift console and the Mobile Developer Console.
+* You are developing an Ionic app, plain Cordova is not supported.
+
+:leveloffset: +2
+
+//':context:' is a vital parameter. See: http://asciidoctor.org/docs/user-manual/#include-multiple
+
+[id='security-terminology-{context}']
+= {device-security-service} Terminology
+
+This section describes terminology that is associated with {device-security-service}.
+
+
+Root Access Detection (ROOT_ENABLED)::
+Use it to help prevent your app running in a device that has been rooted/jailbroken. A device is considered rooted if *any* of the following are true:
+
+- A custom key has been used to sign the kernel
+- The `su` binaries are present
+
+
+Developer Mode Detection (DEVELOPER_MODE_ENABLED)::
+To detect if Developer Mode has been enabled on the device the `DeviceCheckType#DEVELOPER_MODE_ENABLED` function can be used. This function uses Android’s link:https://developer.android.com/reference/android/provider/Settings.html[Settings^] class.
+
+Debugger Detection (DEBUGGER_ENABLED)::
+To detect if an Android debugger is attached to the app the `DeviceCheckType#DEBUGGER_ENABLED` function can be used. This function uses Android’s link:https://developer.android.com/reference/android/os/Debug.html[Debug^] class.
+
+Emulator Detection (IS_EMULATOR)::
+To detect if the app is being run on an emulator the `DeviceCheckType#IS_EMULATOR` function can be used. This function uses Android’s link:https://developer.android.com/reference/android/os/Build.html[Build^] class.
+
+Device Lock Detection (SCREEN_LOCK_ENABLED)::
+To detect if a device has a lock screen set (with pin, fingerprint, pattern) the `DeviceCheckType#SCREEN_LOCK_ENABLED` function can be used. This function uses Android’s link:https://developer.android.com/reference/android/app/KeyguardManager.html[KeyguardManager^] class.
+
+App Data Backup Detection (BACKUP_ENABLED)::
+To detect whether the application’s data is configured to be synchronized across devices the `DeviceCheckType#BACKUP_ENABLED` function can be used. The link:https://developer.android.com/guide/topics/manifest/application-element.html[allowBackup^] flag determines whether to allow the application to participate in the backup and restore infrastructure, which might be interesting to avoid depending on your app’s needs.
+
+Device Encryption Detection (ENCRYPTION_ENABLED)::
+To detect whether the devices' filesystem is encrypted the `DeviceCheckType#ENCRYPTION_ENABLED` function can be used. This function uses Android’s link:https://developer.android.com/reference/android/app/admin/DevicePolicyManager.html[DevicePolicyManager^] class.
+
+:leveloffset!:
+
+[[setting-up-the-device-security-service]]
+== Configuring your Development Environment for the {device-security-service} Service
+:leveloffset: +1
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='downloading-the-configuration-file-{context}']
+= Downloading the Configuration File
+
+The `mobile-services.json` file provides the information for your mobile app to communicate with services.
+After you change any configuration in the {mobile-developer-console}, it is important to update that file in your IDE.
+
+.Prerequisites
+
+* The configuration of your {mobile-client} in {mobile-developer-console} is up-to-date.
+* You have set up your mobile app development environment.
+
+.Procedure
+
+. Open your {mobile-client} in Mobile Developer Console.
+. Copy the `mobile-services.json` configuration to your clipboard.
+. Save the contents of the clipboard to a new file called `mobile-services.json`.
++
+NOTE: The `mobile-services.json` file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.
+. Move `mobile-services.json` to the following location in your application project:
++
+[tabs]
+====
+`src/mobile-services.json`
+====
+
+:leveloffset!:
+:leveloffset: +2
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='setting-up-sdk-{context}']
+= Setting up {device-security-service} service SDK
+
+This guide will help you to set up the {device-security-service} service SDK in your App.
+
+== Importing the libraries
+
+[tabs]
+====
+Cordova::
++
+--
+
+. Install the link:https://www.npmjs.com/package/@aerogear/security[AeroGear Security] package from link:https://www.npmjs.com/[NPM^]
++
+[source,bash]
+----
+$ npm install @aerogear/security
+----
+
+. Add the link:https://www.npmjs.com/package/@aerogear/cordova-plugin-aerogear-security[AeroGear Security plugin^] for Cordova:
++
+[source,bash]
+----
+$ cordova plugin add @aerogear/cordova-plugin-aerogear-security
+----
+
+. Import and instantiate `SecurityService` to start using the SDK:
++
+[source,javascript]
+----
+const SecurityService = require("@aerogear/security");
+
+const securityService = new SecurityService(app.metrics);
+----
++
+NOTE: Any new instantiation of `SecurityService` returns the same instance.
+
+--
+====
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='performing-device-trust-checks_{context}']
+= Performing Device Trust Checks in your Device
+
+This section describes what Device Trust Checks are available and how to execute them for the supported platforms.
+Also note that Device Checks can be performed either individually or together.
+
+== Root Access Detection
+
+Use this to help prevent your app running in a device that has been rooted/jailbroken.
+
+[tabs]
+====
+Cordova::
++
+--
+
+[source, javascript]
+----
+new SecurityService(app.metrics)
+    .check(DeviceCheckType.rootEnabled)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });
+----
+
+--
+====
+
+== Developer Mode Detection
+
+Use this to detect if Developer Mode has been enabled on the device.
+
+[tabs]
+====
+Cordova::
++
+--
+This check is not available for Cordova.
+--
+====
+
+
+== Debugger Detection
+
+Use this to detect if a debugger is attached to the app.
+
+[tabs]
+====
+Cordova::
++
+--
+[source, javascript]
+----
+new SecurityService(app.metrics)
+    .check(DeviceCheckType.debugModeEnabled)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });
+----
+--
+====
+
+== Emulator Detection
+
+Use this to detect if the app is being run on an emulator.
+
+[tabs]
+====
+Cordova::
++
+--
+[source, javascript]
+----
+new SecurityService(app.metrics)
+    .check(DeviceCheckType.isEmulator)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });
+----
+--
+====
+
+== Device Lock Detection
+
+Use this to detect if a device has a lock screen set (with pin, fingerprint, pattern...).
+
+[tabs]
+====
+Cordova::
++
+--
+NOTE: For iOS devices this check requires iOS 8 or above.
+[source, javascript]
+----
+new SecurityService(app.metrics)
+    .check(DeviceCheckType.screenLockEnabled)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });
+----
+--
+====
+
+== App Data Backup Detection
+
+Use this to detect whether the application’s data is configured to be synchronized across devices.
+
+[tabs]
+====
+Cordova::
++
+--
+This is not available for Cordova.
+--
+====
+
+== Device Encryption Detection
+
+Use this to detect whether a devices filesystem is encrypted.
+
+[tabs]
+====
+Cordova::
++
+--
+This is not available for Cordova.
+--
+====
+
+== Invoking Multiple Device Checks
+
+Device Checks can be run in group, both synchronously and asynchronously.
+
+[discrete]
+=== Synchronously
+
+[tabs]
+====
+Cordova::
++
+--
+Executing multiple checks synchronously is not directly supported. Instead, it's possible to use the link:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await[await^] operator.
+[source, javascript]
+----
+const results = await securityService.checkMany(
+    DeviceCheckType.rootEnabled,
+    DeviceCheckType.isEmulator,
+    // Add more checks here
+);
+----
+NOTE: `DeviceCheckResult` objects in the returning array stay in the same order they were provided.
+--
+====
+
+[discrete]
+=== Asynchronously
+
+[tabs]
+====
+Cordova::
++
+--
+Invoke multiple checks using the `checkMany` method:
+[source, javascript]
+----
+const checkResults = securityService.checkMany(
+    DeviceCheckType.rootEnabled,
+    DevoceCheckType.isEmulator,
+    // Add more checks here
+)
+.then(results => {
+    // Handle results
+});
+----
+NOTE: This method returns a Promise with an array containing all `DeviceCheckResult` objects in the same order they were provided.
+--
+====
+
+
+== Additional Resources
+
+[discrete]
+=== Adding Custom Device Checks
+
+It is possible to make use of your own custom checks. Follow the next steps depending on your platform to implement them:
+
+[tabs]
+====
+Cordova::
++
+--
+. Implement the `DeviceCheck` interface:
++
+[source, javascript]
+----
+class CustomDeviceCheck implements DeviceCheck {
+
+    get name(): string {
+        return "My Custom Check";
+    }
+
+    public check(): Promise<DeviceCheckResult> {
+        // Implement device check logic here
+        return null;
+    }
+
+}
+----
+
+. Instantiate it to execute it, using the instance of `SecurityService`:
++
+[source, javascript]
+----
+const securityService = new SecurityService(app.metrics);
+
+securityService.check(new CustomDeviceCheck())
+    .then(result => {
+        // Handle result
+    });
+----
+--
+====
+
+[discrete]
+=== Reporting Device Checks Results Via the Metrics Service
+
+In order to report the results of Device Checks utilize this service in conjunction with the Mobile Metrics service.
+
+[tabs]
+====
+Cordova::
++
+--
+Report individual checks via the `checkAndPublishMetric` method:
+
+[source, javascript]
+----
+new SecurityService(app.metrics)
+    .checkAndPublishMetric(DeviceCheckType.rootEnabled)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });
+----
+
+Or alternatively report multiple checks using the `checkManyAndPublishMetric` method:
+
+[source, javascript]
+----
+new SecurityService(app.metrics)
+    .checkManyAndPublishMetric(
+        DeviceCheckType.rootEnabled,
+        DeviceCheckType.isEmulator,
+        // Add more checks here
+    )
+    .then(results => {
+        // Handle the security results array
+    });
+----
+--
+====
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// For more information, see: https://redhat-documentation.github.io/modular-docs/
+
+[id='certificate-pinning_{context}']
+= Certificate Pinning in Android Devices
+
+link:https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning[Certificate pinning^] can be enabled in individual SDKs through the `mobile-services.json` file.
+Certificate pinning will only be enabled for services which are used directly by the SDKs. For
+other services *SPKI* pinning is used. Mobile services must have pinning configured
+separately. For more information on setting up certificate pinning for mobile services see the
+link:https://developer.android.com/training/articles/security-config.html#CertificatePinning[Android network security guide^].
+
+== Generating Pinning Configuration
+
+The {sdk} gets its configuration from the `https` section of the `mobile-services.json` file
+in a project.
+
+[source,json]
+----
+{
+    "services":[],
+    "https": {
+        "certificatePins": [{
+            "host": "example.sync.service",
+            "certificateHash": "exampleHash"
+        }]
+    }
+}
+----
+
+To include the `https` section in configuration when generating it using the Mobile CLI use the
+`--include-cert-pins` flag when retrieving a client configuration. By default, self-signed or
+invalid certs will not be permitted to be included in the certificate pinning configuration. To
+allow these to be included use the `--insecure-skip-tls-verify` flag.
+
+[source, bash]
+----
+$ ./mobile get clientconfig <client name> --include-cert-pins --insecure-skip-tls-verify
+----
+
+[discrete]
+=== Using Pinning Configuration
+
+If the `https` section is included in the `mobile-services.json` file then certificate pinning will
+automatically be enabled for mobile services.
+
+[discrete]
+=== Considerations
+
+If the certificate authority of a service changes then the `mobile-services.json` file will need to
+be regenerated in order to retrieve the correct `https` configuration. The app will then need to be
+rebuilt and republished for the end users to consume. If this is not done then an app may become
+incapable of making network requests to other services.
+
+:leveloffset!:
+
+
+
+// Restore the context to what it was before this assembly.
+:!context:
+
+:leveloffset!:

@@ -1,0 +1,13 @@
+include::shared/upstream-attributes.adoc[]
+
+include::shared/downstream-attributes.adoc[]
+
+
+:upstream-location: https://mobile-docs.netlify.com
+:upstream-location: ../../mobile-docs/build/site
+
+include::{upstream-location}/getting-started.adoc[tags=!excludeDownstream]
+
+include::{upstream-location}/getting-started-configuring.adoc[leveloffset=+1,tags=!excludeDownstream]
+
+include::{upstream-location}/getting-started-running.adoc[leveloffset=+1,tags=!excludeDownstream]
