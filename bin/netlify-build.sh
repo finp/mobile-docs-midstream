@@ -2,7 +2,7 @@
 echo $SHELL
  
 echo 'publish-adoc'
-#gem install asciidoctor
+gem install asciidoctor
 
 
 for filename in ../*/master.adoc; do
