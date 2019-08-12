@@ -1,0 +1,4283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<title>Developing a Data Sync App</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment @import statement to use as custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite::before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+:not(pre)>code.nobreak{word-wrap:normal}
+:not(pre)>code.nowrap{white-space:nowrap}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
+table.tableblock{max-width:100%;border-collapse:separate}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+td.tableblock>.content>:last-child.sidebarblock{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot,table.frame-ends{border-width:1px 0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body id="a-collection-of-modules" class="article toc2 toc-left">
+<div id="header">
+<h1>Developing a Data Sync App</h1>
+<div id="toc" class="toc2">
+<a href=../index.html>Home</a><br><br>
+<ul class="sectlevel2">
+<li><a href="#introducing-data-sync-data-sync">1. Introducing Data Sync</a></li>
+<li><a href="#data-sync-technical-overview-data-sync">2. Data Sync Technical Overview</a>
+<ul class="sectlevel4">
+<li><a href="#ref-data-sync-terminology-data-sync">Data Sync terminology</a></li>
+</ul>
+</li>
+<li><a href="#_developing_a_data_sync_application">3. Developing a Data Sync Application</a></li>
+<li><a href="#getting-started-with-hello-world-data-sync">4. Getting Started with Hello World Data Sync</a></li>
+<li><a href="#_querying_a_data_sync_server_using_a_data_sync_client">5. Querying a Data Sync server using a Data Sync client</a></li>
+<li><a href="#_adding_a_mutation_to_a_data_sync_client">6. Adding a mutation to a Data Sync client</a></li>
+<li><a href="#offline-client">7. Supporting offline functionality in your mobile app</a>
+<ul class="sectlevel2">
+<li><a href="#_about_offline_functionality">7.1. About offline functionality</a></li>
+<li><a href="#setup-offline-client">7.2. Creating an offline client</a></li>
+</ul>
+</li>
+<li><a href="#_detecting_mutations_while_offline">8. Detecting mutations while offline</a></li>
+<li><a href="#_performing_mutations_while_offline">9. Performing mutations while offline</a>
+<ul class="sectlevel2">
+<li><a href="#_supporting_app_restarts_while_offline">9.1. Supporting app restarts while offline</a></li>
+<li><a href="#_ensuring_specified_mutations_are_performed_online_only">9.2. Ensuring specified mutations are performed online only</a></li>
+<li><a href="#sync-client-offline-queue-listener">9.3. Listening for events</a></li>
+<li><a href="#cache-update-helpers">9.4. Using cache update helpers</a>
+<ul class="sectlevel3">
+<li><a href="#_using_cache_update_helpers_for_mutations">9.4.1. Using cache update helpers for mutations</a></li>
+<li><a href="#_using_cache_update_helpers_for_subscriptions">9.4.2. Using cache update helpers for subscriptions</a></li>
+<li><a href="#_using_cache_update_helpers_for_multiple_subscriptions">9.4.3. Using cache update helpers for multiple subscriptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_detecting_network_status">10. Detecting Network Status</a></li>
+<li><a href="#realtime_data-sync">11. Supporting real-time updates in your mobile app</a></li>
+<li><a href="#realtime-intro-data-sync">12. Introduction to real-time updates</a></li>
+<li><a href="#realtime-updates-data-sync">13. Implementing real-time updates on a Data Sync server</a>
+<ul class="sectlevel2">
+<li><a href="#_implementing_a_subscriptionserver_using_voyager_subscription">13.1. Implementing a SubscriptionServer using voyager-subscription</a></li>
+<li><a href="#_implementing_a_publish_subscribe_mechanism">13.2. Implementing a Publish Subscribe Mechanism</a></li>
+<li><a href="#_defining_subscriptions_in_the_schema">13.3. Defining subscriptions in the schema</a></li>
+<li><a href="#_implementing_resolvers">13.4. Implementing resolvers</a></li>
+</ul>
+</li>
+<li><a href="#pub-sub">14. Configuring a Publish Subscribe mechanism</a>
+<ul class="sectlevel2">
+<li><a href="#_using_the_apollo_pubsub_mechanism">14.1. Using the Apollo PubSub mechanism</a></li>
+<li><a href="#_using_the_mqtt_pubsub_mechanism">14.2. Using the MQTT PubSub mechanism</a></li>
+<li><a href="#_configuring_amq_online_for_mqtt_messaging">14.3. Configuring AMQ Online for MQTT Messaging</a>
+<ul class="sectlevel3">
+<li><a href="#_creating_an_address_space">14.3.1. Creating an address space</a></li>
+<li><a href="#_creating_an_address">14.3.2. Creating an Address</a></li>
+<li><a href="#_creating_an_amq_online_user">14.3.3. Creating an AMQ Online user</a></li>
+</ul>
+</li>
+<li><a href="#_using_graphql_mqtt_pubsub_with_amq_online">14.4. Using GraphQL MQTT PubSub with AMQ Online</a>
+<ul class="sectlevel3">
+<li><a href="#_using_environment_variables_for_configuration">14.4.1. Using environment variables for configuration</a></li>
+<li><a href="#_troubleshooting_mqtt_connection_issues">14.4.2. Troubleshooting MQTT Connection Issues</a>
+<ul class="sectlevel4">
+<li><a href="#_troubleshooting_mqtt_events">Troubleshooting MQTT Events</a></li>
+<li><a href="#_troubleshooting_mqtt_configuration_issues">Troubleshooting MQTT Configuration Issues</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sync-js-client-realtime-updates">15. Implementing real-time updates on on the client</a>
+<ul class="sectlevel2">
+<li><a href="#_setting_up_a_client_to_use_subscriptions">15.1. Setting up a client to use subscriptions</a></li>
+<li><a href="#_using_subscriptions">15.2. Using Subscriptions</a></li>
+<li><a href="#_handling_network_state_changes">15.3. Handling network state changes</a></li>
+</ul>
+</li>
+<li><a href="#auth_data-sync">16. Supporting authentication and authorization in your mobile app</a></li>
+<li><a href="#sync-server-auth">17. Configuring your server for authentication and authorization using Red Hat Single Sign-On</a>
+<ul class="sectlevel2">
+<li><a href="#_protecting_voyager_server_using_red_hat_single_sign_on">17.1. Protecting Voyager Server using Red Hat Single Sign-On</a></li>
+<li><a href="#_using_the_hasrole_directive_in_a_schema">17.2. Using the hasRole directive in a schema</a></li>
+</ul>
+</li>
+<li><a href="#authentication-and-authorization-websockets-data-sync">18. Authentication Over Websockets using Red Hat Single Sign-On</a>
+<ul class="sectlevel2">
+<li><a href="#_red_hat_single_sign_on_authorization_in_subscriptions">18.1. Red Hat Single Sign-On Authorization in Subscriptions</a></li>
+</ul>
+</li>
+<li><a href="#sync-js-client-auth">19. Implementing authentication and authorization on your client</a></li>
+<li><a href="#filesdata-sync">20. Allowing users upload files from your mobile app</a></li>
+<li><a href="#_enabling_file_uploads_on_the_server">21. Enabling file uploads on the server</a></li>
+<li><a href="#_implementing_file_upload_on_the_client">22. Implementing file upload on the client</a>
+<ul class="sectlevel2">
+<li><a href="#_introduction">22.1. Introduction</a></li>
+<li><a href="#_enabling_file_upload">22.2. Enabling File Upload</a></li>
+</ul>
+</li>
+<li><a href="#_uploading_files_from_graphql">23. Uploading Files from GraphQL</a>
+<ul class="sectlevel2">
+<li><a href="#_executing_mutations">23.1. Executing mutations</a></li>
+</ul>
+</li>
+<li><a href="#audit_data-sync">24. Enabling audit logs and viewing reports</a></li>
+<li><a href="#sync-server-audit-logs">25. Enabling audit logs on the server</a>
+<ul class="sectlevel2">
+<li><a href="#_audit_logging_architecture">25.1. Audit Logging Architecture</a></li>
+<li><a href="#_enabling_audit_logging_in_voyager_server">25.2. Enabling Audit Logging in Voyager Server</a></li>
+<li><a href="#_sending_device_information_in_voyager_client">25.3. Sending Device Information in Voyager Client</a></li>
+<li><a href="#_exploring_audit_logs">25.4. Exploring Audit Logs</a></li>
+<li><a href="#_configuring_openshift_logging">25.5. Configuring OpenShift Logging</a></li>
+<li><a href="#_importing_kibana_saved_objects">25.6. Importing Kibana Saved Objects</a></li>
+</ul>
+</li>
+<li><a href="#_viewing_the_dashboard_and_audit_logs">26. Viewing the Dashboard and Audit Logs</a></li>
+<li><a href="#sync-js-client-audit-logs">27. Enabling audit logs on the client</a></li>
+<li><a href="#sync-js-client-advanced-topics">28. Advanced Topics</a>
+<ul class="sectlevel2">
+<li><a href="#_logging_debug_messages">28.1. Logging Debug Messages</a></li>
+<li><a href="#_optimistic_ui">28.2. Optimistic UI</a></li>
+</ul>
+</li>
+<li><a href="#openshift_data-sync">29. Running a Data Sync app on OpenShift</a></li>
+<li><a href="#_overview">30. Overview</a></li>
+<li><a href="#building-and-publishing-the-container">31. Building and publishing the Data Sync server container</a></li>
+<li><a href="#sync-server-provisioning-data-sync-templates">32. Provisioning the Data Sync server applications using templates</a></li>
+<li><a href="#sync-server-getting-started-mdc-client">33. Connecting a Client</a>
+<ul class="sectlevel2">
+<li><a href="#_updating_the_hello_world_sync_client">33.1. Updating the Hello World Sync Client</a></li>
+</ul>
+</li>
+<li><a href="#sync-server-binding">34. Binding a Mobile App with the Data Sync server application service</a></li>
+<li><a href="#sync-server-binding-keycloak">35. Binding Data Sync to Identity Management</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect2">
+<h3 id="introducing-data-sync-data-sync">1. Introducing Data Sync</h3>
+<div class="paragraph">
+<p>Data Sync is a JavaScript framework that enables a developer to add real time data synchronization to both mobile and web clients.
+The Data Sync framework also provides offline capabilities that allow a client to continue operating offline and once connectivity is re-established, the client is automatically synchronized.
+An app built using the Data Sync framework typically connects to a data source for data persistence however, an app built using the Data Sync framework works without a data source.</p>
+</div>
+<div class="paragraph">
+<p>An app built using the Data Sync framework comprises of two components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Data Sync client is a JavaScript client offering client side extensions and server side integration.
+The Data Sync client can be integrated into frameworks such as React and Angular.</p>
+</li>
+<li>
+<p>The Data Sync server is a framework for building Node.js based GraphQL API.
+The Data Sync server offers enterprise extensions for ensuring data security, integrity, and monitoring.
+It can be integrated into existing Node.js application.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The Data Sync framework uses the <a href="https://www.apollographql.com/">Apollo platform</a> as the GraphQL implementation.</p>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p>Real-time data synchronization across mobile and web clients.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Websockets allow for real-time data synchronization across multiple Data Sync clients. Data Sync clients receive updates from the Data Sync server without having to explicitly query their local data as conflict detection is handled by the Data Sync server.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>A Data Sync client can perform any operation regardless of the connectivity state.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If network connectivity is a concern, a Data Sync client can perform any operation regardless of its connectivity state. A Data Sync client can perform the same operations when it is on-line or off-line, and this functionality ensures that you can safely use Data Sync to create business critical applications.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Offers fully customizable conflict detection and resolution to the developer.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Data Sync enables users to detect and resolve conflicts on the Data Sync server resulting in the seamless transmission of data to various Data Sync clients. Data Sync also allows for conflict resolution on the Data Sync client should a developer want to adopt this strategy.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Instant synchronous queries provide instant feedback for developers.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>When a Data Sync client is on-line, instant queries allow a developer to quickly react to errors and display results to users when the operation is executed. Developers can retrieve an instant response or error from the Data Sync server however the Data Sync client must have a connection to the Data Sync server.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Flexible data sources.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Data Sync can connect to various data sources, for example, cloud storage, databases such as MongoDB and PostgreSQL, and existing back-end data sources.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="data-sync-technical-overview-data-sync">2. Data Sync Technical Overview</h3>
+<div class="paragraph">
+<p>This section describes the technical aspects of Data Sync.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="shared/images/data-sync-technical-overview.png" alt="Data Sync Technical Overview">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Data Sync case study</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top">Technical Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sync Client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Sync Client is a client side JavaScript library used for building web and mobile applications. It allows for simple Sync Server integration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sync Server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Sync Server is based on the Apollo Server framework and it performs two primary functions. It sends and retrieves data from a data source, and it syncs data across the Sync Clients. Sync Server uses GraphQL to create custom connections that in turn allow various types of Sync Clients to connect.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data sources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The data source stores data. This data is typically what is synchronized across the Sync Clients.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For more information about the Apollo Server framework, see <a href="https://www.apollographql.com/docs/apollo-server/"><em>Start here to learn about the Apollo platform</em></a>.</p>
+</div>
+<div class="sect4">
+<h5 id="ref-data-sync-terminology-data-sync">Data Sync terminology</h5>
+<div class="paragraph">
+<p>This section describes terminology that is associated with Data Sync.</p>
+</div>
+<div class="dlist">
+<div class="title">Data Sync terms</div>
+<dl>
+<dt class="hdlist1">GraphQL</dt>
+<dd>
+<p>A query language for your API, and a server-side runtime for executing queries that use a type system. For more information, see <a href="https://graphql.org/learn">GraphQL</a>.</p>
+</dd>
+<dt class="hdlist1">Apollo</dt>
+<dd>
+<p><a href="https://www.apollographql.com/">Apollo</a> is an implementation of GraphQL designed for the needs of product engineering teams building modern, data-driven applications.
+Apollo includes two open-source libraries, Apollo Server and Apollo Client.
+The Data Sync Framework leverages Apollo functionality.</p>
+</dd>
+<dt class="hdlist1">Sync Server</dt>
+<dd>
+<p>The Sync Server is a framework for building Node.js based GraphQL API.</p>
+</dd>
+<dt class="hdlist1">Sync Client</dt>
+<dd>
+<p>The Sync Client is a JavaScript client offering client side extensions and server side integration. The Sync Client can be integrated into frameworks such as React and Angular.</p>
+</dd>
+<dt class="hdlist1">Data sources</dt>
+<dd>
+<p>Data Sync framework is typically used in conjunction with a data source for data persistence however, an app built using the Data Sync framework works without a data source.</p>
+</dd>
+<dt class="hdlist1">Data Sync framework</dt>
+<dd>
+<p>Data Sync is a JavaScript framework that enables a developer to add the capability to synchronize data in real-time for both mobile and web clients.</p>
+</dd>
+</dl>
+</div>
+<div id="data-sync_additional-resources-data-sync" class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://graphql.org/learn">Learn GraphQL</a></p>
+</li>
+<li>
+<p><a href="https://github.com/aerogear/voyager-server">Voyager Server GitHub repository</a></p>
+</li>
+<li>
+<p><a href="https://github.com/aerogear/aerogear-js-sdk/tree/master/packages/sync">Voyager Client GitHub repository</a></p>
+</li>
+<li>
+<p><a href="https://www.apollographql.com/docs/apollo-server">Apollo Server</a></p>
+</li>
+<li>
+<p><a href="https://www.apollographql.com/docs/react">Apollo Client</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_developing_a_data_sync_application">3. Developing a Data Sync Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Unlike other mobile services which provide a server and an API, Data Sync is a framework that you use to develop services. Typically, you develop a Data Sync service as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Design a <a href="https://graphql.org/learn">GraphQL</a> schema.</p>
+</li>
+<li>
+<p>Develop a Data Sync server and Data Sync client, with the features you require, for example, real-time updates.</p>
+</li>
+<li>
+<p>Containerize your Data Sync server and deploy it to OpenShift.</p>
+</li>
+<li>
+<p>Bind your mobile app to that Data Sync server.</p>
+</li>
+<li>
+<p>Configure your mobile app to point to the Data Sync server.</p>
+</li>
+<li>
+<p>Complete your mobile app development.</p>
+</li>
+<li>
+<p>Build and run your mobile app.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="getting-started-with-hello-world-data-sync">4. Getting Started with Hello World Data Sync</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this example, you add the Voyager Server library to your <a href="https://expressjs.com/">Express</a> node.js project, create an <code>index-1.js</code> file, run the server, and query GraphQL.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Voyager Server is a set of Node.js libraries that can be used to build a Data Sync server.</p>
+</li>
+<li>
+<p>Voyager Server is the starting point for developing a Data Sync application.</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have Node.js and npm installed.</p>
+</li>
+<li>
+<p>You have created a node.js project.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Add libraries to your Node.js application:</p>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ npm install graphql <b class="conum">(1)</b>
+$ npm install express <b class="conum">(2)</b>
+$ npm install @aerogear/voyager-server <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>See <a href="https://graphql.org/" class="bare">https://graphql.org/</a></p>
+</li>
+<li>
+<p>See <a href="https://expressjs.com/" class="bare">https://expressjs.com/</a></p>
+</li>
+<li>
+<p>The Voyager Server library that enables data sync</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Create an <code>index-1.js</code> file with the following content:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const express = require('express')
+//Include our server libraries
+const { VoyagerServer, gql } = require('@aerogear/voyager-server')
+
+//Provide your graphql schema
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`
+
+//Create the resolvers for your schema
+const resolvers = {
+  Query: {
+    hello: (obj, args, context, info) =&gt; {
+      return `Hello world`
+    }
+  }
+}
+
+//Initialize the library with your Graphql information
+const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+//Connect the server to express
+const app = express()
+apolloServer.applyMiddleware({ app })
+
+app.listen(4000, () =&gt;
+  console.log(`🚀 Server ready at http://localhost:4000/graphql`)
+)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the server:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ node index-1.js
+
+🚀 Server ready at http://localhost:4000/graphql</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Browse <code><a href="http://localhost:4000/graphql" class="bare">http://localhost:4000/graphql</a></code> and interact with the playground. For example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{
+  hello
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check the output. For the example above, the output should be:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{
+  "data": {
+    "hello": "Hello world"
+  }
+}</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To get started with the  Data Sync framework, see the <a href="https://github.com/aerogear/ionic-showcase">sample application</a>.
+In this app, you can explore a more complex schema.</p>
+</div>
+<div class="paragraph">
+<p>Before proceeding, make sure you have an understanding of the following GraphQL concepts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Schema design</p>
+</li>
+<li>
+<p>Resolvers</p>
+</li>
+<li>
+<p>Subscriptions</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_querying_a_data_sync_server_using_a_data_sync_client">5. Querying a Data Sync server using a Data Sync client</h2>
+<div class="sectionbody">
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have Node.js and npm installed.</p>
+</li>
+<li>
+<p>You have created an empty web project that supports ES6, for example, using the <a href="https://webpack.js.org/guides/getting-started/">webpack getting started</a> guide.</p>
+</li>
+<li>
+<p>You have completed the server getting started guide and the application is running.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This section describes how to use the Voyager Client to create mobile and web applications that can communicate with the Voyager server application.</p>
+</div>
+<div class="paragraph">
+<p>Data Sync provides JavaScript libraries which integrate your javascript app using with a server that also uses Data Sync.
+The client libraries are based on the <a href="https://www.apollographql.com/docs/react/api/apollo-client.html">Apollo client</a>.</p>
+</div>
+<div class="paragraph">
+<p>You will add the libraries to your mobile project, configure the client classes, connect to the server, and confirm that it works.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create an address book server:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Create an <code>index-2.js</code> file with the following content:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const express = require('express')
+//Include our server libraries
+const { VoyagerServer, gql } = require('@aerogear/voyager-server')
+
+//Provide your graphql schema
+const typeDefs = gql`
+type Query {
+  info: String!
+  addressBook: [Person!]!
+}
+
+type Mutation {
+  post(name: String!, address: String!): Person!
+}
+
+type Person {
+  id: ID!
+  address: String!
+  name: String!
+}
+`
+
+let persons = [{
+  id: 'person-0',
+  name: 'Alice Roberts',
+  address: '1 Red Square, Waterford'
+}]
+
+let idCount = persons.length
+const resolvers = {
+  Query: {
+    info: () =&gt; `This is a simple example`,
+    addressBook: () =&gt; persons,
+  },
+  Mutation: {
+
+    post: (parent, args) =&gt; {
+       const person = {
+        id: `person-${idCount++}`,
+        address: args.address,
+        name: args.name,
+      }
+      persons.push(person)
+      return person
+    }
+  },
+}
+
+//Initialize the library with your Graphql information
+const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+//Connect the server to express
+const app = express()
+apolloServer.applyMiddleware({ app })
+
+app.listen(4000, () =&gt;
+  console.log(`🚀 Server ready at http://localhost:4000/graphql`)
+)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the server:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ node index-2.js
+
+🚀 Server ready at http://localhost:4000/graphql</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Browse <code><a href="http://localhost:4000/graphql" class="bare">http://localhost:4000/graphql</a></code> and interact with the playground. For example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{
+  addressBook {
+    name
+    address
+
+  }
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check the output. For the example above, the output should be:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{
+  "data": {
+    "addressBook": [
+      {
+        "name": "Alice Roberts",
+        "address": "1 Red Square, Waterford"
+      }
+    ]
+  }
+}</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Add the following libraries to your javascript client:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">npm install @aerogear/voyager-client
+npm install graphql
+npm install graphql-tag</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+A prerequisite is that you have created an empty web project that supports ES6, for example, using the <a href="https://webpack.js.org/guides/getting-started/">webpack getting started</a> guide.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Create an <code>index.js</code> file to make the same query as step 1, but from JavaScript.</p>
+<div class="paragraph">
+<p>In this example, a config object is created, and the <code>httpUrl</code> field is set to the url of the Voyager server application.
+If the client app uses subscriptions, then the <code>wsUrl</code> field is required too.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/index.js</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">// gql is a utility function that handles gql queries
+import gql from 'graphql-tag';
+
+import { OfflineClient } from '@aerogear/voyager-client';
+
+// connect to the local service.
+let config = {
+  httpUrl: "http://localhost:4000/graphql",
+  wsUrl: "ws://localhost:4000/graphql",
+}
+
+async function queryPeople() {
+
+  // Actually create the client
+  let offlineClient = new OfflineClient(config);
+  let client = await offlineClient.init();
+
+  // Execute the query
+  client.query({
+      fetchPolicy: 'network-only',
+      query: gql`
+      query addressBook{
+        addressBook{
+        name
+        address
+        }
+      }
+      `
+    })
+    //Print the response of the query
+    .then( ({data}) =&gt; {
+      console.log(data.addressBook)
+    });
+}
+
+queryPeople();</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build and run the client application.</p>
+</li>
+<li>
+<p>Browse the client application and check the console output.</p>
+<div class="paragraph">
+<p>It should include an array similar to the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>address: "1 Red Square, Waterford"
+name: "Alice Roberts"
+__typename: "Person"</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adding_a_mutation_to_a_data_sync_client">6. Adding a mutation to a Data Sync client</h2>
+<div class="sectionbody">
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have Node.js and npm installed.</p>
+</li>
+<li>
+<p>You have completed <a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/developing_a_data_sync_app#querying_a_data_sync_server_using_a_data_sync_client">Queries section</a> and the server is still running.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Modify the client application to perform the mutation:</p>
+<div class="listingblock">
+<div class="title">src/index.js</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">// gql is a utility function that handles gql queries
+import gql from 'graphql-tag';
+
+import { OfflineClient } from '@aerogear/voyager-client';
+
+// connect to the local service.
+let config = {
+  httpUrl: "http://localhost:4000/graphql",
+  wsUrl: "ws://localhost:4000/graphql",
+}
+
+async function addPerson() {
+
+  // Actually create the client
+  let offlineClient = new OfflineClient(config);
+  let client = await offlineClient.init();
+
+  // Execute the mutation
+  client.mutate({
+      mutation: gql`
+       mutation {
+         post(name: "John Doe", address: "1 Red Hill") {
+           id
+         }
+       }
+       `
+    })
+    //Print the response of the query
+    .then( ({data}) =&gt; {
+      console.log(data)
+    });
+}
+
+addPerson();</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build and run the client application.</p>
+</li>
+<li>
+<p>Browse the client application and check the console output.</p>
+<div class="paragraph">
+<p>It should include an array similar to the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{
+  "data": {
+    "post": {
+      "id": "person-1"
+    }
+  }
+}</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="offline-client">7. Supporting offline functionality in your mobile app</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_about_offline_functionality">7.1. About offline functionality</h3>
+<div class="paragraph">
+<p>Your mobile app can run offline and allow users to query and create mutations using the @aerogear/voyager-client module.</p>
+</div>
+<div class="paragraph">
+<p>As shown in the diagram below, all queries are performed against the cache, a mutation store supports offline mutations.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="shared/images/datasync-features.png" alt="datasync features">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The mutation store is sometimes referred to as the offline store.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If a client goes offline for a long period of time, the mutation store negotiates local updates with the server using conflict resolution strategies.</p>
+</div>
+<div class="paragraph">
+<p>When a client comes online again, the mutations are replicated back to the server, as shown in the diagram below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="shared/images/datasync-going_offline.png" alt="datasync going offline">
+</div>
+</div>
+<div class="paragraph">
+<p>Developers can attach listeners to get notifications about updates applied on the server or failing, and take appropriate actions.</p>
+</div>
+<div class="paragraph">
+<div class="title">Mutations and Local Cache</div>
+<p>By default queries and the results of mutations are cached.</p>
+</div>
+<div class="paragraph">
+<p>Mutations can change query results, make sure to call the <code>refetchQueries</code> or <code>update</code> options of the <code>mutate</code> method to ensure the local cache is kept up to date.</p>
+</div>
+<div class="paragraph">
+<p>The @aerogear/voyager-client module also provides cache helper functions to reduce the amount of code required, as described in <a href="#cache-update-helpers">Using cache update helpers</a>.</p>
+</div>
+<div class="paragraph">
+<p>For more information about <code>mutate</code> and the options available, see <a href="https://www.apollographql.com/docs/react/essentials/mutations.html#props">Apollo&#8217;s document about mutations</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="setup-offline-client">7.2. Creating an offline client</h3>
+<div class="paragraph">
+<p>The @aerogear/voyager-client module provides an <code>OfflineClient</code> class which exposes the following functionality:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>direct access to the mutation store</p>
+</li>
+<li>
+<p>allows you register multiple offline event listeners as described in <a href="#sync-client-offline-queue-listener">Listening for events</a></p>
+</li>
+<li>
+<p>automatically ensures the mobile app&#8217;s local cache is kept up to date. This client automatically generates <code>update</code> methods as described in <a href="#cache-update-helpers">Using cache update helpers</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To create the client:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import { OfflineClient } from '@aerogear/voyager-client';
+
+let config = {
+  httpUrl: "http://localhost:4000/graphql",
+  wsUrl: "ws://localhost:4000/graphql",
+}
+
+async function setupClient() {
+
+  let offlineClient = new OfflineClient(config);
+  let client = await offlineClient.init();
+}
+
+setupClient();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This client can replace an Apollo client as it supports the same functionality.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_detecting_mutations_while_offline">8. Detecting mutations while offline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If a mutation occurs while the device is offline, the <code>client.mutate</code> function:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>returns immediately</p>
+</li>
+<li>
+<p>returns a promise with an error</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can check the <em>error</em> object to isolate errors relating to offline state.
+Invoking the <code>watchOfflineChange()</code> method on an <em>error</em> object watches for when an offline change is synced with the server, and sends a notification when triggered.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">  client.mutate(...).catch((error)=&gt; {
+    // 1. Detect if this was an offline error
+   if(error.networkError &amp;&amp; error.networkError.offline){
+     const offlineError: OfflineError =  error.networkError;
+     // 2. We can still track when offline change is going to be replicated.
+     offlineError.watchOfflineChange().then(...)
+   }
+  });</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+In addition to watching individual mutations, you can add a global offline listener when creating a client as described in <a href="#sync-client-offline-queue-listener">Listening for events</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_performing_mutations_while_offline">9. Performing mutations while offline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The @aerogear/voyager-client module provides an <code>offlineMutate</code> method which extends Apollo&#8217;s mutate function with some extra functionality.
+This includes automatically adding some fields to each operation&#8217;s context.</p>
+</div>
+<div class="paragraph">
+<p>To set up the offline client, see <a href="#setup-offline-client">Creating an offline client</a>.</p>
+</div>
+<div class="paragraph">
+<p>Once set up is complete, <code>offlineMutate</code> is then available to use.</p>
+</div>
+<div class="paragraph">
+<p>Note: The <code>offlineMutate</code> method accepts the same parameters as <code>mutate</code> with some additional optional parameters also available.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">  const { CacheOperation } = require('@aerogear/voyager-client');
+
+  client.offlineMutate({
+    ...
+    updateQuery: GET_TASKS, // <b class="conum">(1)</b>
+    operationType: CacheOperation.ADD, // <b class="conum">(2)</b>
+    idField: "id", // <b class="conum">(3)</b>
+    returnType: "Task" // <b class="conum">(4)</b>
+    ...
+  })</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>The query or queries which should be updated with the result of the mutation.</p>
+</li>
+<li>
+<p>The type of operation being performed. Should be "add", "refresh" or "delete". Defaults to "add" if not provided.</p>
+</li>
+<li>
+<p>The field on the object used to identify it. Defaults to "id" if not provided.</p>
+</li>
+<li>
+<p>The type of object being operated on.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_supporting_app_restarts_while_offline">9.1. Supporting app restarts while offline</h3>
+<div class="paragraph">
+<p>An Apollo client holds all mutation parameters in memory.
+An offline Apollo client continues to store mutation parameters and once online, it restores all mutations to memory.
+Any update functions that are supplied to mutations cannot be cached by an Apollo client resulting in the loss of all optimistic responses after a restart.
+<em>Update functions</em> supplied to mutations cannot be saved in the cache.
+As a result, all <em>optimisticResponses</em> disappear from the application after a restart and  only reappear when the Apollo client becomes online and successfully syncs with the server.</p>
+</div>
+<div class="paragraph">
+<p>To prevent the loss of all <em>optimisticResponses</em> after a restart, you can configure the <em>Update Functions</em> to restore all <em>optimisticResponses</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const updateFunctions = {
+  // Can contain update functions from each component
+  ...ItemUpdates,
+  ...TasksUpdates
+}
+
+let config = {
+  mutationCacheUpdates: updateFunctions,
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also use <code>getUpdateFunction</code> to automatically generate functions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { createMutationOptions, CacheOperation } = require('@aerogear/voyager-client');
+
+const updateFunctions = {
+  // Can contain update functions from each component
+  createTask: getUpdateFunction({
+      mutationName: 'createTask',
+      idField: 'id',
+      updateQuery: GET_TASKS,
+      operationType: CacheOperation.ADD
+    }),
+  deleteTask: getUpdateFunction({
+      mutationName: 'deleteTask',
+      idField: 'id',
+      updateQuery: GET_TASKS,
+      operationType: CacheOperation.DELETE
+    })
+}
+
+let config = {
+  ...
+  mutationCacheUpdates: updateFunctions,
+  ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ensuring_specified_mutations_are_performed_online_only">9.2. Ensuring specified mutations are performed online only</h3>
+<div class="paragraph">
+<p>If you wish to ensure certain mutations are only executed when the client is online, use the GraphQL directive <code>@onlineOnly</code>, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-graphql" data-lang="graphql">exampleMutation(...) @onlineOnly {
+  ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sync-client-offline-queue-listener">9.3. Listening for events</h3>
+<div class="paragraph">
+<p>To handle all notifications about offline related events, use the <strong>offlineQueueListener</strong> listener in the config object</p>
+</div>
+<div class="paragraph">
+<p>The following events are emitted:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>onOperationEnqueued</code> - Called when new operation is being added to offline queue</p>
+</li>
+<li>
+<p><code>onOperationSuccess</code> - Called when back online and operation succeeds</p>
+</li>
+<li>
+<p><code>onOperationFailure</code> - Called when back online and operation fails with GraphQL error</p>
+</li>
+<li>
+<p><code>queueCleared</code> - Called when offline operation queue is cleared</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can use this listener to build User Interfaces that show pending changes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cache-update-helpers">9.4. Using cache update helpers</h3>
+<div class="paragraph">
+<p>The @aerogear/voyager-client module provides an out of the box solution for managing updates to your application&#8217;s cache.
+It can intelligently generate cache update methods for both mutations and subscriptions.</p>
+</div>
+<div class="sect3">
+<h4 id="_using_cache_update_helpers_for_mutations">9.4.1. Using cache update helpers for mutations</h4>
+<div class="paragraph">
+<p>The following example shows how to use these helper methods for mutations.
+To use these methods, create an offline client as described in <a href="#setup-offline-client">Creating an offline client</a> and then use the  <code>offlineMutate</code> method.
+The <code>offlineMutate</code> function accepts a <code>MutationHelperOptions</code> object as a parameter.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { createMutationOptions, CacheOperation } = require('@aerogear/voyager-client');
+
+const mutationOptions = {
+  mutation: ADD_TASK,
+  variables: {
+    title: 'item title'
+  },
+  updateQuery: {
+    query: GET_TASKS,
+    variables: {
+      filterBy: 'some filter'
+    }
+  },
+  typeName: 'Task',
+  operationType: CacheOperation.ADD,
+  idField: 'id'
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also provide more than one query to update the cache by providing an array to the <code>updateQuery</code> parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const mutationOptions = {
+  ...
+  updateQuery: [
+    { query: GET_TASKS, variables: {} }
+  ]
+  ,
+  ...
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows how to prepare an offline mutation to add a task using the <code>mutationOptions</code> object and how to update the <code>GET_TASK</code> query for the client&#8217;s cache.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { createMutationOptions, CacheOperation } = require('@aerogear/voyager-client');
+
+client.offlineMutate&lt;Task&gt;(mutationOptions);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you do not want to use the offline client you can also use the <code>createMutationOptions</code> function directly.
+This function provides an Apollo compatible <code>MutationOptions</code> object to pass to your pre-existing client.
+The following example shows how to use this function where <code>mutationOptions</code> is the same object as the previous code example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const options = createMutationOptions(mutationOptions);
+
+client.mutate&lt;Task&gt;(options);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_cache_update_helpers_for_subscriptions">9.4.2. Using cache update helpers for subscriptions</h4>
+<div class="paragraph">
+<p>The @aerogear/voyager-client module provides a subscription helper which can generate the necessary options to be used with Apollo Client&#8217;s <code>subscribeToMore</code> function.</p>
+</div>
+<div class="paragraph">
+<p>To use this helper, we first need to create some options, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { CacheOperation } = require('@aerogear/voyager-client');
+
+const options = {
+  subscriptionQuery: TASK_ADDED_SUBSCRIPTION,
+  cacheUpdateQuery: GET_TASKS,
+  operationType: CacheOperation.ADD
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This options object informs the subscription helper that for every data object
+received because of the <code>TASK_ADDED_SUBSCRIPTION</code> the <code>GET_TASKS</code> query should also be kept up to date in the cache.</p>
+</div>
+<div class="paragraph">
+<p>You can then create the required cache update functions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { createSubscriptionOptions } = require('@aerogear/voyager-client');
+
+const subscriptionOptions = createSubscriptionOptions(options);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To use this helper, pass this <code>subscriptionOptions</code> variable to the <code>subscribeToMore</code> function of our <code>ObservableQuery</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const query = client.watchQuery&lt;AllTasks&gt;({
+  query: GET_TASKS
+});
+
+query.subscribeToMore(subscriptionOptions);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The cache is kept up to date while automatically performing data deduplication.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_cache_update_helpers_for_multiple_subscriptions">9.4.3. Using cache update helpers for multiple subscriptions</h4>
+<div class="paragraph">
+<p>The @aerogear/voyager-client module provides the ability to automatically call <code>subscribeToMore</code> on your <code>ObservableQuery</code>.
+This can be useful in a situation where you may have multiple subscriptions which can affect one single query.
+For example, if you have a <code>TaskAdded</code>, <code>TaskDeleted</code>, and a <code>TaskUpdated</code> subscription you require three separate <code>subscribeToMore</code> function calls.
+To avoid this, use the <code>subscribeToMoreHelper</code> function from the @aerogear/voyager-client module to automatically handle this by passing an array of subscriptions and their corresponding queries:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { CacheOperation } = require('@aerogear/voyager-client');
+
+const addOptions = {
+  subscriptionQuery: TASK_ADDED_SUBSCRIPTION,
+  cacheUpdateQuery: GET_TASKS,
+  operationType: CacheOperation.ADD
+}
+
+const deleteOptions = {
+  subscriptionQuery: TASK_DELETED_SUBSCRIPTION,
+  cacheUpdateQuery: GET_TASKS,
+  operationType: CacheOperation.DELETE
+}
+
+const updateOptions = {
+  subscriptionQuery: TASK_UPDATED_SUBSCRIPTION,
+  cacheUpdateQuery: GET_TASKS,
+  operationType: CacheOperation.REFRESH
+}
+
+const query = client.watchQuery&lt;AllTasks&gt;({
+  query: GET_TASKS
+});
+
+subscribeToMoreHelper(query, [addOptions, deleteOptions, updateOptions]);</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_detecting_network_status">10. Detecting Network Status</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use the NetworkStatus interface to check the current network status, or to register a listener which performs actions when the status of the network changes.</p>
+</div>
+<div class="paragraph">
+<p>Two default implementations are provided:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>WebNetworkStatus</strong>  for web browsers</p>
+</li>
+<li>
+<p><strong>CordovaNetworkStatus</strong> for Cordova</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following example demonstrates how to register a listener using <code>CordovaNetworkStatus</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import { CordovaNetworkStatus, NetworkInfo } from '@aerogear/voyager-client';
+const networkStatus = new CordovaNetworkStatus();
+
+networkStatus.onStatusChangeListener({
+  onStatusChange: info =&gt; {
+    const online = info.online;
+    if (online) {
+      //client is online, perform some actions
+    } else {
+      //client is offline
+    }
+  }
+});
+
+let config = {
+  ...
+  networkStatus: networkStatus,
+  ...
+};
+
+//create a new client using the config</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="realtime_data-sync">11. Supporting real-time updates in your mobile app</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="realtime-intro-data-sync">12. Introduction to real-time updates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After developing some queries and mutations, you might want to implement real-time updates.
+These are supported in the GraphQL specification by an operation type called <code>Subscription</code>.
+To support subscriptions in a production environment, Data Sync implements subscriptions using an MQTT PubSub subscription mechanism, however you might want to use the Apollo PubSub module to develop proof-of-concept applications.</p>
+</div>
+<div class="paragraph">
+<p>When coding for real-time updates, you use the following modules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>@aerogear/voyager-server - supports clients that use voyager-client to enable GraphQL queries and mutations</p>
+</li>
+<li>
+<p>@aerogear/voyager-subscriptions - supports clients that use voyager-client to enable GraphQL subscriptions</p>
+</li>
+<li>
+<p>@aerogear/graphql-mqtt-subscriptions - supports GraphQL resolvers connections to a MQTT broker</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>GraphQL Subscriptions enable clients to subscribe to server events over a websocket connection.</p>
+</div>
+<div class="paragraph">
+<p>The flow can be summarized as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Client connects to the server using websockets, and subscribes to certain events.</p>
+</li>
+<li>
+<p>As events occur, the server notifies the clients that are subscribed to those events.</p>
+</li>
+<li>
+<p>Any <em>currently connected</em> client that is subscribed to a given event receives it.</p>
+</li>
+<li>
+<p>The client can close the connection at any time and no longer receives updates.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To receive updates, the client must be currently connected to the server.
+The client does not receive events from subscriptions while offline.
+To support inactive clients, use Push Notifications.</p>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p>For more information about GraphQL subscriptions, see the <a href="https://www.apollographql.com/docs/apollo-server/features/subscriptions.html">Subscriptions documentation</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="realtime-updates-data-sync">13. Implementing real-time updates on a Data Sync server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The follow code shows typical code for a Data Sync Server without subscriptions:</p>
+</div>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+const app = express()
+apolloServer.applyMiddleware({ app })
+
+app.listen({ port }, () =&gt;
+  console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`)
+)</code></pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>The following sections outline the steps required to enable real-time updates:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Implement a SubscriptionServer</p>
+</li>
+<li>
+<p>Implement a Publish Subscribe Mechanism</p>
+</li>
+<li>
+<p>Define subscriptions in the schema</p>
+</li>
+<li>
+<p>Implement resolvers</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_implementing_a_subscriptionserver_using_voyager_subscription">13.1. Implementing a SubscriptionServer using voyager-subscription</h3>
+<div class="paragraph">
+<p>To allow you create GraphQL subscription types in your schema:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Install the <code>@aerogear/voyager-subscriptions</code> package:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm i @aerogear/voyager-subscriptions</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure SubscriptionServer using <code>@aerogear/voyager-subscriptions</code></p>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const { createSubscriptionServer } = require('@aerogear/voyager-subscriptions')
+
+const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+const app = express()
+apolloServer.applyMiddleware({ app })
+const port = 4000
+
+const server = app.listen({ port }, () =&gt; {
+  console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`)
+
+  createSubscriptionServer({ schema: apolloServer.schema }, {
+    server,
+    path: '/graphql'
+  })
+})</code></pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>The <code>createSubscriptionServer</code> code:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>returns a <code>SubscriptionServer</code> instance</p>
+</li>
+<li>
+<p>installs handlers for</p>
+<div class="ulist">
+<ul>
+<li>
+<p>managing websocket connections</p>
+</li>
+<li>
+<p>delivering subscriptions on the server</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>provides integrations with other modules such as <code>@aerogear/voyager-keycloak</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Additional Information</div>
+<p>For more information about arguments and options, see the <a href="https://npm.im/subscriptions-transport-ws">subscriptions-transport-ws</a> module.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implementing_a_publish_subscribe_mechanism">13.2. Implementing a Publish Subscribe Mechanism</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+This procedure describes an in-memory implementation which is useful for prototyping but not suitable for production. Red Hat recommends using <a href="npm.im/@aerogear/graphql-mqtt-subscriptions">MQTT PubSub</a> in production. See <a href="#pub-sub">Configuring a Publish Subscribe mechanism</a> for more information about all the implementation methods.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To provide a channel to push updates to the client using the default <code>PubSub</code> provided by <code>apollo-server</code>, you implement a Publish Subscribe mechanism, for example:</p>
+</div>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const { PubSub } = require('apollo-server')
+
+const pubsub = new PubSub()</code></pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<div class="title">Addtional Information</div>
+<p>Subscriptions depend on a <a href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">publish subscribe</a> mechanism to generate the events that notify a subscription. There are <a href="https://www.apollographql.com/docs/apollo-server/features/subscriptions/#pubsub-implementations">several PubSub implementations</a> available based on the <code>PubSubEngine</code> interface.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_defining_subscriptions_in_the_schema">13.3. Defining subscriptions in the schema</h3>
+<div class="paragraph">
+<p>Subscriptions are a root level type.
+They are defined in the schema similar to <code>Query</code> and <code>Mutation</code>.
+For example, in the following schema, a <code>Task</code> type is defined and so are mutations and subscriptions.</p>
+</div>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>type Subscription {
+  taskCreated: Task
+}
+
+type Mutation {
+  createTask(title: String!, description: String!): Task
+}
+
+type Task {
+  id: ID!
+  title: String!
+  description: String!
+}</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect2">
+<h3 id="_implementing_resolvers">13.4. Implementing resolvers</h3>
+<div class="paragraph">
+<p>Inside the resolver map, subscription resolvers return an <code>AsyncIterator,</code> which listens for events.
+To generate an event, call the <code>publish</code> method.
+The <code>pubsub.publish</code> code is typically located inside a mutation resolver.</p>
+</div>
+<div class="paragraph">
+<p>In the following example, when a new task is created, the <code>createTask</code> resolver publishes the result of this mutation to the <code>TaskCreated</code> channel.</p>
+</div>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const TASK_CREATED = 'TaskCreated'
+
+const resolvers = {
+  Subscription: {
+    taskCreated: {
+      subscribe: () =&gt; pubSub.asyncIterator(TASK_CREATED)
+    }
+  },
+  Mutation: {
+    createTask: async (obj, args, context, info) =&gt; {
+      const task = tasks.create(args)
+      pubSub.publish(TASK_CREATED, { taskCreated: task })
+      return task
+    }
+  },
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This subscription server does not implement authentication or authorization. For information about implementing authenication and authorization, see <a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/developing_a_data_sync_app#auth_data-sync">Supporting authentication and authorization in your mobile app</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Additional Information</div>
+<p>For information on how to use subscriptions in your client code, see <a href="#sync-js-client-realtime-updates">Realtime Updates</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pub-sub">14. Configuring a Publish Subscribe mechanism</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can use the Apollo PubSub mechanism for development, but you must use the MQTT PubSub mechanism for production.</p>
+</div>
+<div class="sect2">
+<h3 id="_using_the_apollo_pubsub_mechanism">14.1. Using the Apollo PubSub mechanism</h3>
+<div class="paragraph">
+<p>The <a href="#realtime-updates-data-sync">Implementing real-time updates on a Data Sync server</a> section describes how to set up the default <code>PubSub</code> provided by <code>apollo-server</code>. For a production system, you require <a href="npm.im/@aerogear/graphql-mqtt-subscriptions">MQTT PubSub</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_the_mqtt_pubsub_mechanism">14.2. Using the MQTT PubSub mechanism</h3>
+<div class="paragraph">
+<p>The <a href="https://npm.im/@aerogear/graphql-mqtt-subscriptions"><code>@aerogear/graphql-mqtt-subscriptions</code></a> module provides an <code>AsyncIterator</code> interface used for <a href="#realtime-updates-data-sync">implementing subscription resolvers</a>
+It connects the Data Sync server to an MQTT broker to support horizontally scalable subscriptions.</p>
+</div>
+<div class="paragraph">
+<p>Initialize an MQTT client and pass that client to the <code>@aerogeaar/graphql-mqtt-subscriptions</code> module, for example:</p>
+</div>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const client = mqtt.connect('mqtt://test.mosquitto.org', {
+  reconnectPeriod: 1000,
+})
+
+const pubsub = new MQTTPubSub({
+  client
+})</code></pre>
+</div>
+</div>
+</div>
+</details>
+<div class="paragraph">
+<p>In the example, an <code>mqtt</code> client is created using <code>mqtt.connect</code> and then this client is passed into an <code>MQTTPubSub</code> instance.
+The <code>pubsub</code> instance can then be used to publish and subscribe to events in the server.</p>
+</div>
+<div class="ulist">
+<div class="title">Additional Information</div>
+<ul>
+<li>
+<p><a href="https://www.npmjs.com/package/mqtt#connect">mqtt.connect documentation</a>.</p>
+</li>
+<li>
+<p><a href="https://npmjs.com/package/@aerogear/graphql-mqtt-subscriptions">MQTTPubSub documentation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_amq_online_for_mqtt_messaging">14.3. Configuring AMQ Online for MQTT Messaging</h3>
+<div class="paragraph">
+<p>Red Hat AMQ supports the MQTT protocol which makes it a suitable PubSub technology for powering GraphQL subscriptions at scale.</p>
+</div>
+<div class="paragraph">
+<p>This section provides recommendations for</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuring AMQ Online for MQTT messaging.</p>
+</li>
+<li>
+<p>Connecting to AMQ Online and using it as a pubsub within server applications.</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Terminology</div>
+<ul>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.2/html-single/using_amq_online_on_openshift_container_platform/index#assembly-intro-using-messaging">AMQ Online</a> is a mechanism that allows developers to consume the features of Red Hat AMQ within OpenShift.</p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.3/html/introducing_red_hat_amq_7/about">Red Hat AMQ</a> provides fast, lightweight, and secure messaging for Internet-scale applications. AMQ Broker supports multiple protocols and fast message persistence.</p>
+</li>
+<li>
+<p><a href="http://mqtt.org/">MQTT</a> stands for MQ Telemetry Transport. It is a publish/subscribe, extremely simple and lightweight messaging protocol.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>AMQ Online includes many configuration options that could address the specific needs of your application.
+The minimum configuration steps for using AMQ Online for MQTT messaging and enabling GraphQL subscriptions are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create an <code>AddressSpace</code></p>
+</li>
+<li>
+<p>Create an <code>Address</code></p>
+</li>
+<li>
+<p>Create a <code>MessagingUser</code></p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_creating_an_address_space">14.3.1. Creating an address space</h4>
+<div class="paragraph">
+<p>A user can request messaging resources by creating an <code>AddressSpace</code>. There are two types of address space, <code>standard</code> and <code>brokered</code>.
+You must use the <code>brokered</code> address space for MQTT based applications.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create an address space, for example, the following resource creates a brokered <code>AddressSpace</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myaddressspace
+spec:
+  type: brokered
+  plan: brokered-single-broker</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the <code>AddressSpace</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc create -f brokered-address-space.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check the status of the address space:</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc get &lt;`AddressSpace` name&gt; -o yaml</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output displays information about the address space, including details required for connecting applications.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Additional Information</div>
+<p>See <a href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.3/html-single/using_amq_online_on_openshift_container_platform/index#create-address-space-cli-messaging">Creating address spaces using the command line</a> for more information.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_creating_an_address">14.3.2. Creating an Address</h4>
+<div class="paragraph">
+<p>An adress is part of an <code>AddressSpace</code> and represents a destination for sending and receiving messages.
+Use an <code>Address</code> with type <code>topic</code> to represent an MQTT topic.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create an address definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre>apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+    name: myaddressspace.myaddress # must have the format &lt;`AddressSpace` name&gt;.&lt;address name&gt;
+spec:
+    address: myaddress
+    type: topic
+    plan: brokered-topic</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the address:</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc create -f topic-address.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+See the <a href="#realtime-updates-data-sync">Configuring your server for real-time updates</a> guide for more information about using <code>pubsub.asyncIterator()</code>.
+Create an Address for each topic name passed into <code>pubsub.asyncIterator()</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Additional Information</div>
+<p>See <a href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.2/html-single/using_amq_online_on_openshift_container_platform/index#create-address-cli-messaging">Creating addresses using the command line</a> for more information.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_creating_an_amq_online_user">14.3.3. Creating an AMQ Online user</h4>
+<div class="paragraph">
+<p>A messaging client connects using an AMQ Online user, also known as a`MessagingUser`.
+A <code>MessagingUser</code> specifies an authorization policy that controls which addresses can be used and the operations that can be performed on those addresses.</p>
+</div>
+<div class="paragraph">
+<p>Users are configured as <code>MessagingUser</code> resources.
+Users can be created, deleted, read, updated, and listed.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a user definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre>apiVersion: user.enmasse.io/v1beta1
+kind: MessagingUser
+metadata:
+  name: myaddressspace.mymessaginguser # must be in the format &lt;`AddressSpace` name&gt;.&lt;username&gt;
+spec:
+  username: mymessaginguser
+  authentication:
+    type: password
+    password: cGFzc3dvcmQ= # must be Base64 encoded. Password is 'password'
+  authorization:
+    - addresses: ["*"]
+      operations: ["send", "recv"]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the <code>MessagingUser</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc create -f my-messaging-user.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>An application can now connect to an AMQ Online address using this user&#8217;s credentials.</p>
+</div>
+<div class="paragraph">
+<p>For more information see the <a href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.2/html-single/using_amq_online_on_openshift_container_platform/index#con-user-model-messaging">AMQ Online User Model</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_graphql_mqtt_pubsub_with_amq_online">14.4. Using GraphQL MQTT PubSub with AMQ Online</h3>
+<div class="paragraph">
+<div class="title">Prerequisites</div>
+<p>The following AMQ Online resources are available for MQTT Applications</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AddressSpace</p>
+</li>
+<li>
+<p>Address</p>
+</li>
+<li>
+<p>MessagingUser</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This section describes how to use <a href="https://npm.im/@aerogear/graphql-mqtt-subscriptions"><code>@aerogear/graphql-mqtt-subscriptions</code></a> to connect to an AMQ Online <code>Address</code>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Retrieve the connection details for the <code>AddressSpace</code> you want to use:</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc get addressspace &lt;addressspace&gt; -o yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Determine which method you want to use to connect to the address:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Using the service hostname - Allows clients to connect from within the OpenShift cluster.</p>
+<div class="paragraph">
+<p>Red Hat recommends that applications running inside OpenShift connect using the service hostname.
+The service hostname is only accessible within the OpenShift cluster. This ensures messages routed between your application and AMQ Online stay within the OpenShift cluster and never go onto the public internet.</p>
+</div>
+</li>
+<li>
+<p>Using the external hostname - Allows clients to connect from outside the OpenShift cluster.</p>
+<div class="paragraph">
+<p>The external hostname allows connections from outside the OpenShift cluster. This is useful for the following cases:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Production applications running outside of OpenShift connecting and publishing messages.</p>
+</li>
+<li>
+<p>Quick Prototyping and local development. Create a non-production <code>AddressSpace</code>, allowing developers to connect applications from their local environments.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>To connect to an AMQ Online <code>Address</code> using the service hostname</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Retrieve the service hostname:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">oc get addressspace &lt;addressspace name&gt; -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].serviceHost</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add code to create the connection, for example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const client = mqtt.connect({
+  host: '&lt;internal host name&gt;',
+  username: '&lt;MessagingUser name&gt;',
+  password: '&lt;MessagingUser password&gt;',
+  port: 5762,
+})
+
+const pubsub = new MQTTPubSub({ client })</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>To encrypt all messages between your application and the AMQ Online broker, enable TLS, for example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const host = '&lt;internal host name&gt;'
+
+const client = mqtt.connect({
+  host: host,
+  servername: host,
+  username: '&lt;MessagingUser name&gt;',
+  password: '&lt;MessagingUser password&gt;',
+  port: 5761,
+  protocol: 'tls',
+  rejectUnauthorized: false,
+})
+
+const pubsub = new MQTTPubSub({ client })</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>To connect to an AMQ Online <code>Address</code> using the external hostname:</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The external hostname typically accept only accept TLS connections.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Retrieve the external hostname:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">oc get addressspace &lt;addressspace name&gt; -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].externalHost</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Connect to the external hostname, for example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const host = '&lt;internal host name&gt;'
+
+const client = mqtt.connect({
+  host: host,
+  servername: host,
+  username: '&lt;MessagingUser name&gt;',
+  password: '&lt;MessagingUser password&gt;',
+  port: 443,
+  protocol: 'tls',
+  rejectUnauthorized: false,
+})
+
+const pubsub = new MQTTPubSub({ client })</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If you use TLS, note the following additional <code>mqtt.connect</code> options:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>servername</code> - when connecting to a message broker in OpenShift using TLS, this property must be set otherwise the connection will fail, because the messages are being routed through a proxy resulting in the client being presented with multiple certificates. By setting the <code>servername</code>, the client will use <a href="https://en.wikipedia.org/wiki/Server_Name_Indication">Server Name Indication (SNI)</a> to request the correct certificate as part of the TLS connection setup.</p>
+</li>
+<li>
+<p><code>protocol</code> - must be set to <code>'tls'</code></p>
+</li>
+<li>
+<p><code>rejectUnauthorizated</code> - must be set to false, otherwise the connection will fail. This tells the client to ignore certificate errors. Again, this is needed because the client is presented with multiple certificates and one of the certificates is for a different hostname than the one being requested, which normally results in an error.</p>
+</li>
+<li>
+<p><code>port</code> - must be set to 5761 for service hostname or 443 for external hostname.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_using_environment_variables_for_configuration">14.4.1. Using environment variables for configuration</h4>
+<div class="paragraph">
+<p>Red Hat recommends that you use environment variables for connection, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const host = process.env.MQTT_HOST || 'localhost'
+
+const client = mqtt.connect({
+  host: host,
+  servername: host,
+  username: process.env.MQTT_USERNAME,
+  password: process.env.MQTT_PASSWORD,
+  port: process.env.MQTT_PORT || 1883,
+  protocol: process.env.MQTT_PROTOCOL || 'mqtt',
+  rejectUnauthorized: false,
+})
+
+const pubsub = new MQTTPubSub({ client })</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, the connection options can be configured using environment variables, but sensible defaults for the <code>host</code>, <code>port</code> and <code>protocol</code> are provided for local development.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_troubleshooting_mqtt_connection_issues">14.4.2. Troubleshooting MQTT Connection Issues</h4>
+<div class="sect4">
+<h5 id="_troubleshooting_mqtt_events">Troubleshooting MQTT Events</h5>
+<div class="paragraph">
+<p>The <code>mqtt</code> module emits various events during runtime.
+It recommended to add listeners for these events for regular operation and for troubleshooting.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">client.on('connect', () =&gt; {
+  console.log('client has connected')
+})
+
+client.on('reconnect', () =&gt; {
+  console.log('client has reconnected')
+})
+
+client.on('offline', () =&gt; {
+  console.log('Client has gone offline')
+})
+
+client.on('error', (error) =&gt; {
+  console.log(`an error has occurred ${error}`)
+})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Read the <a href="https://www.npmjs.com/package/mqtt"><code>mqtt documentation</code></a> to learn about all of the events and what causes them.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_troubleshooting_mqtt_configuration_issues">Troubleshooting MQTT Configuration Issues</h5>
+<div class="paragraph">
+<p>If your application is experiencing connection errors, the most important thing to check is the configuration being passed into <code>mqtt.connect</code>. Because your application may run locally or in OpenShift, it may connect using internal or external hostnames, and it may or may not use TLS, it&#8217;s very easy to accidentally provide the wrong configuration.</p>
+</div>
+<div class="paragraph">
+<p>The Node.js <code>mqtt</code> module does not report any errors if parameters such as <code>hostname</code> or <code>port</code> are incorrect. Instead, it will silently fail and allow your application to start without messaging capabilities.</p>
+</div>
+<div class="paragraph">
+<p>It may be necessary to handle this scenario in your application. The following workaround can be used.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const TIMEOUT = 10 // number of seconds to wait before checking if the client is connected
+
+setTimeout(() =&gt; {
+  if (!client.connected) {
+    console.log(`client not connected after ${TIMEOUT} seconds`)
+	// process.exit(1) if you wish
+  }
+}, TIMEOUT * 1000)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This code can be used to detect if the MQTT client hasn&#8217;t connected. This can be helpful for detecting potential configuration issues and allows your application to respond to that scenario.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-js-client-realtime-updates">15. Implementing real-time updates on on the client</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A core concept of the GraphQL specification is an operation type called <code>Subscription</code>, they provide a mechanism for real time updates.
+For more information on GraphQL subscriptions  see the <a href="https://www.apollographql.com/docs/apollo-server/features/subscriptions.html">Subscriptions documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>To do this GraphQL Subscriptions utilise websockets to enable clients to subscribe to published changes.</p>
+</div>
+<div class="paragraph">
+<p>The architecture of websockets is as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Client connects to websocket server.</p>
+</li>
+<li>
+<p>Upon certain events, the server can publish the results of these events to the websocket.</p>
+</li>
+<li>
+<p>Any <em>currently connected</em> client to that websocket receives these results.</p>
+</li>
+<li>
+<p>The client can close the connection at any time and no longer receives updates.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Websockets are a perfect solution for delivering messages to currently active clients.
+To receive updates the client must be currently connected to the websocket server, updates made over this websocket while the client is offline are not consumed by the client.
+For this use case Push Notifications are recommended.</p>
+</div>
+<div class="paragraph">
+<p>Voyager Client comes with subscription support out of the box including auto-reconnection upon device restart or network reconnect.
+To enable subscriptions on your client set the following
+paramater in the Voyager Client config object. A DataSyncConfig interface is also available from Voyager Client if you wish to use it.</p>
+</div>
+<div class="sect2">
+<h3 id="_setting_up_a_client_to_use_subscriptions">15.1. Setting up a client to use subscriptions</h3>
+<div class="paragraph">
+<p>To set up a client to use subscriptions:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Provide a <code>wsUrl</code> string in the config object as follows:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const config = {
+    wsUrl: "ws://&lt;your_websocket_url&gt;"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>&lt;your_websocket_url&gt;</code> is the full URL of the websocket endpoint of your GraphQL server.</p>
+</div>
+</li>
+<li>
+<p>Use the object from step 1 to initialise Voyager Client:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { createClient } = require("@aerogear/voyager-client");
+
+const client = createClient(config)</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_subscriptions">15.2. Using Subscriptions</h3>
+<div class="paragraph">
+<p>A standard flow to utilise subscriptions is as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Make a network query to get data from the server</p>
+</li>
+<li>
+<p>Watch the cache for changes to queries</p>
+</li>
+<li>
+<p>Subscribe to changes pushed from the server</p>
+</li>
+<li>
+<p>Unsubscibe when leaving the view where there is an active subscription</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In the three examples below, <code>subscribeToMore</code> ensures that any further updates received from the server force the updateQuery function to be called with <code>subscriptionData</code> from the server.</p>
+</div>
+<div class="paragraph">
+<p>Using <code>subscribeToMore</code> ensures the cache is easily updated as all GraphQL queries are automatically notified.</p>
+</div>
+<div class="paragraph">
+<p>For more information, see the  <a href="https://www.apollographql.com/docs/angular/features/subscriptions.html#subscribe-to-more">subscribeToMore documentation</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">getTasks() {
+  const tasks = client.watchQuery({
+    query: GET_TASKS
+  });
+
+  tasks.subscribeToMore({
+    document: TASK_ADDED_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) =&gt; {
+    // Update logic here.
+    }
+  });
+  return tasks;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To allow Voyager Client to automatically generate the <code>updateQuery</code> function for you, please see the <a href="#cache-update-helpers">Cache Update Helpers</a> section.</p>
+</div>
+<div class="paragraph">
+<p>You can then use this query in our application to subscribe to changes so that the front end is always updated when new
+data is returned from the server.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">this.tasks = [];
+this.getTasks().subscribe(result =&gt; {
+  this.tasks = result.data &amp;&amp; result.data.allTasks;
+})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that it is also a good idea to unsubscribe from a query upon leaving a page. This prevents possible memory leaks.
+This can be done by calling unsubscribe() as shown in the following example. This code should be placed in the appropriate place.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">this.getTasks().unsubscribe();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_handling_network_state_changes">15.3. Handling network state changes</h3>
+<div class="paragraph">
+<p>When using subscriptions to provide your client with realtime updates it is important to monitor network state because the client will be out of sync if the server if updated when the the client is offline.</p>
+</div>
+<div class="paragraph">
+<p>To avoid this, Voyager Client provides a <code>NetworkStatus</code> interface which can be used along with the <code>NetworkInfo</code> interface to implement custom checks of network status.</p>
+</div>
+<div class="paragraph">
+<p>For more information about how to import and configure a custom network status checker, see <a href="#sync-js-client-advanced-topics">Advanced Topics</a>.</p>
+</div>
+<div class="paragraph">
+<p>Use the following example to re-run a query after a client returns to an online state:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { CordovaNetworkStatus, NetworkInfo } = require("@aerogear/voyager-client");
+const networkStatus = new CordovaNetworkStatus();
+
+networkStatus.onStatusChangeListener({
+  onStatusChange(networkInfo: NetworkInfo) {
+    const online = networkInfo.online;
+    if (online) {
+      client.watchQuery({
+        query: GET_TASKS
+      });
+    }
+  }
+});</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="auth_data-sync">16. Supporting authentication and authorization in your mobile app</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-server-auth">17. Configuring your server for authentication and authorization using Red Hat Single Sign-On</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Using the Identity Management service and the <a href="https://www.npmjs.com/package/@aerogear/voyager-keycloak">@aerogear/voyager-keycloak</a> module, it is possible to add security to a Voyager Server application.</p>
+</div>
+<div class="paragraph">
+<p>The <code>@aerogear/voyager-keycloak</code> module provides the following features out of the box:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Authentication - Ensure only authenticated users can access your server endpoints, including the main GraphQL endpoint.</p>
+</li>
+<li>
+<p>Authorization - Use the <code>@hasRole()</code> directive within the GraphQL schema to implement role based access control (RBAC) on the GraphQL level.</p>
+</li>
+<li>
+<p>Integration with GraphQL context - Use the <code>context</code> object within the GraphQL resolvers to access user credentials and several helper functions.</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>There is a Red Hat Single Sign-On service available.</p>
+</li>
+<li>
+<p>You must add a valid <code>keycloak.json</code> config file to your project.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a client for your application in the Keycloak administration console.</p>
+</li>
+<li>
+<p>Click on the Installation tab.</p>
+</li>
+<li>
+<p>Select <strong>Keycloak OIDC JSON</strong> for Format option, and click <strong>Download</strong>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_protecting_voyager_server_using_red_hat_single_sign_on">17.1. Protecting Voyager Server using Red Hat Single Sign-On</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Import the <code>@aerogear/voyager-keycloak</code> module</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { KeycloakSecurityService } = require('@aerogear/voyager-keycloak')</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Read the Keycloak config and pass it to initialise the <code>KeycloakSecurityService</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const keycloakConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, './path/to/keycloak.json')))
+const keycloakService = new KeycloakSecurityService(keycloakConfig)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Use the <code>keycloakService</code> instance to protect your app:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const app = express()
+keycloakService.applyAuthMiddleware(app)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure the Voyager server so that the <code>keycloakService</code> is used as the security service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const voyagerConfig = {
+  securityService: keycloakService
+}
+const server = VoyagerServer(apolloConfig, voyagerConfig)</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/aerogear/voyager-server/blob/master/examples/keycloak">Keycloak Example Server Guide</a> has an example server based off the instructions above and shows all of the steps needed to get it running.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_the_hasrole_directive_in_a_schema">17.2. Using the hasRole directive in a schema</h3>
+<div class="paragraph">
+<p>The Voyager Keycloak module provides the <code>@hasRole</code> directive to define role based authorisation in your schema. The <code>@hasRole</code> directive is a special annotation that can be applied to</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fields</p>
+</li>
+<li>
+<p>Queries</p>
+</li>
+<li>
+<p>Mutations</p>
+</li>
+<li>
+<p>Subscriptions</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>@hasRole</code> usage is as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>@hasRole(role: String)</code></p>
+</li>
+<li>
+<p>Example - <code>@hasRole(role: "admin"])</code></p>
+</li>
+<li>
+<p>If the authenticated user has the role <code>admin</code> they will be authorized.</p>
+</li>
+<li>
+<p><code>@hasRole(role: [String])</code></p>
+</li>
+<li>
+<p>Example - <code>@hasRole(role: ["admin", "editor"])</code></p>
+</li>
+<li>
+<p>If the authenticated user has at least one of the roles in the list, they will be authorized.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The default behaviour is to check client roles. For example, <code>@hasRole(role: "admin")</code> will check that user has a client role called <code>admin</code>. <code>@hasRole(role: "realm:admin")</code> will check if that user has a realm role called <code>admin</code></p>
+</div>
+<div class="paragraph">
+<p>The syntax for checking a realm role is <code>@hasRole(role: "realm:&lt;role&gt;")</code>. For example, <code>@hasRole(role: "realm:admin")</code>. Using a list of roles, it is possible to check for both client and realm roles at the same time.</p>
+</div>
+<div class="paragraph">
+<div class="title">Example: Using the @hasRole Directive to Apply Role Based Authorization in a Schema</div>
+<p>The following example demonstrates how the <code>@hasRole</code> directive can be used to define role based authorization on various parts of a GraphQL schema. This example schema represents publishing application like a news or blog website.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-graphql" data-lang="graphql">type Post {
+  id: ID!
+  title: String!
+  author: Author!
+  content: String!
+  createdAt: Int!
+}
+
+type Author {
+  id: ID!
+  name: String!
+  posts: [Post]!
+  address: String! @hasRole(role: "admin")
+  age: Int! @hasRole(role: "admin")
+}
+
+type Query {
+  allPosts:[Post]!
+  getAuthor(id: ID!):Author!
+}
+
+type Mutation {
+  editPost:[Post]! @hasRole(role: ["editor", "admin"])
+  deletePost(id: ID!):[Post] @hasRole(role: "admin")
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are two types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Post</code> - This might be an article or a blog post</p>
+</li>
+<li>
+<p><code>Author</code> - This would represent the person that authored a Post</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are two Queries:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>allPosts</code> - This might return a list of posts</p>
+</li>
+<li>
+<p><code>getAuthor</code> - This would return details about an Author</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are two Mutations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>editPost</code> - This would edit an existing post</p>
+</li>
+<li>
+<p><code>deletePost</code> - This would delete a post.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Role Based Authorization on Queries and Mutations</div>
+<p>In the example schema, the <code>@hasRole</code> directive has been applied to the <code>editPost</code> and <code>deletePost</code> mutations. The same could be done on Queries.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Only users with the roles <code>editor</code> and/or <code>admin</code> are allowed to perform the <code>editPost</code> mutation.</p>
+</li>
+<li>
+<p>Only users with the role <code>admin</code> are allowed to perform the <code>deletePost</code> mutation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This example shows how the <code>@hasRole</code> directive can be used on various queries and mutations.</p>
+</div>
+<div class="paragraph">
+<div class="title">Role Based Authorization on Fields</div>
+<p>In the example schema, the <code>Author</code> type has the fields <code>address</code> and <code>age</code> which both have <code>hasRole(role: "admin")</code> applied.</p>
+</div>
+<div class="paragraph">
+<p>This means that users without the role <code>admin</code> are not authorized to request these fields in any query or mutation.</p>
+</div>
+<div class="paragraph">
+<p>For example, non admin users are allowed to run the <code>getAuthor</code> query, but they cannot request back the <code>address</code> or <code>age</code> fields.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="authentication-and-authorization-websockets-data-sync">18. Authentication Over Websockets using Red Hat Single Sign-On</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#sync-server-auth">Configure Data Sync Server for Authentication and Authorization</a></p>
+</li>
+<li>
+<p><a href="ds-realtime.html#realtime-updates-data-sync">Configuring Your Server for real-time updates</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This section describes how to implement Authentication and Authorization over websockets with Red Hat Single Sign-On. For more generic documentation on Authentication over Websockets, read Apollo&#8217;s <a href="https://www.apollographql.com/docs/apollo-server/features/subscriptions/#authentication-over-websocket">Authentication Over Websocket</a> document.</p>
+</div>
+<div class="paragraph">
+<p>The Voyager Client supports adding token information to <code>connectionParams</code> that will be sent with the first WebSocket message. In the server, this token is used to authenticate the connection and to allow the subscription to proceeed. Read the section on <a href="#sync-js-client-auth">Red Hat Single Sign-On Authentication in Voyager Client</a> to ensure the Red Hat Single Sign-On token is being sent to the server.</p>
+</div>
+<div class="paragraph">
+<p>In the server, <code>createSubscriptionServer</code> accepts a <code>SecurityService</code> instance in addition to the regular options that can be passed to a standard <code>SubscriptionServer</code>. The <code>KeycloakSecurityService</code> from <code>@aerogear/voyager-keycloak</code> is used to validate the Red Hat Single Sign-On token passed by the client in the initial WebSocket message.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const { createSubscriptionServer } = require('@aerogear/voyager-subscriptions')
+const { KeycloakSecurityService } = require('@aerogear/voyager-keycloak')
+const keycloakConfig = require('./keycloak.json') // typical Keycloak OIDC installation
+
+const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+securityService = new KeycloakSecurityService(keycloakConfig)
+
+const app = express()
+
+keycloakService.applyAuthMiddleware(app)
+apolloServer.applyMiddleware({ app })
+
+const server = app.listen({ port }, () =&gt;
+  console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`)
+
+  createSubscriptionServer({ schema: apolloServer.schema }, {
+    securityService,
+    server,
+    path: '/graphql'
+  })
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The example shows how the Red Hat Single Sign-On <code>securityService</code> is created and how it is passed into <code>createSubscriptionServer</code>. This enables Red Hat Single Sign-On authentication on all subscriptions.</p>
+</div>
+<div class="sect2">
+<h3 id="_red_hat_single_sign_on_authorization_in_subscriptions">18.1. Red Hat Single Sign-On Authorization in Subscriptions</h3>
+<div class="paragraph">
+<p>The Red Hat Single Sign-On <code>securityService</code> will validate and parse the token sent by the client into a <a href="https://github.com/keycloak/keycloak-nodejs-connect/blob/master/middleware/auth-utils/token.js">Token Object</a>. This token is available in Subscription resolvers with <code>context.auth</code> and can be used to implement finer grained role based access control.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-js" data-lang="js">const resolvers = {
+  Subscription: {
+    taskAdded: {
+      subscribe: (obj, args, context, info) =&gt; {
+        const role = 'admin'
+        if (!context.auth.hasRole(role)) {
+          return new Error(`Access Denied - missing role ${role}`)
+        }
+        return pubSub.asyncIterator(TASK_ADDED)
+      }
+    },
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example shows role based access control inside a subscription resolver. <code>context.auth</code> is a full <a href="https://github.com/keycloak/keycloak-nodejs-connect/blob/master/middleware/auth-utils/token.js">Keycloak Token Object</a> which means methods like <code>hasRealmRole</code> and <code>hasApplicationRole</code> are available.</p>
+</div>
+<div class="paragraph">
+<p>The user details can be accessed through <code>context.auth.content</code>. Here is an example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{
+  "jti": "dc1d6286-c572-43c1-99c7-4f36982b0e56",
+  "exp": 1561495720,
+  "nbf": 0,
+  "iat": 1561461830,
+  "iss": "http://localhost:8080/auth/realms/voyager-testing",
+  "aud": "voyager-testing-public",
+  "sub": "57e1dcda-990f-4cc2-8542-0d1f9aae302b",
+  "typ": "Bearer",
+  "azp": "voyager-testing-public",
+  "nonce": "552c3cba-a6c2-490a-9914-28784ba0e4bc",
+  "auth_time": 1561459720,
+  "session_state": "ed35e1b4-b43c-438f-b1a3-18b1be8c6307",
+  "acr": "0",
+  "allowed-origins": [
+    "*"
+  ],
+  "realm_access": {
+    "roles": [
+      "developer",
+      "uma_authorization"
+    ]
+  },
+  "resource_access": {
+    "voyager-testing-public": {
+      "roles": [
+        "developer"
+      ]
+    },
+    "account": {
+      "roles": [
+        "manage-account",
+        "manage-account-links",
+        "view-profile"
+      ]
+    }
+  },
+  "preferred_username": "developer"
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Having access to the user details (e.g. <code>context.auth.content.sub</code> is the authenticated user&#8217;s ID) means it is possible to implement <a href="https://www.apollographql.com/docs/apollo-server/features/subscriptions/#subscription-filters">Subscription Filters</a> and to subscribe to more fine grained pubsub topics based off the user details.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-js-client-auth">19. Implementing authentication and authorization on your client</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With Voyager Client, user information can be passed to a Data Sync server application in two ways: headers or tokens.</p>
+</div>
+<div class="paragraph">
+<p>Headers are used to authentication HTTP requests to the server, which are used for queries and mutations.</p>
+</div>
+<div class="paragraph">
+<p>Tokens are used to authenticate WebSocket connections, which are used for subscriptions.</p>
+</div>
+<div class="paragraph">
+<p>Both of them can be set via the <code>authContextProvider</code> configuration option. Here is an example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">//get the token value from somewhere, for example the authentication service
+const token = "REPLACE_WITH_REAL_TOKEN";
+
+const config = {
+  ...
+  authContextProvider: function() {
+    return {
+      header: {
+        "Authorization": `Bearer ${token}`
+      },
+      token: token
+    }
+  },
+  ...
+};
+
+//create a new client</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For information about how to perform authentication and authorization on the server, see the <a href="#sync-server-auth">Server Authentication and Authorization Guide</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="filesdata-sync">20. Allowing users upload files from your mobile app</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_enabling_file_uploads_on_the_server">21. Enabling file uploads on the server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Voyager Server provides support for uploading binary data along with the GraphQL queries.
+The implementation relies on upstream <code>Apollo Server</code> capabilities.</p>
+</div>
+<div class="paragraph">
+<p>The upload functionality uses the GraphQL multipart form requests specification.
+File upload needs to be implemented on both server and client:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>On the client HTML FileList objects are mapped into a mutation and sent to the server in a multipart request.</p>
+</li>
+<li>
+<p>On the server: The multipart request is handled. The server processes it and provides an upload argument to a resolver.
+In the resolver function, the upload promise resolves an object.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+File upload is based on <a href="https://github.com/jaydenseric/graphql-multipart-request-spec">graphql-multipart-request-spec</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To enable file uploads, create a schema and use the <code>Upload</code> scalar.
+For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { ApolloServer, gql } = require('apollo-server');
+
+const typeDefs = gql`
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+  type Query {
+    uploads: [File]
+  }
+  type Mutation {
+    singleUpload(file: Upload!): File!
+  }
+`;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following schema enables file uploads. The <code>Upload</code> scalar will be injected as one of the arguments in the resolvers.
+The <code>Upload</code> scalar contains all file metadata and a <a href="https://nodejs.org/api/stream.html#stream_readable_streams">Readable Stream</a> that can be used to save the file to a specific location.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">    async singleUpload(parent, { file }) {
+      const { stream, filename, mimetype, encoding } = await file;
+      // Save file and return required metadata
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="https://blog.apollographql.com/file-uploads-with-apollo-server-2-0-5db2f3f60675">Official Apollo blog post</a> for more information.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implementing_file_upload_on_the_client">22. Implementing file upload on the client</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Voyager Client provides support for uploading binary data along with the GraphQL queries.
+The binary upload implementation uses the <code>apollo-upload-client</code> package built by the Apollo community.</p>
+</div>
+<div class="sect2">
+<h3 id="_introduction">22.1. Introduction</h3>
+<div class="paragraph">
+<p>The upload functionality uses the GraphQL multipart form requests specification.
+The File upload needs to be implemented on both server and client:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>On the client HTML FileList objects are mapped into a mutation and sent to the server in a multipart request.</p>
+</li>
+<li>
+<p>On the server: The multipart request is handled. The server processes it and provides an upload argument to a resolver.
+In the resolver function, the upload promise resolves an object.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+File upload is based on <a href="https://github.com/jaydenseric/graphql-multipart-request-spec">graphql-multipart-request-spec</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enabling_file_upload">22.2. Enabling File Upload</h3>
+<div class="paragraph">
+<p>File upload feature needs to be enabled by passing <code>fileUpload</code> flag to config object:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const config = {
+  ...
+  fileUpload: true
+  ...
+};
+
+//create a new client</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_uploading_files_from_graphql">23. Uploading Files from GraphQL</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>File upload capability adds a new GraphQL scalar <code>Upload</code> that can be used for mutations that operate on binary data.
+The <code>Upload</code> scalar maps html <code>FileList</code> HTML5 object in GraphQL schemas.
+The first step required to work with binary uploads is to write mutation that will contain <code>Upload</code> scalar.
+The following example demonstrates how to upload a profile picture:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import gql from 'graphql-tag'
+import { Mutation } from 'react-apollo'
+
+export const UPLOAD_PROFILE = gql`
+mutation changeProfilePicture($file: Upload!) {
+  changeProfilePicture(file: $file) {
+    filename
+    mimetype
+    encoding
+  }
+}
+`;</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_executing_mutations">23.1. Executing mutations</h3>
+<div class="paragraph">
+<p>The <code>Upload</code> scalar will be mapped  to object returned from HTML file input.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows file upload in a React application.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const uploadOneFile = () =&gt; {
+  return (
+    &lt;Mutation mutation={UPLOAD_PROFILE}&gt;
+      {uploadFile =&gt; (
+        &lt;input
+        type="file"
+        required
+        onChange={({ target: { validity, files: [file] } }) =&gt;
+          validity.valid &amp;&amp; uploadFile({ variables: { file } });
+        }
+       /&gt;
+      )}
+    &lt;/Mutation&gt;
+  );
+};</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="audit_data-sync">24. Enabling audit logs and viewing reports</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-server-audit-logs">25. Enabling audit logs on the server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Audit logging is a mechanism to track all of the actions that occur inside your application. Audit Logging in Voyager Server provides two main benefits.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>It is possible to build a detailed audit trail of every action that has occured in the application. This can also include information about the user that performed the action, and the mobile device they were using.</p>
+</li>
+<li>
+<p>The data from the audit logs can be aggregated and visualised to provide more insight into how your application is used.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_audit_logging_architecture">25.1. Audit Logging Architecture</h3>
+<div class="paragraph">
+<p>Audit logging can be enabled in Voyager Server using the <a href="https://www.npmjs.com/package/@aerogear/voyager-audit">@aerogear/voyager-audit</a> module. When enabled, all actions such as GraphQL mutations, queries and subscriptions are logged in great detail to <code>stdout</code> in JSON format.</p>
+</div>
+<div class="paragraph">
+<p>An audit log example message is shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "level": 30,
+  "time": 1545385687476,
+  "pid": 11889,
+  "hostname": "localhost.localdomain",
+  "tag": "AUDIT",
+  "logType" "RESOLVER_COMPLETION",
+  "msg": "",
+  "operationType": "query",
+  "fieldName": "hello",
+  "parentTypeName": "Query",
+  "path": "hello",
+  "success": true,
+  "arguments": {},
+  "clientInfo": {
+    "clientId": "848d2a10-0505-11e9-888f-8d166149101a",
+    "timestamp": 1545385686843,
+    "data": {
+      "app": {
+        "appId": "org.aerogear.sync.example",
+        "appVersion": "0.0.1",
+        "sdkVersion": "0.0.1",
+        "framework": "cordova"
+      },
+      "device": {
+        "platform": "android",
+        "platformVersion": "9",
+        "device": "General Mobile GM8 Pro"
+      }
+    }
+  },
+  "userInfo": {
+    "jti": "6ae0966a-9d61-430b-8167-d2b3c0b42709",
+    "exp": 1545761725,
+    "nbf": 0,
+    "iat": 1545725725,
+    "iss": "http://localhost:8080/auth/realms/voyager-testing",
+    "aud": "voyager-testing",
+    "sub": "ea2312e9-1aae-4b67-8674-a3aacf20a71d",
+    "typ": "Bearer",
+    "azp": "voyager-testing",
+    "auth_time": 1545725725,
+    "session_state": "1ba4d429-8010-4f38-8002-9cc72550850d",
+    "acr": "1",
+    "allowed-origins": [
+      "*"
+    ],
+    "realm_access": {
+      "roles": [
+        "admin",
+        "uma_authorization"
+      ]
+    },
+    "resource_access": {
+      "voyager-testing": {
+        "roles": [
+          "admin"
+        ]
+      },
+      "account": {
+        "roles": [
+          "manage-account",
+          "manage-account-links",
+          "view-profile"
+        ]
+      }
+    },
+    "name": "Ali Ok",
+    "preferred_username": "developer",
+    "given_name": "Ali",
+    "family_name": "Ok",
+    "email": "aliok@example.com"
+  },
+  "v": 1
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>clientInfo</code> property of the audit log message is available only if the client is sending the client information to Voyager Server. That has to be enabled separately in the client. Additionally, data in that property can only be collected if the app is a Cordova app or a native app. Simple web clients cannot get the device, client nor app details and cannot send this information.</p>
+</div>
+<div class="paragraph">
+<p>The <code>userInfo</code> property is available only if Voyager Server is protected by an identity manager, such as Red Hat Single Sign-On, and if the user is authenticated. See  see <a href="#sync-server-auth">Configuring your server for authentication and authorization using Red Hat Single Sign-On</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enabling_audit_logging_in_voyager_server">25.2. Enabling Audit Logging in Voyager Server</h3>
+<div class="paragraph">
+<p>Audit logging is enabled in Voyager Server using the <a href="https://www.npmjs.com/package/@aerogear/voyager-audit">@aerogear/voyager-audit</a></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Import the <code>@aerogear/voyager-audit</code> module</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const auditLogger = require('@aerogear/voyager-audit')</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Inject the auditLogger module into the Voyager Server. This enables audit logging within your application.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const voyagerConfig = {
+  auditLogger
+}
+const server = VoyagerServer(apolloConfig, voyagerConfig)</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/aerogear/voyager-server/tree/master/examples/audit_logging">Audit Logging Example Server Guide</a> has an example server based off the instructions above and shows all of the steps needed to get it running.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, if the default audit logger does not match your requirements, you can create an audit logger that implements the <code>AuditLogger</code> interface as defined below.</p>
+</div>
+<div class="listingblock">
+<div class="title">Definition of the <code>AuditLogger</code> interface</div>
+<div class="content">
+<pre class="highlight"><code class="language-typescript" data-lang="typescript">export interface AuditLogger {
+  logResolverCompletion(msg: string, success: boolean, obj: any, args: any, context: any, info: GraphQLResolveInfo): void
+  logConflict (msg: string, serverData: any, clientData: any, obj: any, args: any, context: any, info: GraphQLResolveInfo): void
+  auditLog(msg: string, obj: any, args: any, context: any, info: GraphQLResolveInfo): void
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example implements an <code>AuditLogger</code> and injects it into the Voyager Server.
+The example redacts the arguments using a <code>myCustomRedactionFunction</code> function.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-typescript" data-lang="typescript">const { buildPath } = require('@aerogear/voyager-tools')
+// ...
+
+const auditLogger = {
+  auditLog: function(msg, obj, args, context, info){
+    console.log(JSON.stringify(
+      {
+        audit: {
+          tag: 'AUDIT',
+          logType: logType,
+          msg: msg || '',
+          requestId: context &amp;&amp; context.request ? context.request.id : '',
+          operationType: info.operation.operation,
+          fieldName: info.fieldName,
+          parentTypeName: info.parentType.name,
+          path: buildPath(info.path),
+          parent: obj,
+          arguments: myCustomRedactionFunction(args),
+          clientInfo: context &amp;&amp; context.request &amp;&amp; context.request.body &amp;&amp; context.request.body.extensions &amp;&amp; context.request.body.extensions.metrics || undefined,
+          authenticated: !!(context &amp;&amp; context.auth &amp;&amp; context.auth.isAuthenticated()),
+          userInfo: (context &amp;&amp; context.auth &amp;&amp; context.auth.accessToken) ? context.auth.accessToken.content : undefined
+        }
+      }
+    ));
+  },
+
+  logResolverCompletion: function(msg, success, obj, args, context, info){
+    console.log(JSON.stringify(
+      {
+        audit: {
+          tag: 'AUDIT',
+          logType: 'RESOLVER_COMPLETION',
+          msg: msg || '',
+          requestId: context &amp;&amp; context.request ? context.request.id : '',
+          operationType: info.operation.operation,
+          fieldName: info.fieldName,
+          parentTypeName: info.parentType.name,
+          path: buildPath(info.path),
+          success,
+          parent: obj,
+          arguments: myCustomRedactionFunction(args),
+          clientInfo: context &amp;&amp; context.request &amp;&amp; context.request.body &amp;&amp; context.request.body.extensions &amp;&amp; context.request.body.extensions.metrics || undefined,
+          authenticated: !!(context &amp;&amp; context.auth &amp;&amp; context.auth.isAuthenticated()),
+          userInfo: (context &amp;&amp; context.auth &amp;&amp; context.auth.accessToken) ? context.auth.accessToken.content : undefined
+        }
+      }
+    ));
+  },
+
+  logConflict: function (msg, serverData, clientData, obj, args, context, info) {
+    console.log(JSON.stringify(
+      {
+        audit: {
+          tag: 'AUDIT',
+          logType: LOG_TYPE_CONFLICT,
+          msg: msg || '',
+          requestId: context &amp;&amp; context.request ? context.request.id : '',
+          operationType: info.operation.operation,
+          fieldName: info.fieldName,
+          parentTypeName: info.parentType.name,
+          path: buildPath(info.path),
+          parent: obj,
+          arguments: myCustomRedactionFunction(args),
+          clientInfo: context &amp;&amp; context.request &amp;&amp; context.request.body &amp;&amp; context.request.body.extensions &amp;&amp; context.request.body.extensions.metrics || undefined,
+          authenticated: !!(context &amp;&amp; context.auth &amp;&amp; context.auth.isAuthenticated()),
+          userInfo: (context &amp;&amp; context.auth &amp;&amp; context.auth.accessToken) ? context.auth.accessToken.content : undefined,
+          conflict: true,
+          conflictData: {
+            message: msg,
+            myCustomRedactionFunction(serverData),
+            myCustomRedactionFunction(clientData),
+          }
+        }
+      }
+    ));
+  }
+}
+
+// ...
+
+const voyagerConfig = {
+  auditLogger
+}
+const server = VoyagerServer(apolloConfig, voyagerConfig)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sending_device_information_in_voyager_client">25.3. Sending Device Information in Voyager Client</h3>
+<div class="paragraph">
+<p>See the <a href="#sync-js-client-audit-logs">Voyager Client Audit Logs</a> section for more information.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exploring_audit_logs">25.4. Exploring Audit Logs</h3>
+<div class="paragraph">
+<p>Voyager Server simply prints audit logs to <code>stdout</code> and it is the responsibility of another component to pick up these logs and provide
+functionality to the user to make use of the logs.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>EFK stack</strong> (ElasticSearch, Fluentd and Kibana) on OpenShift is the recommended solution in this guide. We provide Kibana dashboards with a number of useful visualisations and insights into Voyager Server.</p>
+</div>
+<div class="paragraph">
+<p>All application logs printed to <code>stdout</code> are sent to ElasticSearch by Fluentd. However, the audit log messages printed by <code>@aerogear/voyager-audit</code> are printed in a format that is used by the Kibana dashboards.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_openshift_logging">25.5. Configuring OpenShift Logging</h3>
+<div class="paragraph">
+<p>OpenShift logging can be enabled as described in <a href="https://docs.okd.io/3.11/install_config/aggregate_logging.html">OpenShift documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>Once enabled, OpenShift logging will create a Fluentd instance per cluster node that reads the <code>stdout</code> and <code>stderr</code> of the pods in that node
+and pushes the readings to the centralized ElasticSearch instance. Documents created in ElasticSearch instance can be then explored and
+visualized by the Kibana instance, which is also installed by OpenShift logging.</p>
+</div>
+<div class="paragraph">
+<p>OpenShift logging creates an index per namespace and that index is only available to users who have access to that namespace.
+It also creates the index patterns in Kibana in the same way.</p>
+</div>
+<div class="paragraph">
+<p>By default, OpenShift also provides a <a href="https://www.elastic.co/guide/en/elasticsearch/client/curator/current/about.html">curator</a> which deletes the old
+log messages from ElasticSearch to reduce storage needs and improve performance. This has an impact on audit trails and also metrics.</p>
+</div>
+<div class="paragraph">
+<p>For long term audit trails, curator can be configured to delete messages older than your choice. If this is not sufficient,
+Fluentd can be configured to write log messages to a separate storage, such as <a href="https://docs.fluentd.org/v0.12/articles/out_s3">S3</a>.</p>
+</div>
+<div class="paragraph">
+<p>In terms of metrics, curator&#8217;s deletion age config should not be set shorter than the desired time range that you would like
+to see the metrics for.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_importing_kibana_saved_objects">25.6. Importing Kibana Saved Objects</h3>
+<div class="paragraph">
+<p>Kibana is a visualization tool that has a great integration with ElasticSearch.</p>
+</div>
+<div class="paragraph">
+<p>A template for Kibana saved objects is available. When the saved objects are imported, a number of saved searches, visualizations and a
+dashboard are created in Kibana. These then can be used to have an overview of the Voyager application.</p>
+</div>
+<div class="paragraph">
+<p>See the screenshot of the provided dashboard below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="shared/images/kibana-dashboard-screenshot.png" alt="kibana dashboard screenshot">
+</div>
+</div>
+<div class="paragraph">
+<p>OpenShift logging creates ElasticSearch indices per namespace and the index names have the format <code>project.&lt;project-name&gt;.&lt;project-uid&gt;</code>.
+For example <code>project.myproject.49f9a0b6-09b5-11e9-9597-069f7827c758</code>.</p>
+</div>
+<div class="paragraph">
+<p>It also creates a Kibana index pattern for that index using the pattern <code>project.&lt;project-name&gt;.&lt;project-uid&gt;.*</code>.</p>
+</div>
+<div class="paragraph">
+<p>In order to make sure the Kibana saved objects use the correct index pattern, project UID should be fetched and
+fed to the Kibana import template.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">PROJECT_NAME=&lt;your_project_name&gt;
+# login with your user that has access to your project
+oc login
+# get project UUID, which is used to build the index name
+PROJECT_UUID=`oc get project $PROJECT_NAME -o go-template='{{.metadata.uid}}'`
+
+# replace the placeholders in the template
+sed \
+    -e "s/&lt;PROJECT_NAME&gt;/${PROJECT_NAME}/g" \
+    -e "s/&lt;PROJECT_UUID&gt;/${PROJECT_UUID}/g" \
+ kibanaImportTemplate.json &gt; kibanaImport.json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A template, <code>kibanaImportTemplate.json</code> is available from the <a href="https://raw.githubusercontent.com/aerogear/voyager-server/master/doc/guides/kibanaImportTemplate.json">Voyager GitHub repo</a>.</p>
+</div>
+<div class="paragraph">
+<p>Once the <code>kibanaImport.json</code> file is generated, import it into Kibana:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open Kibana using <code><a href="https://kibana.&lt;domain&gt;.com" class="bare">https://kibana.&lt;domain&gt;.com</a></code>. Replace <code>&lt;domain&gt;</code> with the name of the cluster&#8217;s main domain.</p>
+</li>
+<li>
+<p>Click <strong>Management</strong> in the left</p>
+</li>
+<li>
+<p>Click <strong>Saved Objects</strong></p>
+</li>
+<li>
+<p>Click <strong>Import</strong> and select <code>kibanaImport.json</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Imported saved objects include the project name or the UID in their names, so that saved objects in differnt namespaces do not affect each other.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>No index pattern is created in Kibana if there are no logs generated by an application.</p>
+</div>
+<div class="paragraph">
+<p>Also, if the fields referenced in the prepared Kibana saved objects do not exist, errors such as the following can be seen:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Error: Importing AeroGear Data Sync - top level execution per platform - aaa (top_level_execution_per_platform_49f9a0b6-09b5-11e9-9597-069f7827c758) failed: Could not locate that index-pattern-field (id: audit.clientInfo.data.device.platform.raw)
+Error: Could not locate that index-pattern-field (id: audit.clientInfo.data.device.platform.raw)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because of these conditions, Kibana saved objects have to be imported after there are some audit logs already in ElasticSearch.
+At the moment, no mechanisms are provided to overcome this problem.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_viewing_the_dashboard_and_audit_logs">26. Viewing the Dashboard and Audit Logs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When the Kibana saved objects are imported, a dashboard is available with several visualizations that can be used as an
+overview of the Voyager application status.</p>
+</div>
+<div class="paragraph">
+<p>At the bottom of the dashboard, audit log messages can be explored directly.</p>
+</div>
+<div class="paragraph">
+<p>For more information on how to use Kibana, see the <a href="https://www.elastic.co/products/kibana">Kibana documentation</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-js-client-audit-logs">27. Enabling audit logs on the client</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As described in the <a href="#sync-server-audit-logs">Server Audit Logs</a> section, device information can be logged as part of an audit log message. To enable it:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The Cordova plugin <code>cordova-plugin-aerogear-metrics</code> has to be installed so that the device, client and app information can be collected.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">cordova plugin add cordova-plugin-aerogear-metrics</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Set <code>auditLogging</code> to true when creating a client instance.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import { createClient } from '@aerogear/voyager-client';
+
+const config = {
+  ...
+  auditLogging: true,
+  ...
+}
+
+return await createClient(config);</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-js-client-advanced-topics">28. Advanced Topics</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_logging_debug_messages">28.1. Logging Debug Messages</h3>
+<div class="paragraph">
+<p>The Voyager Client uses the <a href="https://www.npmjs.com/package/debug">debug module</a> to log debug messages.</p>
+</div>
+<div class="paragraph">
+<p>To enable debug logs, run the following code in a browser&#8217;s console:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">localStorage.debug = 'AeroGearSync:*'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Certain features can be enabled separately:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">localStorage.debug = 'AeroGearSync:offlineMutates*'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_optimistic_ui">28.2. Optimistic UI</h3>
+<div class="paragraph">
+<p>By default mutations are not applied to the UI until responses are received from the server. To provide better user experience, an application may want to update the UI immediately. <a href="https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-mutation-options-optimisticResponse">Optimistic response</a> is an easy way to achieve this goal, and Voyager Client provides a helper method to work with optimistic responses:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript"> import { createOptimisticResponse } from "@aerogear/voyager-client";
+
+ client.mutate({
+   mutation: ADD_TASK,
+   variables: item,
+   optimisticResponse: createOptimisticResponse("createTask", "Task", item);
+ });</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To detect if the provided data is an optimistic response, the <code>optimisticResponse</code> flag can be used.</p>
+</div>
+<div class="paragraph">
+<p>The <code>OptimisticResponse</code> feature and the <a href="#sync-client-offline-queue-listener">offlineQueueListener</a> can be used together to deliver great offline experience for an application.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="openshift_data-sync">29. Running a Data Sync app on OpenShift</h2>
+<div class="sectionbody">
+<div id="sync-server-getting-started-openshift" class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have Docker installed on your local machine.</p>
+</li>
+<li>
+<p>You have access to an OpenShift cluster with the Service Catalog.</p>
+</li>
+<li>
+<p>You have completed the server getting started guide.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_overview">30. Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To connect your Data Sync server and client to other services, you need to run your application in OpenShift.  Data Sync provides a service catalog item to help with this.</p>
+</div>
+<div class="paragraph">
+<p>Data Sync requires your server application to be packaged as a Docker formatted container and published to a public respository such as <a href="https://hub.docker.com/">Docker hub</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="building-and-publishing-the-container">31. Building and publishing the Data Sync server container</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To build a server into a container, create a <code>Dockerfile</code> in the project&#8217;s directory.  This container will need to include your server source code, its dependencies, and be configured to execute your server.</p>
+</div>
+<div class="paragraph">
+<p>As an example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-dockerfile" data-lang="dockerfile">FROM node:8
+WORKDIR /usr/src/app
+# copy Node.js specific files
+COPY package*.json ./
+# copy application source file to the workdir
+COPY index.js .
+RUN npm install
+# TCP port that application is listening on
+EXPOSE 4000
+CMD [ "node", "index.js" ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Build the Docker container and tag it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ docker build . --tag  &lt;your-repo&gt;/&lt;container-name&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Push your container to Dockerhub&#8217;s repository:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ docker push &lt;your-repo&gt;/&lt;container-name&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-server-provisioning-data-sync-templates">32. Provisioning the Data Sync server applications using templates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Data Sync offers following OpenShift templates
+that will help developers with provisioning their DataSync applications to OpenShift platform.</p>
+</div>
+<div class="paragraph">
+<p>Templates:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>DataSync App</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The DataSync App template allows developers to deploy the Node.js DataSync App on Openshift using source code only.
+<em>Node s2i</em>  is used to build the Data Sync App image.
+NOTE: You must set the <code>NODE_ENV</code> environment variable to <code>development</code> and redeploy the pod to ensure access to the GraphQL playground.</p>
+</div>
+<div class="paragraph">
+<p>The DataSync App can connect with other services running on OpenShift and can also connect to external data sources.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>DataSync Showcase</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Showcase application will deploy fully functional server with example Task implementation.
+Server side requires client application available on github <a href="https://github.com/aerogear/ionic-showcase">aerogear/ionic-showcase</a></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Note: Showcase server template can be used only for demo purposes and it should not be used in production.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>When running on Red Hat Managed Integration templates will be available in <strong>Mobile</strong> &gt; <strong>App</strong>  category in OpenShift catalog</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-server-getting-started-mdc-client">33. Connecting a Client</h2>
+<div class="sectionbody">
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have access to an OpenShift cluster with the Service Catalog.</p>
+</li>
+<li>
+<p>You have completed the OpenShift getting started guide.</p>
+</li>
+<li>
+<p>You have created a mobile client and bound your data sync server.</p>
+</li>
+<li>
+<p>You have completed the client getting started guide.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once a service is bound to a mobile client, MDC will provide a mobile-services.json file that is used by the AeroGear client libraries to automatically configure the Data Sync client.  It is very important that you use your version of this file and not the one used in this example as system specific values will be different.</p>
+</div>
+<div class="sect2">
+<h3 id="_updating_the_hello_world_sync_client">33.1. Updating the Hello World Sync Client</h3>
+<div class="paragraph">
+<p>The Hello World client application we wrote uses a hard coded server url.  We need to remove this url and instead pass the mobile-services config to the client.  We will also use the AeroGear core library to parse this file and pass that configuration to the Data Sync library.</p>
+</div>
+<div class="listingblock">
+<div class="title">Configure the core library with mobile-services.json</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const { init }  = require("@aerogear/app");
+
+const core = init({
+  "version": 1,
+  "namespace": "myproject",
+  "clientId": "getting-started",
+  "services": [
+    {
+      "id": "0637bfd3-33aa-11e9-968e-52540014a8c2",
+      "name": "sync-app-getting-started-getting-started",
+      "type": "sync-app",
+      "url": "https://sync-app-getting-started-myproject.192.168.42.138.nip.io/graphql",
+      "config": {
+        "websocketUrl": "wss://sync-app-getting-started-myproject.192.168.42.138.nip.io/graphql"
+      }
+    }
+  ]
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once you have initialized the core, we can use it to configure the Data Sync client by setting the <code>openShiftConfig</code> property when we call <code>createClient</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Updated data sync client</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">let client = await createClient({
+    openShiftConfig:core.config
+  });</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And now, as before, we can use the client to make queries.  A full example may look like the following code</p>
+</div>
+<div class="listingblock">
+<div class="title">Updated hello world index.js</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import gql from 'graphql-tag';
+const { init }  = require("@aerogear/app");
+import { createClient } from '@aerogear/voyager-client';
+
+const core = init({
+  "version": 1,
+  "namespace": "myproject",
+  "clientId": "getting-started",
+  "services": [
+    {
+      "id": "0637bfd3-33aa-11e9-968e-52540014a8c2",
+      "name": "sync-app-getting-started-getting-started",
+      "type": "sync-app",
+      "url": "https://sync-app-getting-started-myproject.192.168.42.138.nip.io/graphql",
+      "config": {
+        "websocketUrl": "wss://sync-app-getting-started-myproject.192.168.42.138.nip.io/graphql"
+      }
+    }
+  ]
+});
+
+async function helloWorld() {
+  let client = await createClient({
+    openShiftConfig:core.config
+  });
+  client.query({
+      fetchPolicy: 'network-only',
+      query: gql`{hello}`
+    })
+    .then( ({data}) =&gt; {
+      console.log(data.hello)
+    });
+}
+
+helloWorld();</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-server-binding">34. Binding a Mobile App with the Data Sync server application service</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To use Mobile Developer Services, you must represent your mobile app in <strong>Mobile Developer Console</strong>, and that app must be associated with the mobile service.
+This association is called <strong>binding</strong> and it is necessary for your mobile app to use that service.</p>
+</div>
+<div class="paragraph">
+<p>To bind a Mobile App with a mobile service:</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Launch Mobile Developer Console</p>
+</li>
+<li>
+<p>Click on the Mobile App on the Overview screen</p>
+</li>
+<li>
+<p>Navigate to <strong>Mobile Services</strong> tab.</p>
+<div class="imageblock">
+<div class="content">
+<img src="shared/images/mobile-clients-services-all-unbound.png" alt="mobile clients services all unbound">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+It is possible to bind a Mobile App with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Press <strong>Bind to App</strong> in the Data Sync</p>
+</li>
+<li>
+<p>Fill out the binding parameters required by the Data Sync Service.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync-server-binding-keycloak">35. Binding Data Sync to Identity Management</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section, we will show you how to protect your Data Sync application using the Identity Management service.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>There is a Identity Management service available.</p>
+</li>
+<li>
+<p>You have provisioned a Data Sync application using our playbook.</p>
+</li>
+<li>
+<p>oc tools must be installed</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Any application that connects to Identity Management must consume a <code>keycloak.json</code> file. This section demonstrates how to add a <code>keycloak.json</code> file to your Data Sync application deployment. It is still your application&#8217;s responsibility to consume this file. We have provided an <a href="https://github.com/aerogear/voyager-server/tree/master/examples/keycloak">example project</a>.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create a client for your application in the Identity Management Administration Console</p>
+</li>
+<li>
+<p>Click on the <code>Installation</code> tab, select <code>Keycloak OIDC JSON</code> for <code>Format</code> Option, and then click on <code>Download</code>. Save the downloaded <code>keycloak.json</code>.</p>
+</li>
+<li>
+<p>Create a Identity Management secret:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">oc create secret generic sync-keycloak-doc \
+  --from-file=keycloak=./keycloak.json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The command creates a secret named <code>sync-keycloak-doc</code>.</p>
+</div>
+<div class="paragraph">
+<p>The secret will contain one key, <code>keycloak</code>, with the value being the text of the <code>keycloak.json</code> file.</p>
+</div>
+<div class="paragraph">
+<p>You can view the secret with either <code>oc get secret sync-keycloak-doc</code> or the OpenShift web console.</p>
+</div>
+</li>
+<li>
+<p>Create a patch for your deployment configuration</p>
+<div class="paragraph">
+<p>This step requires patching the Data Sync application&#8217;s deployment config to create and mount a volume with the Identity Management secret we just created. Replace <code>$YOUR_DEPLOYMENT_CONFIG_NAME</code> in the following yaml section with the deployment config name of your Data Sync application and save this file as <code>secret.yaml</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">spec:
+  template:
+    spec:
+      containers:
+        - env:
+          - name: KEYCLOAK_CONFIG
+            value: /config/keycloak.json
+          name: $YOUR_DEPLOYMENT_CONFIG_NAME
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /config
+              readOnly: true
+      volumes:
+          - name: secret-volume
+            secret:
+              items:
+                - key: keycloak
+                  path: keycloak.json
+              secretName: sync-keycloak-doc</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply the patch.</p>
+<div class="paragraph">
+<p>After replacing <code>$YOUR_DEPLOYMENT_CONFIG_NAME</code> with the deployment config name, run the following command to patch the deployment configuration and trigger your application to redeploy.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">oc patch deploymentconfig $YOUR_DEPLOYMENT_CONFIG_NAME -p "$(cat secret.yaml)"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once your application has redeployed, it should be able to read the keycloak.json file pointed to by the KEYCLOAK_CONFIG environment variable.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2019-08-12 13:53:08 +0100
+</div>
+</div>
+</body>
+</html>

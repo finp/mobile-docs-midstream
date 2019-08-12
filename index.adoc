@@ -1,0 +1,13 @@
+= Mobile Developer Services Documentation
+:nofooter:
+// asciidoctor -b html5  -a toc=left -a theme=flask index.adoc
+
+
+* link:getting-started/master.html[Getting Started]
+* link:sync/master.html[Data Sync]
+* link:push/master.html[Push Notifications]
+* link:idm/master.html[Identity Management]
+* link:security/master.html[Security]
+* link:showcase/master.html[Showcase App]
+
+
