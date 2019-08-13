@@ -1,0 +1,286 @@
+The Identity Management service allows you to add authentication and authorization to your mobile app.
+
+* Secure your mobile app using the industry standard OpenID Connect protocol
+* Add access control to your app based on user’s group membership
+* Easily implement SSO, multi-factor authentication and Social Login support
+* Back-end support for identity brokering and user federation
+
+= Identity Management Service terminology =
+
+This section describes terminology that is associated with Identity Management.
+
+; SSO
+: Single Sign On, the ability to share a login between multiple services
+; OpenID Connect
+: A standard for providing identity on top of OAuth 2.0
+; Keycloak
+: Red Hat’s implementation of SSO and OpenID used as the identity provider
+; Client ID
+: Is the client identifier for OpenID Connect requests, a simple alpha-numeric string
+; User Attributes
+: Additional properties for user accounts (besides name and email) managed by Keycloak
+
+* You have provisioned Mobile Developer Console as described in [[getting-started.html|Provisioning Mobile Developer Console]].
+
+= Setting Up the Identity Management Service =
+
+== Binding a Mobile App with the Identity Management Service ==
+
+To use mobile services, you must represent your mobile app in '''Mobile Developer Console''', and that app must be associated with the mobile service. This association is called '''binding''' and it is necessary for your mobile app to use that service.
+
+This section describes how to set up the Identity Management service.
+
+* You have created a Mobile App.
+
+'''Procedure.'''
+
+To bind a Mobile App with a mobile service:
+
+<ol style="list-style-type: decimal;">
+<li><p>Launch Mobile Developer Console.</p></li>
+<li><p>Click on the Mobile App on the Overview screen.</p></li>
+<li><p>Navigate to '''Mobile Services''' tab.</p>
+<p>[[File:shared/images/mobile-clients-services-all-unbound.png|mobile clients services all unbound]]</p>
+<blockquote><p>'''Note'''</p>
+<p>It is possible to bind a Mobile App with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.</p></blockquote></li>
+<li><p>Click '''Bind to App''' for Identity Management.</p></li>
+<li><p>Fill out the binding parameters required by the Identity Management Service.</p>
+<p>[[File:shared/images/mobile-clients-services-idm-parameters.png|mobile clients services idm parameters]]</p>
+<blockquote><p>'''Note'''</p>
+<p>Use <code>Public</code> when binding a Mobile App to a Identity Management. When binding mobile services to each other, use <code>Bearer</code>.</p></blockquote></li></ol>
+
+The Identity Management service will now be expandable, details about the service can be viewed.
+
+[[File:shared/images/mobile-clients-services-all-idm-provisioned.png|mobile clients services all idm provisioned]]
+
+== Configuring the Identity Management Service ==
+
+This section guides you through configuring the redirect url and web origin for a client in Red Hat Single Sign-On. This is required to enable OpenID authentication. For an explanation of these terms, see [https://access.redhat.com/products/red-hat-single-sign-on Red Hat Single Sign-On Documentation].
+
+* An understanding of [https://openid.net/ OpenID]
+
+<ol style="list-style-type: decimal;">
+<li><p>Log into the Mobile Developer Console and navigate to the Mobile App screen.</p></li>
+<li><p>Select the '''Mobile Services''' tab.</p></li>
+<li><p>If a binding to the Identity Management service is in progress, a spinning icon is displayed to the right of the Identity Management entry. Wait for the binding process to complete.</p></li>
+<li><p>If the ''Red Hat Single Sign-On Realm URL'' URL is not visible, expand the Identity Management Service by clicking the &gt; icon.</p></li>
+<li><p>Click on the '''Red Hat Single Sign-On Realm URL''' link to open the Red Hat Single Sign-On Administration Console.</p></li>
+<li><p>Log in to the Administration console (default admin/admin).</p></li>
+<li><p>Select <code>Clients</code> from the left navigation menu.</p></li>
+<li><p>Select your client from the list of clients. The name of your client is derived from the name of the Mobile App, the name of the mobile development platform and the client type, for example <code>myapp-android-public</code>.</p></li>
+<li><p>Add an additional entry to '''Valid Redirect URIs'''.</p>
+<div class="informalexample">
+
+<p>Set the additional value to <code>http://localhost*</code>.</p>
+
+</div></li>
+<li><p>Add an additional entry to '''Web Origins'''.</p>
+<div class="informalexample">
+
+<p>Set additional value to <code>http://localhost*</code>.</p>
+
+</div></li>
+<li><p>Save your changes.</p></li>
+<li><p>Creating a new user account as described in [https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#create-new-user Creating a New User].</p></li>
+<li><p>Set up credentials for the new user as described in [https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#user_credentials User Credentials].</p></li></ol>
+
+= Configuring your development environment for the Identity Management Service =
+
+== Downloading the Configuration File ==
+
+The <code>mobile-services.json</code> file provides the information for your mobile app to communicate with services. After you change any configuration in the Mobile Developer Console, it is important to update that file in your IDE.
+
+* The configuration of your Mobile App in Mobile Developer Console is up-to-date.
+* You have set up your mobile app development environment.
+
+<ol style="list-style-type: decimal;">
+<li><p>Open your Mobile App in Mobile Developer Console.</p></li>
+<li><p>Copy the <code>mobile-services.json</code> configuration to your clipboard.</p></li>
+<li><p>Save the contents of the clipboard to a new file called <code>mobile-services.json</code>.</p>
+<blockquote><p>'''Note'''</p>
+<p>The <code>mobile-services.json</code> file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.</p></blockquote></li>
+<li><p>Move mobile-services.json to the following location in your application project:</p>
+<div class="informalexample">
+
+<p><code>src/mobile-services.json</code></p>
+
+</div></li></ol>
+
+== Setting up the Identity Management Service SDK ==
+
+This section helps you to set up the Identity Management service SDK in your App. It describes how to set up and initialize the Identity Management service SDK.
+
+* Your local <code>mobile-services.json</code> file is up-to-date.
+
+<ol style="list-style-type: decimal;">
+<li><p>Import the libraries.</p>
+<div class="informalexample">
+
+<ol style="list-style-type: decimal;">
+<li><p>Add the following code to <code>index.html</code> located in <code>src/</code> :</p>
+<source lang="html"><meta http-equiv="Content-Security-Policy" content="default-src * file: 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"></source></li>
+<li><p>Install the [https://www.npmjs.com/package/@aerogear/auth AeroGear Auth] package from [https://www.npmjs.com/ NPM]:</p>
+<source lang="bash">$ npm install @aerogear/auth</source></li>
+<li><p>Install cordova-plugin-inappbrowser:</p>
+<source lang="bash">$ cordova plugin add cordova-plugin-inappbrowser</source>
+<p>Use a JavaScript bundler, for example, <code>browserify</code> so that you can use node modules in Cordova. Red Hat recommends using the <code>require</code> statement rather than <code>import</code> for the the @aerogear/auth module as shown below:</p></li></ol>
+
+
+</div></li>
+<li><p>Initialize the SDK.</p>
+<div class="informalexample">
+
+<ol style="list-style-type: decimal;">
+<li><p>Import and initialize Auth.</p>
+<source lang="javascript">const Auth = require('@aerogear/auth').Auth;
+const authService = new Auth(app.config);
+const initOptions = { onLoad: "login-required" };
+
+authService.init(initOptions)
+    .then(() => {
+        // successful init & authentication
+    })
+    .catch((err) => {
+        // initialization error
+    });</source></li></ol>
+
+<p>You can pass <code>login-required</code> or <code>check-sso</code> to the init function. <code>login-required</code> will authenticate the client if the user is logged in to Keycloak or display the login page if not. <code>check-sso</code> will only authenticate the client if the user is already logged in. If the user is not logged in the browser will be redirected back to the application and remain unauthenticated. By default, the <code>check-sso</code> option is used.</p>
+<blockquote><p>'''Note'''</p>
+<p>Initialization also enables authentication.</p></blockquote>
+
+</div></li></ol>
+
+= Adding User Authentication to your Mobile App =
+
+== Implementing authentication ==
+
+* The <code>mobile-services.json</code> file is up-to-date in your development environment.
+
+'''Procedure.'''
+
+To implement authentication using the Aerogear SDK:
+
+<div class="informalexample">
+
+Authentication is enabled during initialization as described in the section [[#setting-up-sdk-idm|Setting up the Identity Management Service SDK]]. To manually redirect to the login screen, use:
+
+<source lang="javascript">authService.login().then(() => {
+    // Login success
+}).catch(() => {
+    // Login error
+});;</source>
+
+</div>
+== Refreshing the authentication token ==
+
+When a user is authenticated, an access token and a refresh token are generated by the authentication server. See the [https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#timeouts Red Hat Single Sign-On documentation] for information about configuring the lifespan of these tokens. If the refresh token is still valid, the authentication token can be refreshed even if the authentication token has expired.
+
+* A working mobile app that uses authentication with the Identity Management service.
+
+'''Procedure.'''
+
+To automatically refresh the authenticate token :
+
+<div class="informalexample">
+
+Retrieve the keycloak adapter object and refresh the access token, when possible and required:
+
+<source lang="javascript">authService.extract().updateToken(30).then(() => {
+    // Token has been refreshed
+});</source>
+More information about the keycloak javascript adapter can be found [https://www.keycloak.org/docs/3.0/securing_apps/topics/oidc/javascript-adapter.html here]
+
+
+</div>
+== Adding Log Out Option to your Mobile App ==
+
+The following section describes how to perform a logout.
+
+<blockquote>'''Note'''
+
+To perform '''backchannel or federated logouts''', you must enable the Backchannel Logout option for the federated identity provider. More information is available in the Red Hat Single Sign-On documentation under [https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#openid_connect_v1_0_identity_providers OICD Identity Providers].
+</blockquote>
+* A working mobile app that uses authentication with the Identity Management service.
+
+'''Procedure.'''
+
+To enable users of the mobile app log out from the service.
+
+<div class="informalexample">
+
+Invoke the <code>logout</code> function:
+
+<source lang="javascript">authService.logout().then(() => {
+    // User Logged Out Successfully and local Auth tokens were Deleted
+});</source>
+
+</div>
+== Authenticating with a back end service ==
+
+In a typical scenario, you not only want the user to authenticate on the mobile app, you also want that user to authenticate with a back end service.
+
+* A working mobile app that uses authentication with the Identity Management service.
+
+<ol style="list-style-type: decimal;">
+<li><p>Add an additional token:</p>
+<pre>Authorization: BEARER Yourtoken</pre></li>
+<li><p>Add code to authenticate with a back end service:</p>
+<div class="informalexample">
+
+<p>The AeroGear Cordova SDK doesn’t provide an HTTP layer, therefore it cannot provide an Auth Header Provider. You must manually attach the <code>Bearer</code> header to your HTTP requests.</p>
+<source lang="javascript">req.setRequestHeader('Accept', 'application/json');
+req.setRequestHeader('Authorization', 'Bearer ' + authService.extract().token);</source>
+
+</div></li></ol>
+
+* [https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#openid_connect_v1_0_identity_providers Red Hat Single Sign-On OICD Providers]
+
+== Adding Access Control to your Mobile App ==
+
+Once a <code>UserPrincipal</code> has been retrieved, the [http://www.keycloak.org/docs/latest/server_admin/index.html#roles roles] of the user can be listed and checked. This can be used to perform client side access control, such as hiding UI components related to actions the user doesn’t have permissions to perform. Roles are divided into two types. Resource roles which belong to the client the user has authenticated against, and Realm roles which belong to the realm the client is in.
+
+* A working mobile app that uses authentication with the Identity Management service.
+
+'''Procedure.'''
+
+To add Access Control:
+
+<div class="informalexample">
+
+Get the realm roles from the auth service:
+
+<source lang="javascript">const realmRoles = authService.getRealmRoles();</source>
+<blockquote>'''Note'''
+
+No function to retrieve the resource roles is currently exported but you can use <code>extract</code> to get a handle to the underlying keycloak-js instance to retrieve the roles from there. Have a look at their documentation [https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter here].
+</blockquote>
+
+</div>
+= Adding SSO to your Mobile App =
+
+== Using SSO with the Device Browser ==
+
+The Red Hat mobile SDK uses OpenID Connect [http://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth Authorization Code Flow] to implement SSO using a mobile device browser.
+
+* You have completed all steps in [[#adding-access-control|Adding Access Control to your Mobile App]].
+* Two Mobile Apps bound to the Identity Management service.
+* Two Mobile Apps built and running on the same device that are using the AeroGear SDK Auth module.
+
+'''Procedure.'''
+
+In the following procedure, the two apps are named '''Email App''' and '''Messaging App'''. Substitute the appropriate names for your SSO scenario.
+
+# Ensure the &quot;Remember Me&quot; option in Red Hat Single Sign-On is turned on. In the admin UI click on '''Realm Settings''' section on the left hand side, and then click on '''Login'''. Turn on '''Remember Me'''.
+# Now that your two apps and Red Hat Single Sign-On clients are setup, sign into the '''Email App''' with the user you have previously created. You should be redirected to your device browser which should have loaded the Red Hat Single Sign-On login page.
+# Next, enter in your credentials, make sure check the '''Remember Me''' option and login. You have now been authenticated on the '''Email App''' via the browser.
+# Finally, try sign into the '''Messaging App''' and you should be automatically logged in as you have been previously authenticated in the '''Email App''' via the '''''same''''' browser.
+
+'''Additional resources.'''
+
+With iOS 11 and later, Apple has introduced SFAuthenticationSession for apps to perform SSO, instead of using the system Safari browser and there are known issues with this new feature. Sometimes, the user may have to enter their credentials again, even if they have logged in previously in another app.
+
+= Additional resources =
+
+* For more information about OpenID, see the [https://openid.net/ OpenID Foundation] website.
+* See the [https://www.keycloak.org/documentation.html Red Hat Single Sign-On documentation] for more info.
+

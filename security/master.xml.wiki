@@ -1,0 +1,498 @@
+This guide does not address all mobile security topics. See the [https://www.owasp.org/index.php/OWASP_Mobile_Security_Project OWASP Mobile Security Project] for an introduction to mobile security. Red Hat helps you achieve security:
+
+* [[#app-security|Using the Mobile Security service]] - remotely disable specific app variants
+* [[#device-checks|Adding Device Checks to your mobile app]] - for example, disable app on rooted devices
+
+= Using the Mobile Security Service =
+
+== Setting Up the Mobile Security Service ==
+
+=== Provisioning the Mobile Security Service ===
+
+This section describes how to set up the Mobile Security Service.
+
+* You have logged into the OpenShift console and the Mobile Developer Console.
+
+<ol style="list-style-type: decimal;">
+<li><p>Log into the OpenShift console.</p></li>
+<li><p>Create a new project or choose an existing project.</p></li>
+<li><p>Click '''Add to Project''' and choose '''Browse Catalog''' from the options.</p>
+<p>You can filter the catalog items to only show mobile specific items by clicking the '''Mobile''' tab.</p></li>
+<li><p>Click '''Services''' and choose the Mobile Security service.</p>
+<p>[[File:shared/images/catalog-mobile-services.png|catalog mobile services]]</p></li>
+<li><p>Follow the wizard for provisioning that service.</p>
+<blockquote><p>'''Note'''</p>
+<p>If prompted to '''Create a Binding''', choose '''Do not bind at this time'''</p></blockquote>
+<p>Once the wizard steps are completed, navigate to the Project Overview in OpenShift to see the newly provisioned service. Provisioning a service may take some time.</p></li></ol>
+
+== Binding a Mobile App with the Mobile Security Service ==
+
+To use mobile services, you must represent your mobile app in '''Mobile Developer Console''', and that app must be associated with the mobile service. This association is called '''binding''' and it is necessary for your mobile app to use that service.
+
+This section describes how to set up the Mobile Security service.
+
+* You have created a Mobile App.
+
+'''Procedure.'''
+
+To bind a Mobile App with a mobile service:
+
+<ol style="list-style-type: decimal;">
+<li><p>Launch Mobile Developer Console.</p></li>
+<li><p>Click on the Mobile App on the Overview screen.</p></li>
+<li><p>Navigate to '''Mobile Services''' tab.</p>
+<p>[[File:shared/images/mobile-clients-services-all-unbound.png|mobile clients services all unbound]]</p>
+<blockquote><p>'''Note'''</p>
+<p>It is possible to bind a Mobile App with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.</p></blockquote></li>
+<li><p>Click '''Bind to App''' for Mobile Security.</p></li>
+<li><p>Fill out the binding parameters required by the Mobile Security Service.</p></li></ol>
+
+The Mobile Security service will now be expandable, details about the service can be viewed.
+
+== Configuring the Mobile Security Service ==
+
+* An understanding of [https://openid.net/ OpenID]
+
+# Log into the Mobile Developer Console and navigate to the Mobile App screen.
+# Select the '''Mobile Services''' tab.
+# If a binding to the Mobile Securityservice is in progress, a spinning icon is displayed to the right of the Mobile Securityentry. Wait for the binding process to complete.
+# Save your changes.
+
+== Configuring your Development Environment for the Mobile Security Service ==
+
+=== Downloading the Mobile Services Configuration File ===
+
+<ol style="list-style-type: decimal;">
+<li><p>Open your Mobile App in Mobile Developer Console.</p></li>
+<li><p>Copy the <code>mobile-services.json</code> configuration to your clipboard.</p></li>
+<li><p>Save the contents of the clipboard to a new file called <code>mobile-services.json</code>.</p>
+<blockquote><p>'''Note'''</p>
+<p>The mobile-services.json file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.</p></blockquote></li>
+<li><p>Follow the platform-specific instructions:</p></li></ol>
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><p>Move mobile-services.json to the following location in your application project:</p>
+<p><code>src/mobile-services.json</code></p></dd></dl>
+
+
+</div>
+=== Setting up Mobile Security service SDK ===
+
+==== Importing the libraries ====
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><ol style="list-style-type: decimal;">
+<li><p>Install the [https://www.npmjs.com/package/@aerogear/security AeroGear Security] package from [https://www.npmjs.com/ NPM]:</p>
+<source lang="bash">$ npm install @aerogear/security --save</source></li>
+<li><p>Add the [https://www.npmjs.com/package/@aerogear/cordova-plugin-aerogear-security AeroGear Security plugin] for Cordova:</p>
+<source lang="bash">$ cordova plugin add @aerogear/cordova-plugin-aerogear-security</source></li>
+<li><p>Import and instantiate <code>SecurityService</code> to start using the SDK:</p>
+<source lang="javascript">const SecurityService = require("@aerogear/security");
+
+const appSecurity = new SecurityService.AppSecurity(app.config);</source>
+<blockquote><p>'''Note'''</p>
+<p>Any new instantiation of <code>SecurityService</code> returns the same instance.</p></blockquote></li></ol>
+</dd></dl>
+
+
+</div>
+= Implementing the Mobile Security service in your mobile app =
+
+Call the appSecurity clientInit function to implement the App Security Service. Call this service on application initialization, for example:
+
+<source lang="javascript">appSecurity.clientInit()
+.then(clientInit => {
+  /**
+    You can use clientInit.data.disabled boolean
+    to check if app has been disabled by admin.
+
+    The disabled message is returned if the app is
+    disabled at clientInit.data.disabledMessage
+    This contains a string with a disabled message
+    from the server set by the admin.
+  */
+}).catch(err  => {
+  /**
+    You can handle errors connecting to the
+    mobile security service here. i.e. if the
+    client is offline that error will be caught
+    here and you can return a response at this
+    point
+    */
+});</source>
+= Managing mobile apps using the Mobile Security Console =
+
+To access the Mobile Security Console:
+
+# Retrieve the console URL from the list of available services in the Mobile Developer Console (MDC).
+# Open the URL in a browser.
+
+'''Overview of the Mobile Security Console.'''
+
+The Mobile Security Console allows you to monitor applications, their respective versions, and disable versions of those applications.
+
+Opening the console lists all applications. Click on an application to view version details for that application.
+
+Below is a detailed description of each of these views and the information you can expect each to contain.
+
+'''Application details view.'''
+
+This view provides statistics and information about each deployed version of an application:
+
+* '''App Version''': The version of the application.
+* '''Current Installs''': Total number of current installed versions of this version of the application.
+* '''Launches''': Total number of launches of this version of the application.
+* '''Last launched''': The last time this application version was launched.
+* '''Disable on Startup''': Whether this application version is disabled on startup.
+* '''Custom Disable Message''': A custom message that is displayed when this version of the mobile app is disabled.
+
+== Enabling and disabling mobile app versions ==
+
+To enable/disable one or more versions of the application:
+
+# Toggle the checkbox for that version in the '''Disable on Startup''' column.
+# Confirm these changes by clicking the '''Save''' button to persist these changes.
+
+Navigating away from this screen with unsaved changes prompts you to save or discard these changes.
+
+To disable all versions of an application:
+
+* Click the '''Disable App''' button.
+
+== Adding or updating a custom disabled message ==
+
+To add or update a custom message for the version(s) of an application:
+
+# Enter the message in the text field for that version under the '''Custom Disable Message''' column.
+# Confirm these changes by clicking the '''Save''' button to persist these changes.
+
+Navigating away from this screen with unsaved changes prompts you to save or discard these changes.
+
+= Implementing Device Checks in your mobile app =
+
+The Device Security service allows you to easily configure and manage device security, and trust checks for your mobile application.
+
+* Perform a range of device trust checks on the mobile device, such as checking if the device is rooted, and allows you take proactive action based on the results.
+* Distribute SSL certificates with a Mobile App to create a direct chain of trust (certificate pinning).
+
+<blockquote>'''Note'''
+
+Device Security is not currently associated with an OpenShift service, so there are no provisioning or binding tasks associated with using Device Security.
+</blockquote>
+* You understand Device Checks.
+* You have logged into the OpenShift console and the Mobile Developer Console.
+* You are developing an Ionic app, plain Cordova is not supported.
+
+== Device Checks Terminology ==
+
+This section describes terminology that is associated with Device Checks.
+
+; Root Access Detection (ROOT_ENABLED)
+: Use it to help prevent your app running in a device that has been rooted/jailbroken. A device is considered rooted if '''any''' of the following are true:
+;* A custom key has been used to sign the kernel
+;* The <code>su</code> binaries are present
+; Developer Mode Detection (DEVELOPER_MODE_ENABLED)
+: To detect if Developer Mode has been enabled on the device the <code>DeviceCheckType#DEVELOPER_MODE_ENABLED</code> function can be used. This function uses Android’s [https://developer.android.com/reference/android/provider/Settings.html Settings] class.
+; Debugger Detection (DEBUGGER_ENABLED)
+: To detect if an Android debugger is attached to the app the <code>DeviceCheckType#DEBUGGER_ENABLED</code> function can be used. This function uses Android’s [https://developer.android.com/reference/android/os/Debug.html Debug] class.
+; Emulator Detection (IS_EMULATOR)
+: To detect if the app is being run on an emulator the <code>DeviceCheckType#IS_EMULATOR</code> function can be used. This function uses Android’s [https://developer.android.com/reference/android/os/Build.html Build] class.
+; Device Lock Detection (SCREEN_LOCK_ENABLED)
+: To detect if a device has a lock screen set (with pin, fingerprint, pattern) the <code>DeviceCheckType#SCREEN_LOCK_ENABLED</code> function can be used. This function uses Android’s [https://developer.android.com/reference/android/app/KeyguardManager.html KeyguardManager] class.
+; App Data Backup Detection (BACKUP_ENABLED)
+: To detect whether the application’s data is configured to be synchronized across devices the <code>DeviceCheckType#BACKUP_ENABLED</code> function can be used. The [https://developer.android.com/guide/topics/manifest/application-element.html allowBackup] flag determines whether to allow the application to participate in the backup and restore infrastructure, which might be interesting to avoid depending on your app’s needs.
+; Device Encryption Detection (ENCRYPTION_ENABLED)
+: To detect whether the devices' filesystem is encrypted the <code>DeviceCheckType#ENCRYPTION_ENABLED</code> function can be used. This function uses Android’s [https://developer.android.com/reference/android/app/admin/DevicePolicyManager.html DevicePolicyManager] class.
+
+= Configuring your Development Environment for the Device Checks Service =
+
+= Downloading the Configuration File =
+
+The <code>mobile-services.json</code> file provides the information for your mobile app to communicate with services. After you change any configuration in the Mobile Developer Console, it is important to update that file in your IDE.
+
+* The configuration of your Mobile App in Mobile Developer Console is up-to-date.
+* You have set up your mobile app development environment.
+
+<ol style="list-style-type: decimal;">
+<li><p>Open your Mobile App in Mobile Developer Console.</p></li>
+<li><p>Copy the <code>mobile-services.json</code> configuration to your clipboard.</p></li>
+<li><p>Save the contents of the clipboard to a new file called <code>mobile-services.json</code>.</p>
+<blockquote><p>'''Note'''</p>
+<p>The <code>mobile-services.json</code> file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.</p></blockquote></li>
+<li><p>Move <code>mobile-services.json</code> to the following location in your application project:</p>
+<div class="informalexample">
+
+<p><code>src/mobile-services.json</code></p>
+
+</div></li></ol>
+
+== Setting up Device Checks service SDK ==
+
+This guide will help you to set up the Device Checks service SDK in your App.
+
+=== Importing the libraries ===
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><ol style="list-style-type: decimal;">
+<li><p>Install the [https://www.npmjs.com/package/@aerogear/security AeroGear Security] package from [https://www.npmjs.com/ NPM]</p>
+<source lang="bash">$ npm install @aerogear/security</source></li>
+<li><p>Add the [https://www.npmjs.com/package/@aerogear/cordova-plugin-aerogear-security AeroGear Security plugin] for Cordova:</p>
+<source lang="bash">$ cordova plugin add @aerogear/cordova-plugin-aerogear-security</source></li>
+<li><p>Import and instantiate <code>SecurityService</code> to start using the SDK:</p>
+<source lang="javascript">const SecurityService = require("@aerogear/security");
+
+const securityService = new SecurityService(app.metrics);</source>
+<blockquote><p>'''Note'''</p>
+<p>Any new instantiation of <code>SecurityService</code> returns the same instance.</p></blockquote></li></ol>
+</dd></dl>
+
+
+</div>
+= Performing Device Trust Checks in your Device =
+
+This section describes what Device Trust Checks are available and how to execute them for the supported platforms. Also note that Device Checks can be performed either individually or together.
+
+== Root Access Detection ==
+
+Use this to help prevent your app running in a device that has been rooted/jailbroken.
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><source lang="javascript">new SecurityService(app.metrics)
+    .check(DeviceCheckType.rootEnabled)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</source></dd></dl>
+
+
+</div>
+== Developer Mode Detection ==
+
+Use this to detect if Developer Mode has been enabled on the device.
+
+<div class="informalexample">
+
+; Cordova
+: This check is not available for Cordova.
+
+
+</div>
+== Debugger Detection ==
+
+Use this to detect if a debugger is attached to the app.
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><source lang="javascript">new SecurityService(app.metrics)
+    .check(DeviceCheckType.debugModeEnabled)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</source></dd></dl>
+
+
+</div>
+== Emulator Detection ==
+
+Use this to detect if the app is being run on an emulator.
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><source lang="javascript">new SecurityService(app.metrics)
+    .check(DeviceCheckType.isEmulator)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</source></dd></dl>
+
+
+</div>
+== Device Lock Detection ==
+
+Use this to detect if a device has a lock screen set (with pin, fingerprint, pattern…​).
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><blockquote><p>'''Note'''</p>
+<p>For iOS devices this check requires iOS 8 or above.</p></blockquote>
+<source lang="javascript">new SecurityService(app.metrics)
+    .check(DeviceCheckType.screenLockEnabled)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</source></dd></dl>
+
+
+</div>
+== App Data Backup Detection ==
+
+Use this to detect whether the application’s data is configured to be synchronized across devices.
+
+<div class="informalexample">
+
+; Cordova
+: This is not available for Cordova.
+
+
+</div>
+== Device Encryption Detection ==
+
+Use this to detect whether a devices filesystem is encrypted.
+
+<div class="informalexample">
+
+; Cordova
+: This is not available for Cordova.
+
+
+</div>
+== Invoking Multiple Device Checks ==
+
+Device Checks can be run in group, both synchronously and asynchronously.
+
+'''Synchronously'''
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><p>Executing multiple checks synchronously is not directly supported. Instead, it’s possible to use the [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await await] operator.</p>
+<source lang="javascript">const results = await securityService.checkMany(
+    DeviceCheckType.rootEnabled,
+    DeviceCheckType.isEmulator,
+    // Add more checks here
+);</source>
+<blockquote><p>'''Note'''</p>
+<p><code>DeviceCheckResult</code> objects in the returning array stay in the same order they were provided.</p></blockquote></dd></dl>
+
+
+</div>
+'''Asynchronously'''
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><p>Invoke multiple checks using the <code>checkMany</code> method:</p>
+<source lang="javascript">const checkResults = securityService.checkMany(
+    DeviceCheckType.rootEnabled,
+    DevoceCheckType.isEmulator,
+    // Add more checks here
+)
+.then(results => {
+    // Handle results
+});</source>
+<blockquote><p>'''Note'''</p>
+<p>This method returns a Promise with an array containing all <code>DeviceCheckResult</code> objects in the same order they were provided.</p></blockquote></dd></dl>
+
+
+</div>
+== Additional Resources ==
+
+'''Adding Custom Device Checks'''
+
+It is possible to make use of your own custom checks. Follow the next steps depending on your platform to implement them:
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><ol style="list-style-type: decimal;">
+<li><p>Implement the <code>DeviceCheck</code> interface:</p>
+<source lang="javascript">class CustomDeviceCheck implements DeviceCheck {
+
+    get name(): string {
+        return "My Custom Check";
+    }
+
+    public check(): Promise<DeviceCheckResult> {
+        // Implement device check logic here
+        return null;
+    }
+
+}</source></li>
+<li><p>Instantiate it to execute it, using the instance of <code>SecurityService</code>:</p>
+<source lang="javascript">const securityService = new SecurityService(app.metrics);
+
+securityService.check(new CustomDeviceCheck())
+    .then(result => {
+        // Handle result
+    });</source></li></ol>
+</dd></dl>
+
+
+</div>
+'''Reporting Device Checks Results Via the Metrics Service'''
+
+In order to report the results of Device Checks utilize this service in conjunction with the Mobile Metrics service.
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><p>Report individual checks via the <code>checkAndPublishMetric</code> method:</p>
+<source lang="javascript">new SecurityService(app.metrics)
+    .checkAndPublishMetric(DeviceCheckType.rootEnabled)
+    .then(result => {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</source>
+<p>Or alternatively report multiple checks using the <code>checkManyAndPublishMetric</code> method:</p>
+<source lang="javascript">new SecurityService(app.metrics)
+    .checkManyAndPublishMetric(
+        DeviceCheckType.rootEnabled,
+        DeviceCheckType.isEmulator,
+        // Add more checks here
+    )
+    .then(results => {
+        // Handle the security results array
+    });</source></dd></dl>
+
+
+</div>
+= Certificate Pinning in Android Devices =
+
+[https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning Certificate pinning] can be enabled in individual SDKs through the <code>mobile-services.json</code> file. Certificate pinning will only be enabled for services which are used directly by the SDKs. For other services '''SPKI''' pinning is used. Mobile services must have pinning configured separately. For more information on setting up certificate pinning for mobile services see the [https://developer.android.com/training/articles/security-config.html#CertificatePinning Android network security guide].
+
+== Generating Pinning Configuration ==
+
+The AeroGear SDK gets its configuration from the <code>https</code> section of the <code>mobile-services.json</code> file in a project.
+
+<source lang="json">{
+    "services":[],
+    "https": {
+        "certificatePins": [{
+            "host": "example.sync.service",
+            "certificateHash": "exampleHash"
+        }]
+    }
+}</source>
+To include the <code>https</code> section in configuration when generating it using the Mobile CLI use the <code>--include-cert-pins</code> flag when retrieving a client configuration. By default, self-signed or invalid certs will not be permitted to be included in the certificate pinning configuration. To allow these to be included use the <code>--insecure-skip-tls-verify</code> flag.
+
+<source lang="bash">$ ./mobile get clientconfig <client name> --include-cert-pins --insecure-skip-tls-verify</source>
+'''Using Pinning Configuration'''
+
+If the <code>https</code> section is included in the <code>mobile-services.json</code> file then certificate pinning will automatically be enabled for mobile services.
+
+'''Considerations'''
+
+If the certificate authority of a service changes then the <code>mobile-services.json</code> file will need to be regenerated in order to retrieve the correct <code>https</code> configuration. The app will then need to be rebuilt and republished for the end users to consume. If this is not done then an app may become incapable of making network requests to other services.
+

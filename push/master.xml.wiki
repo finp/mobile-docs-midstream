@@ -1,0 +1,345 @@
+The Push Notifications service allows you to send native push notifications to different mobile operating systems.
+
+* Code once and push notifications to iOS and Android.
+* Push notifications to defined groups.
+* Push notifications to either iOS only or Android only.
+* Push notifications to different variants of a mobile app.
+* Push notifications from different back-end apps to the same mobile app.
+
+Currently the service supports:
+
+* [https://developer.apple.com/notifications/ Apple Push Notification Service]
+* [https://firebase.google.com/products/cloud-messaging/ Firebase Cloud Messaging]
+
+The Push Notifications service offers a unified Notification Service API to the above mentioned Push Network Services. It can be seen as a ''broker'' that distributes push messages to different 3rd party Push Networks.
+
+<blockquote>'''Note'''
+
+* The payload of the push notification is delivered to 3rd party Push Network providers, Google or Apple. Red Hat recommends that users do not send any sensitive personal or confidential information (for example, a social security number, financial account or transactional information) as part of any Push Notification. Users of push notifications should not have an expectation of secure transmission.
+* For analytic purposes, the service stores the content of the alert key sent to the UnifiedPush Server. The content of the alert key belongs to the metadata, which is deleted after 30 days, using a nightly job within the UnifiedPush Server.
+* You are only able to send push notifications to a real device, sending push notifications to an emulator fails.
+* Push is a signalling mechanism and is not suitable to be used as a data carrying system, for example, a chat application.
+</blockquote>
+* You understand Push Notifications.
+* You have logged into the OpenShift console and the Mobile Developer Console.
+
+* [https://developer.apple.com/notifications/ Apple Push Notification Service]
+* [https://firebase.google.com/products/cloud-messaging/ Firebase Cloud Messaging]
+
+= Push Notifications Terminology =
+
+This section describes terminology that is associated with Push Notifications.
+
+; Push Application
+: A logical construct that represents an Mobile App, for example, ''Mobile HR''.
+; Push Notification Message
+: A simple message to be sent to a Push Application.
+; Sender Endpoint API
+: A RESTful API that receives Push Notification Message requests for a PushApplication or some of its different Variants. The Server translates this request into the platform specific details and delivers the payload to the 3rd party cloud providers, which eventually might deliver the message to the physical device.
+; Variant
+: A variant of the Push Application, representing a specific mobile platform, like iOS or Android, or even more fine-grained differentiation like iPad or iPhone. There can be multiple variants for a single Push Application (for example, ''Mobile HR Android'', ''Mobile HR iPad'', ''Mobile HR iOS free'' or _Mobile HR iOS premium). Each supported variant type contains some platform specific properties, such as a Google API key (Android) or passphrase and certificate (Apple).
+; APNs
+: [https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/APNSOverview.html#//apple_ref/doc/uid/TP40008194-CH8-SW1 Apple Push Notification service].
+; Installation
+: Represents an actual device, registered with the UnifiedPush Server. User1 running ''HR Android'' app, while User2 runs ''HR iPhone premium'' on his phone.
+; Administrative User Interface
+: (AUI) The Unified Push Admin UI Web UI that allows you manage Push Applications and Variants, view statistics and send Push Notifications to devices.
+
+= Setting Up the Push Notifications Mobile Service =
+
+== Obtaining Firebase Cloud Messaging Credentials ==
+
+This procedure describes how to obtain Firebase Cloud Messaging Credentials.
+
+'''Prerequisites.'''
+
+Before the Android application is able to receive the notifications, you must set up access to Firebase Cloud Messaging. The following credentials are necessary to set up Firebase Cloud Messaging for your app:
+
+* '''Server key'''
+* '''Sender ID'''
+* <code>google-services.json</code> file containing the credentials required to connect your app to Firebase and Google services.
+
+# From the ''Project Settings'' screen, switch to the ''Cloud Messaging'' tab, where you can find the '''Server key''' and '''Sender ID''' (known in GCM as '''Project Number'''). There is also a ''Legacy server key'' but it should not be used for new projects.
+# Download the <code>google-services.json</code> file as described in the [https://support.google.com/firebase/answer/7015592?hl=en Google Documentation].
+
+== Obtaining Apple Push Notification Service Credentials ==
+
+This procedure describes how to enable Push Notifications for your iOS application and get the credentials required for push from Apple.
+
+<ol style="list-style-type: decimal;">
+<li><p>Follow the [https://help.apple.com/xcode/mac/current/#/devdfd3d04a1 official Apple guide] to enable push notifications for your Xcode project.</p></li>
+<li><p>Follow the [https://help.apple.com/developer-account/#/dev82a71386a official Apple guide] to generate an APNs client TLS certificate and export the client TLS identity from your Mac.</p>
+<blockquote><p>'''Note'''</p>
+<p>Make sure to protect the p12 file with a password.</p>
+<p>The exported p12 file with the password will be used later when binding your Mobile App to the Push Notifications.</p></blockquote></li></ol>
+
+== Provisioning the Push Notifications Service ==
+
+This section describes how to set up the Push Notifications Mobile Service.
+
+<ol style="list-style-type: decimal;">
+<li><p>Log into the OpenShift console.</p></li>
+<li><p>Create a new project or choose an existing project.</p></li>
+<li><p>Click '''Add to Project''' and choose '''Browse Catalog''' from the options.</p>
+<p>You can filter the catalog items to only show mobile specific items by clicking the '''Mobile''' tab.</p></li>
+<li><p>Click '''Services''' and choose the service.</p>
+<p>[[File:shared/images/catalog-mobile-services.png|catalog mobile services]]</p></li>
+<li><p>Follow the wizard for provisioning that service.</p>
+<blockquote><p>'''Note'''</p>
+<p>If prompted to '''Create a Binding''', choose '''Do not bind at this time'''</p></blockquote></li></ol>
+
+Once the wizard steps are completed, navigate to the Project Overview in OpenShift to see the newly provisioned service. Provisioning a service may take some time.
+
+== Binding a Mobile App with the Push Notifications Service ==
+
+To use mobile services, you must represent your mobile app in '''Mobile Developer Console''', and that app must be associated with the mobile service. This association is called '''binding''' and it is necessary for your mobile app to use that service.
+
+* You have created a Mobile App.
+
+<div class="informalexample">
+
+; Android
+: ;* ✓ Google account
+;* ✓ Access to the Firebase console. Refer to [https://firebase.google.com/docs/ Firebase Docs].
+; iOS
+: ;* ✓ Apple Developer account
+;* ✓ APNs client TLS certificate. Refer to [https://help.apple.com/developer-account/#/dev82a71386a official Apple guide].
+
+
+</div>
+'''Procedure.'''
+
+To bind a Mobile App with a mobile service:
+
+<ol style="list-style-type: decimal;">
+<li><p>Log in to the Mobile Developer Console.</p></li>
+<li><p>Click on the Mobile App on the Overview screen.</p></li>
+<li><p>Navigate to '''Mobile Services''' tab.</p>
+<p>[[File:shared/images/mobile-clients-services-all-unbound.png|mobile clients services all unbound]]</p>
+<blockquote><p>'''Note'''</p>
+<p>It is possible to bind a Mobile App with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.</p></blockquote></li>
+<li><p>Press '''Bind to App''' in the Push Notifications.</p></li>
+<li><p>Fill out the binding parameters required by the Push Notifications Service.</p>
+<p>When you bind a mobile client to the Push Notifications service, a variant is created to store the credentials required to communicate with a push network. Those credentials need to be provided in the binding dialog.</p>
+<p>Choose a '''Mobile Client Type''' and fill out the required fields:</p>
+<div class="informalexample">
+
+<dl>
+<dt>Android</dt>
+<dd><ul>
+<li><p>Select <code>Android</code> from in the <code>Mobile Client Type</code> list.</p></li>
+<li><p>Enter a '''Server Key''' and a '''Sender ID'''. Both are present in the Firebase console.</p></li></ul>
+
+<p>[[File:shared/images/mobile-clients-services-push-parameters-android.png|mobile clients services push parameters android]]</p></dd>
+<dt>iOS</dt>
+<dd><ul>
+<li><p>Select <code>iOS</code> from the <code>Mobile Client Type</code> list.</p></li>
+<li><p>Obtain an APNs client TLS certificate. Refer to [https://help.apple.com/developer-account/#/dev82a71386a official Apple guide].</p></li>
+<li><p>Encode the certificate using base64 and paste the encoded certificate into the field labeled <code>iOS .p12 file</code>.</p>
+<p>If you are using macOS:</p>
+<pre>cat &lt;path/to/your/.p12&gt; | base64</pre>
+<p>If you are using Linux and a version of <code>base64</code> that wraps lines, disable line wrapping as follows:</p>
+<pre>cat &lt;path/to/your/.p12&gt; | base64 --wrap=0</pre></li></ul>
+
+<p>[[File:shared/images/mobile-clients-services-push-parameters-ios.png|mobile clients services push parameters ios]]</p></dd></dl>
+
+
+</div>
+<p>After clicking '''Create''' your variant will be created in UPS and you should see a new binding for your mobile client. A variant is used for the storage of the credentials provided in the Binding procedure.</p></li></ol>
+
+= Configuring your client app =
+
+== Downloading the Configuration File ==
+
+The <code>mobile-services.json</code> file provides the information for your mobile app to communicate with services. After you change any configuration in the Mobile Developer Console, it is important to update that file in your IDE.
+
+* The configuration of your Mobile App in Mobile Developer Console is up-to-date.
+* You have set up your mobile app development environment.
+
+<ol style="list-style-type: decimal;">
+<li><p>Open your Mobile App in Mobile Developer Console.</p></li>
+<li><p>Copy the <code>mobile-services.json</code> configuration to your clipboard.</p></li>
+<li><p>Save the contents of the clipboard to a new file called <code>mobile-services.json</code>.</p>
+<blockquote><p>'''Note'''</p>
+<p>The <code>mobile-services.json</code> file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.</p></blockquote></li>
+<li><p>Move <code>mobile-services.json</code> to the following location in your application project:</p>
+<div class="informalexample">
+
+<p><code>src/mobile-services.json</code></p>
+
+</div></li></ol>
+
+== Setting up the Push Notifications Service SDK ==
+
+This section helps you to set up the Push Notifications service SDK in your App. It describes how to set up and initialize the Push Notifications service SDK.
+
+* Your local <code>mobile-services.json</code> file is up-to-date.
+
+<div class="informalexample">
+
+
+
+</div>
+<ol style="list-style-type: decimal;">
+<li><p>Import the libraries</p>
+<div class="informalexample">
+
+<ol style="list-style-type: decimal;">
+<li><p>Install <code>cordova-plugin-aerogear-push</code>:</p>
+<source lang="bash">$ cordova plugin add @aerogear/cordova-plugin-aerogear-push</source></li>
+<li><p>Install the Unified Push Server package needed for device registration:</p>
+<source lang="bash">$ npm install --save @aerogear/push</source></li></ol>
+
+
+</div></li></ol>
+
+= Registering device on Push Notifications Service =
+
+To receive native push notifications from a Push Network, for example APNs or FCM, the mobile device is identified with a unique device-token assigned by that Push Network. This device-token is passed, by the operating system, to the mobile application. Refer to the operating system and Push Network documentation for further details.
+
+Every time a user launches a mobile app, that app receives the <code>device-token</code>, from a ''platform-specific'' method (or callback). Since the Push Network may assign a new token to a device, Red Hat recommends that the app registers the <code>device-token</code> with the UnifiedPush Server each time.
+
+The required metadata for an <code>Installation</code>:
+
+* '''deviceToken:''' _Identifies the device/user-agent within its Push Network.
+* '''variantID:''' The ID of the variant, where the client belongs to
+* '''variantSecret:''' Password of the actual variant
+
+The AeroGear UnifiedPush Server is able to store some user-specific metadata as well:
+
+* '''deviceType:''' The device type of the device or the user agent.
+* '''operatingSystem:''' The name of the underlying Operating System.
+* '''osVersion:''' The version of the used Operating System.
+* '''alias:''' Application specific alias to identify users with the system. For instance an <code>email address</code> or a <code>username</code>.
+* '''categories:''' Used to apply one or more &quot;tags&quot;.
+
+The device-token needs to be registered with the AeroGear UnifiedPush Server, to indicate there is a new Installation for a Variant. This registration is performed by calling an endpoint of the server.
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><source lang="javascript">import { PushRegistration } from "@aerogear/push";
+
+new PushRegistration(app.config).register().then(() => {
+    // Registration with UPS successful, you can now send push notifications from the UPS UI
+}).catch(err => {
+    // Error on device registration
+});</source></dd></dl>
+
+
+</div>
+= Sending a Push Notification using the Unified Push Admin UI =
+
+The Unified Push Admin UI allows you to send Push Notifications.
+
+* Make sure the Push Notifications service is provisioned.
+* Select a route in OpenShift.
+* Login with your OpenShift credentials.
+
+<blockquote>'''Note'''
+
+On first login you need to provide the OpenShift OAuth service permissions to read your user account.
+</blockquote>
+<div class="informalexample">
+
+<dl>
+<dt>Admin UI</dt>
+<dd><ol style="list-style-type: decimal;">
+<li><p>Open the Unified Push Admin UI in a browser.</p></li>
+<li><p>Select the target application from the home page and click '''Send Notification To This App'''.</p>
+<p>[[File:shared/images/send1.png|Send a Push]]</p></li>
+<li><p>When the ''Send Push'' dialog displays, enter text in the '''Message''' form.</p>
+<p>[[File:shared/images/send2.png|Enter the payload]]</p></li>
+<li><p>Click '''Send Push Notification''' to send the message to the target application.</p></li></ol>
+</dd>
+<dt>Java API</dt>
+<dd><ol style="list-style-type: decimal;">
+<li><p>Add [https://github.com/aerogear/aerogear-unifiedpush-java-client/ unifiedpush-java-client] as a dependency to your project.</p>
+<source lang="xml"><dependency>
+  <groupId>org.jboss.aerogear</groupId>
+  <artifactId>unifiedpush-java-client</artifactId>
+  <version>[version]</version>
+</dependency></source></li>
+<li><p>Send the message to the target application.</p>
+<source lang="java">final PushSender sender = DefaultPushSender
+        .withRootServerURL("<pushServerURL e.g http(s)//host:port/context>")
+        .pushApplicationId("<pushApplicationId e.g. 1234456-234320>")
+        .masterSecret("<masterSecret e.g. 1234456-234320>")
+        .build();
+
+final UnifiedMessage unifiedMessage = UnifiedMessage
+        .withMessage()
+        .alert("Hello from Java Sender API!")
+        .build();
+
+sender.send(unifiedMessage, () -> {
+    //do cool stuff
+});</source></li></ol>
+</dd>
+<dt>Node.js API</dt>
+<dd><ol style="list-style-type: decimal;">
+<li><p>Add [https://github.com/aerogear/aerogear-unifiedpush-nodejs-client/ unifiedpush-node-sender] as a dependency to your project.</p>
+<source lang="bash">npm i unifiedpush-node-sender</source></li>
+<li><p>Send the message to the target application.</p>
+<source lang="javascript">const agSender = require('unifiedpush-node-sender');
+
+const settings = {
+  url: "<pushServerURL e.g http(s)//host:port/context>",
+  applicationId: "<pushApplicationId e.g. 1234456-234320>",
+  masterSecret: "<masterSecret e.g. 1234456-234320>"
+
+};
+
+const message = {
+  alert: "Hello from the Node.js Sender API!"
+};
+
+const options = {
+  config: {
+    ttl: 3600
+  }
+};
+
+agSender(settings).then((client) => {
+  client.sender.send(message, options).then((response) => {
+    console.log('success', response);
+  }).catch((error) => {
+    console.log('error', error);
+  })
+});</source></li></ol>
+</dd>
+<dt>REST</dt>
+<dd><ol style="list-style-type: decimal;">
+<li><p>Send the message to the target application.</p>
+<source lang="bash">curl -u "<pushApplicationId>:<masterSecret>"  \
+   -v -H "Accept: application/json" -H "Content-type: application/json"  \
+   -X POST  -d \
+  '{
+     "message": {
+      "alert": "Hello from the curl HTTP Sender!",
+      "sound": "default"
+     }
+   }'  \
+   <pushServerURL>/rest/sender</source></li></ol>
+</dd></dl>
+
+
+</div>
+<blockquote>'''Note'''
+
+The 3rd party Push Network is responsible for delivering the Push Notification to the target application.
+</blockquote>
+= Handling Incoming Push Notifications =
+
+This section describes how to handle incoming push notifications in your foregrounded application.
+
+<blockquote>'''Note'''
+
+Push notifications that arrive when the application is in the background are always handled by the OS.
+</blockquote>
+Add the following code to your app:
+
+<source lang="bash">PushRegistration.onMessageReceived((notification: any) => {
+  console.log('Received a push notification', notification);
+});</source>

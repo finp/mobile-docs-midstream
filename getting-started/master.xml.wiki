@@ -1,0 +1,326 @@
+= Introduction =
+
+Red Hat Mobile Developer Services provides solutions to common development challenges faced by mobile developers. With OpenShift’s Container technology providing a secure, scalable backend platform, mobile developers can use the Red Hat SDK which supports a range of native (iOS &amp; Android) and hybrid (Xamarin &amp; Cordova) platforms to create secure, high quality apps and makes it easy to add features such as Push Notifications or Authentication.
+
+Mobile Apps in OpenShift allow you to perform Cloud Native Mobile App Development using OpenShift as the back-end for your mobile apps. A Mobile App is a representation of the mobile app that you are developing locally. Mobile Apps allow you to bind your mobile app to mobile services such as Identity Management, Push Notifications, Mobile Metrics and others. This makes many of the common tasks associated with mobile development much easier and quicker to implement.
+
+A configuration file named <code>mobile-services.json</code> acts as the link between your Mobile App in OpenShift and your local app in development. This configuration file is used to initialize the AeroGear SDK in your mobile app and to connect to the back-end Mobile Developer Services you have provisioned on OpenShift.
+
+Mobile Developer Console is part of Red Hat Mobile Developer Services and allows you to:
+
+* create a representation of your mobile application in OpenShift
+* bind Mobile App with mobile services
+* get the <code>mobile-services.json</code> configuration file for use in your local development environment
+
+<blockquote>'''Important'''
+
+Red Hat Mobile Developer Services is currently in a development phase. This makes it unsuitable for production deployment. Use this community release as an evaluation environment for developing and deploying mobile applications on Openshift.
+</blockquote>
+This guide shows you how to:
+
+* [[getting-started-installing.xml|Set up Red Hat Mobile Developer Services on OpenShift]]
+* [[getting-started-configuring.xml|Create a Mobile App and a Mobile Service]] (Identity Management)
+* [[getting-started-running.xml|Set up a local development environment]]
+* [[getting-started-running.xml#running|Configure the Red Hat showcase app for your mobile platform]] (Android, iOS, Cordova or Xamarin)
+* [[getting-started-running.xml#running-emulator|Run the showcase app and make calls to the Identity Management service]]
+
+= Configuring your Mobile App and Mobile Service in OpenShift =
+
+= Registering a Mobile App =
+
+After provisioning Mobile Developer Console, the next step is to register the Mobile App that you are going to develop.
+
+'''Procedure.'''
+
+To create a Mobile App:
+
+# Log into the OpenShift console.
+# Choose project where you have previously deployed Mobile Developer Console.
+# Open Mobile Developer Console by clicking on its route in the '''Overview''' screen.
+# Log into the '''Mobile Developer Console'''.
+# Click on <code>Create Mobile App</code> button.
+# Enter a name for your Mobile App.
+# Click <code>Create</code> button.
+
+= Binding a Mobile App with the Identity Management Service =
+
+To use mobile services, you must represent your mobile app in '''Mobile Developer Console''', and that app must be associated with the mobile service. This association is called '''binding''' and it is necessary for your mobile app to use that service.
+
+To bind a Mobile App with a mobile service:
+
+<ol style="list-style-type: decimal;">
+<li><p>Launch Mobile Developer Console</p></li>
+<li><p>Click on the Mobile App on the Overview screen</p></li>
+<li><p>Navigate to '''Mobile Services''' tab.</p>
+<p>[[File:shared/images/mobile-clients-services-all-unbound.png|mobile clients services all unbound]]</p>
+<blockquote><p>'''Note'''</p>
+<p>It is possible to bind a Mobile App with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.</p></blockquote></li>
+<li><p>Press '''Bind to App''' in the Identity Management</p></li>
+<li><p>Fill out the binding parameters required by the Identity Management Service.</p>
+<p>[[File:shared/images/mobile-clients-services-idm-parameters.png|mobile clients services idm parameters]]</p>
+<blockquote><p>'''Note'''</p>
+<p>Use <code>Public</code> when binding a Mobile App to a Identity Management. When binding mobile services to each other, use <code>Bearer</code>.</p></blockquote></li></ol>
+
+The Identity Management service will now be expandable, details about the service can be viewed.
+
+[[File:shared/images/mobile-clients-services-all-idm-provisioned.png|mobile clients services all idm provisioned]]
+
+= Configuring the Service =
+
+The following section will guide you through configuring the schema of the redirect url and web origin for a client in Red Hat Single Sign-On. This is required to enable OpenID authentication. For an explanation of these terms, see [https://www.keycloak.org/documentation.html Keycloak Documentation].
+
+== Configuring Red Hat Single Sign-On ==
+
+<ol style="list-style-type: decimal;">
+<li><p>Log into the Mobile Developer Console and navigate to the Mobile App screen.</p></li>
+<li><p>Select the '''Mobile Services''' tab and if a spinning icon is displayed to the right of the Identity Management entry, wait for the binding process to complete.</p></li>
+<li><p>If the ''Red Hat Single Sign-On Realm URL'' URL is not visible, expand the Identity Management Service by clicking the &gt; icon.</p></li>
+<li><p>Click on the '''Red Hat Single Sign-On Realm URL''' link to open the Red Hat Single Sign-On Administration Console.</p></li>
+<li><p>Log in to the Administration console (default admin/admin).</p></li>
+<li><p>Select '''Clients''' from the left navigation menu.</p></li>
+<li><p>Select your client from the list of clients. The name of your client is derived from the name of the Mobile App, the name of the mobile development platform and the client type, for example <code>myapp-android-public</code>.</p></li>
+<li><p>Add an additional entry to the '''Valid Redirect URIs''' input field.</p>
+<div class="informalexample">
+
+<p>Set the additional value to <code>http://localhost*</code>.</p>
+
+</div></li>
+<li><p>Add an additional entry to '''Web Origins'''.</p>
+<div class="informalexample">
+
+<p>Set the additional value to <code>http://localhost*</code>.</p>
+
+</div></li>
+<li><p>Save your changes.</p></li>
+<li><p>Create a new user account as described in [https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#create-new-user Creating a New User].</p></li>
+<li><p>Create credentials for the new user as described in [https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#user_credentials User Credentials].</p></li></ol>
+
+= Setting Up your Local Development Environment =
+
+* [[getting-started-installing.xml|Set up Red Hat Mobile Developer Services on OpenShift]]
+* [[getting-started-configuring.xml|Created a Mobile App and a Mobile Service]] (Identity Management)
+
+== Supported Environments ==
+
+In order to perform local development, you will need to have set up a local development environment or IDE. Mobile Developer Services supports mobile app development across iOS Native, Android Native, Cordova and Xamarin.
+
+<blockquote>'''Note'''
+
+You can only use the AeroGear Xamarin SDK to create iOS and Android Apps.
+</blockquote>
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><p>You need the following installed on your machine:</p>
+<ul>
+<li><p>✓ [https://nodejs.org/ Node.js] version 8.9.4 runtime and NPM</p></li>
+<li><p>✓ [https://cordova.apache.org/docs/en/latest/guide/cli/#installing-the-cordova-cli Cordova CLI] version 8.0.0</p></li>
+<li><p>✓ [https://github.com/ionic-team/ionic Ionic] version 4</p></li></ul>
+
+<p>For information on how to set up a local Cordova development environment, see the [https://cordova.apache.org/#getstarted Cordova documentation].</p></dd></dl>
+
+
+</div>
+== Running your First Mobile App ==
+
+=== Cloning the Showcase App ===
+
+<div class="informalexample">
+
+<dl>
+<dt>Ionic</dt>
+<dd><source lang="bash">$ git clone https://github.com/aerogear/ionic-showcase.git
+$ cd ionic-showcase
+$ git checkout0.8.0</source></dd>
+<dt>Android</dt>
+<dd><source lang="bash">$ git clone https://github.com/aerogear/android-showcase-template.git
+$ cd android-showcase-template
+$ git checkout0.8.0</source></dd>
+<dt>iOS</dt>
+<dd><source lang="bash">$ git clone https://github.com/aerogear/ios-showcase-template.git
+$ cd ios-showcase-template
+$ git checkout0.8.0</source></dd>
+<dt>Xamarin</dt>
+<dd><source lang="bash">$ git clone https://github.com/aerogear/xamarin-showcase-template.git
+$ cd xamarin-showcase-template
+$ git checkout0.8.0</source></dd></dl>
+
+
+</div>
+= Downloading the Mobile Services Configuration File =
+
+<ol style="list-style-type: decimal;">
+<li><p>Open your Mobile App in Mobile Developer Console.</p></li>
+<li><p>Copy the <code>mobile-services.json</code> configuration to your clipboard.</p></li>
+<li><p>Save the contents of the clipboard to a new file called <code>mobile-services.json</code>.</p>
+<blockquote><p>'''Note'''</p>
+<p>The mobile-services.json file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.</p></blockquote></li>
+<li><p>Follow the platform-specific instructions:</p></li></ol>
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><p>Copy the content of mobile-services.json file and paste it to the following location in your application project to replace the value of <code>config</code></p>
+<p><code>src/mobile-services.js</code></p>
+<p>Move mobile-services.json to the following location in your application project:</p>
+<p><code>src/mobile-services.json</code></p></dd></dl>
+
+
+</div>
+= Building the app =
+
+= Using Self-Signed Certificates in Mobile Apps =
+
+<blockquote>'''Note'''
+
+Before you can run a mobile app and connect to Mobile Developer Services, you must configure self-signed certificates on the mobile device.
+</blockquote>
+Throughout the development lifecycle of a mobile app, a common requirement is to integrate and connect with back-end services in a secure manner. This is achieved using SSL/TLS.
+
+However, in order for the client device to connect over SSL/TLS, it needs to trust the certificates used by the back-end services, which are signed by a certificate authority. Most client devices have a list of well-known and trusted certificate authorities pre-installed and this allows the client devices to verify the certificates used by the back-end services.
+
+A typical OpenShift development environment uses self-signed certificates that are not signed by any of the trusted certificate authorities. In such an environment, the client devices cannot establish secure connections with the back-end services that are running on a local OpenShift cluster.
+
+The suggested workaround is to manually extract the root certificate from the cluster, install it on the device, and make sure your application trusts the new certificate.
+
+== 1. Extracting the OpenShift Root Certificate Authority Cert ==
+
+<ol style="list-style-type: lower-alpha;">
+<li><p>Log into OpenShift as the admin user:</p>
+<source lang="bash">$ oc login -u system:admin</source></li>
+<li><p>Run the following command:</p>
+<source lang="bash">$ oc get secret router-certs --template='{{index .data "tls.crt"}}' -n default  |  \
+base64 --decode | sed -e '1,/^-----END RSA PRIVATE KEY-----$/ d'  > /tmp/localcluster.crt</source>
+<p>The resulting file is located in the <code>/tmp</code> directory.</p></li></ol>
+
+== 2. Installing the OpenShift Root Certificate Authority Cert on a Device ==
+
+<div class="informalexample">
+
+<dl>
+<dt>Android</dt>
+<dd><p>To install the cert on an Android emulator:</p>
+<ol style="list-style-type: decimal;">
+<li><p>[https://support.google.com/android/answer/2819522?hl=en Set screen lock] on the mobile device to allow for the installation of the certificate.</p></li>
+<li><p>Click on the '''certificate file''' and drag it onto the emulator. It should be copied to the ''Downloads'' folder on the device.</p></li>
+<li><p>Install the certificate on your device:</p>
+<ol style="list-style-type: lower-alpha;">
+<li><p>To choose a file, navigate to ''Settings &gt; Security &amp; location &gt; Advanced &gt; Encryption &amp; credentials &gt; Install from SD card''. From here, navigate to the ''Downloads'' folder and you should see the certificate file.</p></li>
+<li><p>Navigate to the <code>Downloads</code> folder and choose the certificate file. The Android system detects the certificate and lets you install it. For more information, see the [https://support.google.com/nexus/answer/2844832?hl=en sample guide for Google Nexus devices].</p></li></ol>
+</li></ol>
+
+<p>To install the cert on a real Android device:</p>
+<ol style="list-style-type: decimal;">
+<li><p>[https://support.google.com/android/answer/2819522?hl=en Enable screen lock] on the mobile device to allow for the installation of the certificate.</p></li>
+<li><p>Copy the file to your device using one of the following methods:</p>
+<ul>
+<li><p>Email attachment (Recommended) - Email the certificate to an address accessible from the device and download the attachment.</p></li>
+<li><p>Cloud service - Use a cloud storage service such as Dropbox or Google Drive that is accessible from the device, and download from the device.</p></li>
+<li><p>USB - Attach the device to a computer and drag the certificate to a devices file system.</p>
+<ul>
+<li><p>Use the [https://support.google.com/nexus/answer/2840804?hl=en example guide for Google Nexus devices]. The procedure might be different for other devices.</p></li>
+<li><p>Use the [https://developer.android.com/studio/command-line/adb Android Debug Bridge (adb) documentation] for the push command to push the certificate to the connected device, for example:</p>
+<pre>$ adb push /tmp/localcluster.crt /sdcard/Download/localcluster.crt</pre></li></ul>
+</li></ul>
+</li>
+<li><p>Install the certificate on your device:</p>
+<p>If you are use the email or cloud service method, you are prompted by the Android system automatically to install the file. Follow the instructions to complete the process.</p>
+<p>If you are using the USB approach, you must install the certificate manually:</p>
+<ol style="list-style-type: lower-alpha;">
+<li><p>Go to Settings &gt; Security &amp; location &gt; Advanced &gt; Encryption &amp; credentials &gt; Install from SD card. You are prompted to choose a file.</p></li>
+<li><p>Navigate to the <code>Downloads</code> folder and choose the certificate file. The Android system detects the certificate and lets you install it. For more information, see the [https://support.google.com/nexus/answer/2844832?hl=en sample guide for Google Nexus devices].</p></li></ol>
+</li></ol>
+
+<p>To verify the self-signed certificate is installed correctly, use a browser on the device to open the OpenShift web console. You should not see any warnings or errors relating to the certificate.</p></dd>
+<dt>iOS</dt>
+<dd><p>To install the cert on an iOS simulator:</p>
+<ol style="list-style-type: decimal;">
+<li><p>Drag and drop the certificate file to the simulator, and use Safari to download the certificate to the simulator.</p></li>
+<li><p>Install the downloaded certificate:</p>
+<ol style="list-style-type: lower-alpha;">
+<li><p>Go to Settings &gt; General &gt; Profile. You should see a profile with a name similar to <code>openshift-signer@xxxxxxx</code>.</p></li>
+<li><p>Tap on the profile. An '''Install''' button appears in the top right corner of the screen.</p></li>
+<li><p>Tap the '''Install''' button to install the cert.</p></li></ol>
+</li>
+<li><p>Trust the installed certificate in iOS. Go to Settings &gt; General &gt; About &gt; Certificate Trust Settings, and enable the newly installed root certificate. See the [https://support.apple.com/en-us/HT204477 Apple support site] for more instructions.</p></li></ol>
+
+<p>To install the cert on a real iOS device:</p>
+<ol style="list-style-type: decimal;">
+<li><p>Enable [https://support.apple.com/en-us/ht204060 Passcode] or [https://support.apple.com/en-us/ht201371 TouchID] protection on the mobile device to ensure the certificate can be installed.</p></li>
+<li><p>Copy the file to your device using one of the following methods:</p>
+<ul>
+<li><p>Email attachment (Recommended) - Email the certificate to an address accessible from the device and download the attachment.</p></li>
+<li><p>Cloud service - Use a cloud storage service such as Dropbox or Google Drive that is accessible from the device, and download from the device.</p></li></ul>
+</li>
+<li><p>Add the certificate to your device:</p>
+<p>When you download the certificate, the device should automatically detect a profile. Follow the on screen instructions to complete the process.</p></li>
+<li><p>Trust the installed certificate in iOS. Go to Settings &gt; General &gt; About &gt; Certificate Trust Settings, and enable the newly installed root certificate. See the [https://support.apple.com/en-us/HT204477 Apple support site] for more instructions.</p></li></ol>
+
+<p>To verify the self-signed certificate is installed correctly, use a browser on the deveice to open the OpenShift web console. You should not see any warnings or errors about the certificate.</p></dd></dl>
+
+
+</div>
+== 3. Trusting the Certificate In Your App. ==
+
+In the previous procedures, you ensured that the operating system trusts the cert. However, if you are using newer versions of the Android or iOS operating systems, you also need to update your mobile app to make sure it trusts the certificate.
+
+<div class="informalexample">
+
+<dl>
+<dt>Android</dt>
+<dd><ol style="list-style-type: decimal;">
+<li><p>Create a <code>network_security_config.xml</code> file with the following code.</p>
+<source lang="xml"><network-security-config>
+  <base-config>
+    <trust-anchors>
+      <certificates src="user"/>
+      <certificates src="system"/>
+    </trust-anchors>
+  </base-config>
+</network-security-config></source>
+<p>Save this file in the following location: * the root directory of the project for JavaScript apps</p></li>
+<li><p>Update the manifest file of your Android application to use this configuration.</p>
+<ol style="list-style-type: lower-alpha;">
+<li><p>If you are developing a Cordova application, add the following code the <code>config.xml</code> file in for the <code>android</code> platform:</p>
+<source lang="xml"><resource-file src="network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
+<edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+    <application android:networkSecurityConfig="@xml/network_security_config" />
+</edit-config></source>
+<p>You also need to add <code>xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</code> to the <code>widget</code> tag in the same <code>config.xml</code> file.</p></li></ol>
+</li></ol>
+
+<p>For more information, check the [https://developer.android.com/training/articles/security-config Android network security configuration guide].</p></dd>
+<dt>iOS</dt>
+<dd><ol style="list-style-type: decimal;">
+<li><p>Add the <code>NSAllowsArbitraryLoads</code> key to the <code>Info.plist</code> file of your iOS project.</p></li>
+<li><p>Set the <code>NSAllowsArbitraryLoads</code> key to <code>Yes</code> to disable the App Transport Security (ATS) feature for your application.</p></li></ol>
+
+<blockquote><p>'''Note'''</p>
+<p>Only perform these steps for development or debug purposes, the resulting app will not pass the App Store review process.</p></blockquote>
+<p>For more information, see the [https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW60 Apple developer docs].</p></dd></dl>
+
+
+</div>
+= Running the app in an emulator =
+
+<div class="informalexample">
+
+<dl>
+<dt>Cordova</dt>
+<dd><p>Install dependencies:</p>
+<ol style="list-style-type: decimal;">
+<li><p><code>npm install -g cordova@8 ionic@4</code></p></li>
+<li><p><code>npm install</code></p></li></ol>
+
+<p>Cordova cross-platform applications can be run in the following emulators:</p>
+<ul>
+<li><p>Android: <code>npm run ionic:android</code></p></li>
+<li><p>iOS: <code>npm run ionic:ios</code></p>
+<blockquote><p>'''Note'''</p>
+<p>A running emulator on macOS is required to run an iOS application.</p></blockquote></li></ul>
+</dd></dl>
+
+
+</div>

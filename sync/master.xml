@@ -1,0 +1,2617 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc maxdepth="4"?>
+<?asciidoc-numbered?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en" xml:id="a-collection-of-modules">
+<info>
+<title>Developing a Data Sync App</title>
+<date>2019-08-12</date>
+</info>
+<section xml:id="introducing-data-sync-data-sync">
+<title>Introducing Data Sync</title>
+<simpara>Data Sync is a JavaScript framework that enables a developer to add real time data synchronization to both mobile and web clients.
+The Data Sync framework also provides offline capabilities that allow a client to continue operating offline and once connectivity is re-established, the client is automatically synchronized.
+An app built using the Data Sync framework typically connects to a data source for data persistence however, an app built using the Data Sync framework works without a data source.</simpara>
+<simpara>An app built using the Data Sync framework comprises of two components:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>The Data Sync client is a JavaScript client offering client side extensions and server side integration.
+The Data Sync client can be integrated into frameworks such as React and Angular.</simpara>
+</listitem>
+<listitem>
+<simpara>The Data Sync server is a framework for building Node.js based GraphQL API.
+The Data Sync server offers enterprise extensions for ensuring data security, integrity, and monitoring.
+It can be integrated into existing Node.js application.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>The Data Sync framework uses the <link xl:href="https://www.apollographql.com/">Apollo platform</link> as the GraphQL implementation.</simpara>
+<itemizedlist>
+<title>Additional resources</title>
+<listitem>
+<simpara>Real-time data synchronization across mobile and web clients.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Websockets allow for real-time data synchronization across multiple Data Sync clients. Data Sync clients receive updates from the Data Sync server without having to explicitly query their local data as conflict detection is handled by the Data Sync server.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>A Data Sync client can perform any operation regardless of the connectivity state.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>If network connectivity is a concern, a Data Sync client can perform any operation regardless of its connectivity state. A Data Sync client can perform the same operations when it is on-line or off-line, and this functionality ensures that you can safely use Data Sync to create business critical applications.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Offers fully customizable conflict detection and resolution to the developer.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Data Sync enables users to detect and resolve conflicts on the Data Sync server resulting in the seamless transmission of data to various Data Sync clients. Data Sync also allows for conflict resolution on the Data Sync client should a developer want to adopt this strategy.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Instant synchronous queries provide instant feedback for developers.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>When a Data Sync client is on-line, instant queries allow a developer to quickly react to errors and display results to users when the operation is executed. Developers can retrieve an instant response or error from the Data Sync server however the Data Sync client must have a connection to the Data Sync server.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Flexible data sources.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Data Sync can connect to various data sources, for example, cloud storage, databases such as MongoDB and PostgreSQL, and existing back-end data sources.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="data-sync-technical-overview-data-sync">
+<title>Data Sync Technical Overview</title>
+<simpara>This section describes the technical aspects of Data Sync.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="shared/images/data-sync-technical-overview.png"/>
+</imageobject>
+<textobject><phrase>Data Sync Technical Overview</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<table frame="all" rowsep="1" colsep="1">
+<title>Data Sync case study</title>
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Component</entry>
+<entry align="left" valign="top">Technical Role</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>Sync Client</simpara></entry>
+<entry align="left" valign="top"><simpara>The Sync Client is a client side JavaScript library used for building web and mobile applications. It allows for simple Sync Server integration.</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Sync Server</simpara></entry>
+<entry align="left" valign="top"><simpara>The Sync Server is based on the Apollo Server framework and it performs two primary functions. It sends and retrieves data from a data source, and it syncs data across the Sync Clients. Sync Server uses GraphQL to create custom connections that in turn allow various types of Sync Clients to connect.</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Data sources</simpara></entry>
+<entry align="left" valign="top"><simpara>The data source stores data. This data is typically what is synchronized across the Sync Clients.</simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<simpara>For more information about the Apollo Server framework, see <link xl:href="https://www.apollographql.com/docs/apollo-server/"><emphasis>Start here to learn about the Apollo platform</emphasis></link>.</simpara>
+<section xml:id="ref-data-sync-terminology-data-sync">
+<title>Data Sync terminology</title>
+<simpara>This section describes terminology that is associated with Data Sync.</simpara>
+<variablelist>
+<title>Data Sync terms</title>
+<varlistentry>
+<term>GraphQL</term>
+<listitem>
+<simpara>A query language for your API, and a server-side runtime for executing queries that use a type system. For more information, see <link xl:href="https://graphql.org/learn">GraphQL</link>.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Apollo</term>
+<listitem>
+<simpara><link xl:href="https://www.apollographql.com/">Apollo</link> is an implementation of GraphQL designed for the needs of product engineering teams building modern, data-driven applications.
+Apollo includes two open-source libraries, Apollo Server and Apollo Client.
+The Data Sync Framework leverages Apollo functionality.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Sync Server</term>
+<listitem>
+<simpara>The Sync Server is a framework for building Node.js based GraphQL API.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Sync Client</term>
+<listitem>
+<simpara>The Sync Client is a JavaScript client offering client side extensions and server side integration. The Sync Client can be integrated into frameworks such as React and Angular.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Data sources</term>
+<listitem>
+<simpara>Data Sync framework is typically used in conjunction with a data source for data persistence however, an app built using the Data Sync framework works without a data source.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Data Sync framework</term>
+<listitem>
+<simpara>Data Sync is a JavaScript framework that enables a developer to add the capability to synchronize data in real-time for both mobile and web clients.</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+<itemizedlist xml:id="data-sync_additional-resources-data-sync">
+<title>Additional resources</title>
+<listitem>
+<simpara><link xl:href="https://graphql.org/learn">Learn GraphQL</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://github.com/aerogear/voyager-server">Voyager Server GitHub repository</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://github.com/aerogear/aerogear-js-sdk/tree/master/packages/sync">Voyager Client GitHub repository</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.apollographql.com/docs/apollo-server">Apollo Server</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.apollographql.com/docs/react">Apollo Client</link></simpara>
+</listitem>
+</itemizedlist>
+</section>
+</section>
+<section xml:id="_developing_a_data_sync_application">
+<title>Developing a Data Sync Application</title>
+<simpara>Unlike other mobile services which provide a server and an API, Data Sync is a framework that you use to develop services. Typically, you develop a Data Sync service as follows:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Design a <link xl:href="https://graphql.org/learn">GraphQL</link> schema.</simpara>
+</listitem>
+<listitem>
+<simpara>Develop a Data Sync server and Data Sync client, with the features you require, for example, real-time updates.</simpara>
+</listitem>
+<listitem>
+<simpara>Containerize your Data Sync server and deploy it to OpenShift.</simpara>
+</listitem>
+<listitem>
+<simpara>Bind your mobile app to that Data Sync server.</simpara>
+</listitem>
+<listitem>
+<simpara>Configure your mobile app to point to the Data Sync server.</simpara>
+</listitem>
+<listitem>
+<simpara>Complete your mobile app development.</simpara>
+</listitem>
+<listitem>
+<simpara>Build and run your mobile app.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="getting-started-with-hello-world-data-sync">
+<title>Getting Started with Hello World Data Sync</title>
+<simpara>In this example, you add the Voyager Server library to your <link xl:href="https://expressjs.com/">Express</link> node.js project, create an <literal>index-1.js</literal> file, run the server, and query GraphQL.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Voyager Server is a set of Node.js libraries that can be used to build a Data Sync server.</simpara>
+</listitem>
+<listitem>
+<simpara>Voyager Server is the starting point for developing a Data Sync application.</simpara>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>You have Node.js and npm installed.</simpara>
+</listitem>
+<listitem>
+<simpara>You have created a node.js project.</simpara>
+</listitem>
+</itemizedlist>
+<orderedlist numeration="arabic">
+<title>Procedure</title>
+<listitem>
+<simpara>Add libraries to your Node.js application:</simpara>
+<informalexample>
+<programlisting language="bash" linenumbering="unnumbered">$ npm install graphql <co xml:id="CO1-1"/>
+$ npm install express <co xml:id="CO1-2"/>
+$ npm install @aerogear/voyager-server <co xml:id="CO1-3"/></programlisting>
+<calloutlist>
+<callout arearefs="CO1-1">
+<para>See <link xl:href="https://graphql.org/">https://graphql.org/</link></para>
+</callout>
+<callout arearefs="CO1-2">
+<para>See <link xl:href="https://expressjs.com/">https://expressjs.com/</link></para>
+</callout>
+<callout arearefs="CO1-3">
+<para>The Voyager Server library that enables data sync</para>
+</callout>
+</calloutlist>
+</informalexample>
+</listitem>
+<listitem>
+<simpara>Create an <literal>index-1.js</literal> file with the following content:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const express = require('express')
+//Include our server libraries
+const { VoyagerServer, gql } = require('@aerogear/voyager-server')
+
+//Provide your graphql schema
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`
+
+//Create the resolvers for your schema
+const resolvers = {
+  Query: {
+    hello: (obj, args, context, info) =&gt; {
+      return `Hello world`
+    }
+  }
+}
+
+//Initialize the library with your Graphql information
+const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+//Connect the server to express
+const app = express()
+apolloServer.applyMiddleware({ app })
+
+app.listen(4000, () =&gt;
+  console.log(`🚀 Server ready at http://localhost:4000/graphql`)
+)</programlisting>
+</listitem>
+<listitem>
+<simpara>Run the server:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">$ node index-1.js
+
+🚀 Server ready at http://localhost:4000/graphql</programlisting>
+</listitem>
+<listitem>
+<simpara>Browse <literal><link xl:href="http://localhost:4000/graphql">http://localhost:4000/graphql</link></literal> and interact with the playground. For example:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">{
+  hello
+}</programlisting>
+</listitem>
+<listitem>
+<simpara>Check the output. For the example above, the output should be:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">{
+  "data": {
+    "hello": "Hello world"
+  }
+}</programlisting>
+</listitem>
+</orderedlist>
+<simpara>To get started with the  Data Sync framework, see the <link xl:href="https://github.com/aerogear/ionic-showcase">sample application</link>.
+In this app, you can explore a more complex schema.</simpara>
+<simpara>Before proceeding, make sure you have an understanding of the following GraphQL concepts:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Schema design</simpara>
+</listitem>
+<listitem>
+<simpara>Resolvers</simpara>
+</listitem>
+<listitem>
+<simpara>Subscriptions</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_querying_a_data_sync_server_using_a_data_sync_client">
+<title>Querying a Data Sync server using a Data Sync client</title>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>You have Node.js and npm installed.</simpara>
+</listitem>
+<listitem>
+<simpara>You have created an empty web project that supports ES6, for example, using the <link xl:href="https://webpack.js.org/guides/getting-started/">webpack getting started</link> guide.</simpara>
+</listitem>
+<listitem>
+<simpara>You have completed the server getting started guide and the application is running.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>This section describes how to use the Voyager Client to create mobile and web applications that can communicate with the Voyager server application.</simpara>
+<simpara>Data Sync provides JavaScript libraries which integrate your javascript app using with a server that also uses Data Sync.
+The client libraries are based on the <link xl:href="https://www.apollographql.com/docs/react/api/apollo-client.html">Apollo client</link>.</simpara>
+<simpara>You will add the libraries to your mobile project, configure the client classes, connect to the server, and confirm that it works.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Create an address book server:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Create an <literal>index-2.js</literal> file with the following content:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const express = require('express')
+//Include our server libraries
+const { VoyagerServer, gql } = require('@aerogear/voyager-server')
+
+//Provide your graphql schema
+const typeDefs = gql`
+type Query {
+  info: String!
+  addressBook: [Person!]!
+}
+
+type Mutation {
+  post(name: String!, address: String!): Person!
+}
+
+type Person {
+  id: ID!
+  address: String!
+  name: String!
+}
+`
+
+let persons = [{
+  id: 'person-0',
+  name: 'Alice Roberts',
+  address: '1 Red Square, Waterford'
+}]
+
+let idCount = persons.length
+const resolvers = {
+  Query: {
+    info: () =&gt; `This is a simple example`,
+    addressBook: () =&gt; persons,
+  },
+  Mutation: {
+
+    post: (parent, args) =&gt; {
+       const person = {
+        id: `person-${idCount++}`,
+        address: args.address,
+        name: args.name,
+      }
+      persons.push(person)
+      return person
+    }
+  },
+}
+
+//Initialize the library with your Graphql information
+const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+//Connect the server to express
+const app = express()
+apolloServer.applyMiddleware({ app })
+
+app.listen(4000, () =&gt;
+  console.log(`🚀 Server ready at http://localhost:4000/graphql`)
+)</programlisting>
+</listitem>
+<listitem>
+<simpara>Run the server:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">$ node index-2.js
+
+🚀 Server ready at http://localhost:4000/graphql</programlisting>
+</listitem>
+<listitem>
+<simpara>Browse <literal><link xl:href="http://localhost:4000/graphql">http://localhost:4000/graphql</link></literal> and interact with the playground. For example:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">{
+  addressBook {
+    name
+    address
+
+  }
+}</programlisting>
+</listitem>
+<listitem>
+<simpara>Check the output. For the example above, the output should be:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">{
+  "data": {
+    "addressBook": [
+      {
+        "name": "Alice Roberts",
+        "address": "1 Red Square, Waterford"
+      }
+    ]
+  }
+}</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Add the following libraries to your javascript client:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">npm install @aerogear/voyager-client
+npm install graphql
+npm install graphql-tag</programlisting>
+<note>
+<simpara>A prerequisite is that you have created an empty web project that supports ES6, for example, using the <link xl:href="https://webpack.js.org/guides/getting-started/">webpack getting started</link> guide.</simpara>
+</note>
+</listitem>
+<listitem>
+<simpara>Create an <literal>index.js</literal> file to make the same query as step 1, but from JavaScript.</simpara>
+<simpara>In this example, a config object is created, and the <literal>httpUrl</literal> field is set to the url of the Voyager server application.
+If the client app uses subscriptions, then the <literal>wsUrl</literal> field is required too.</simpara>
+<formalpara>
+<title>src/index.js</title>
+<para>
+<programlisting language="javascript" linenumbering="unnumbered">// gql is a utility function that handles gql queries
+import gql from 'graphql-tag';
+
+import { OfflineClient } from '@aerogear/voyager-client';
+
+// connect to the local service.
+let config = {
+  httpUrl: "http://localhost:4000/graphql",
+  wsUrl: "ws://localhost:4000/graphql",
+}
+
+async function queryPeople() {
+
+  // Actually create the client
+  let offlineClient = new OfflineClient(config);
+  let client = await offlineClient.init();
+
+  // Execute the query
+  client.query({
+      fetchPolicy: 'network-only',
+      query: gql`
+      query addressBook{
+        addressBook{
+        name
+        address
+        }
+      }
+      `
+    })
+    //Print the response of the query
+    .then( ({data}) =&gt; {
+      console.log(data.addressBook)
+    });
+}
+
+queryPeople();</programlisting>
+</para>
+</formalpara>
+</listitem>
+<listitem>
+<simpara>Build and run the client application.</simpara>
+</listitem>
+<listitem>
+<simpara>Browse the client application and check the console output.</simpara>
+<simpara>It should include an array similar to the following:</simpara>
+<screen>address: "1 Red Square, Waterford"
+name: "Alice Roberts"
+__typename: "Person"</screen>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_adding_a_mutation_to_a_data_sync_client">
+<title>Adding a mutation to a Data Sync client</title>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>You have Node.js and npm installed.</simpara>
+</listitem>
+<listitem>
+<simpara>You have completed <link xl:href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/developing_a_data_sync_app#querying_a_data_sync_server_using_a_data_sync_client">Queries section</link> and the server is still running.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Modify the client application to perform the mutation:</simpara>
+<formalpara>
+<title>src/index.js</title>
+<para>
+<programlisting language="javascript" linenumbering="unnumbered">// gql is a utility function that handles gql queries
+import gql from 'graphql-tag';
+
+import { OfflineClient } from '@aerogear/voyager-client';
+
+// connect to the local service.
+let config = {
+  httpUrl: "http://localhost:4000/graphql",
+  wsUrl: "ws://localhost:4000/graphql",
+}
+
+async function addPerson() {
+
+  // Actually create the client
+  let offlineClient = new OfflineClient(config);
+  let client = await offlineClient.init();
+
+  // Execute the mutation
+  client.mutate({
+      mutation: gql`
+       mutation {
+         post(name: "John Doe", address: "1 Red Hill") {
+           id
+         }
+       }
+       `
+    })
+    //Print the response of the query
+    .then( ({data}) =&gt; {
+      console.log(data)
+    });
+}
+
+addPerson();</programlisting>
+</para>
+</formalpara>
+</listitem>
+<listitem>
+<simpara>Build and run the client application.</simpara>
+</listitem>
+<listitem>
+<simpara>Browse the client application and check the console output.</simpara>
+<simpara>It should include an array similar to the following:</simpara>
+<screen>{
+  "data": {
+    "post": {
+      "id": "person-1"
+    }
+  }
+}</screen>
+</listitem>
+</orderedlist>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="offline-client">
+<title>Supporting offline functionality in your mobile app</title>
+<section xml:id="_about_offline_functionality">
+<title>About offline functionality</title>
+<simpara>Your mobile app can run offline and allow users to query and create mutations using the @aerogear/voyager-client module.</simpara>
+<simpara>As shown in the diagram below, all queries are performed against the cache, a mutation store supports offline mutations.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="shared/images/datasync-features.png"/>
+</imageobject>
+<textobject><phrase>datasync features</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<note>
+<simpara>The mutation store is sometimes referred to as the offline store.</simpara>
+</note>
+<simpara>If a client goes offline for a long period of time, the mutation store negotiates local updates with the server using conflict resolution strategies.</simpara>
+<simpara>When a client comes online again, the mutations are replicated back to the server, as shown in the diagram below:</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="shared/images/datasync-going_offline.png"/>
+</imageobject>
+<textobject><phrase>datasync going offline</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Developers can attach listeners to get notifications about updates applied on the server or failing, and take appropriate actions.</simpara>
+<formalpara>
+<title>Mutations and Local Cache</title>
+<para>By default queries and the results of mutations are cached.</para>
+</formalpara>
+<simpara>Mutations can change query results, make sure to call the <literal>refetchQueries</literal> or <literal>update</literal> options of the <literal>mutate</literal> method to ensure the local cache is kept up to date.</simpara>
+<simpara>The @aerogear/voyager-client module also provides cache helper functions to reduce the amount of code required, as described in <xref linkend="cache-update-helpers"/>.</simpara>
+<simpara>For more information about <literal>mutate</literal> and the options available, see <link xl:href="https://www.apollographql.com/docs/react/essentials/mutations.html#props">Apollo&#8217;s document about mutations</link>.</simpara>
+</section>
+<section xml:id="setup-offline-client">
+<title>Creating an offline client</title>
+<simpara>The @aerogear/voyager-client module provides an <literal>OfflineClient</literal> class which exposes the following functionality:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>direct access to the mutation store</simpara>
+</listitem>
+<listitem>
+<simpara>allows you register multiple offline event listeners as described in <xref linkend="sync-client-offline-queue-listener"/></simpara>
+</listitem>
+<listitem>
+<simpara>automatically ensures the mobile app&#8217;s local cache is kept up to date. This client automatically generates <literal>update</literal> methods as described in <xref linkend="cache-update-helpers"/>.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>To create the client:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">import { OfflineClient } from '@aerogear/voyager-client';
+
+let config = {
+  httpUrl: "http://localhost:4000/graphql",
+  wsUrl: "ws://localhost:4000/graphql",
+}
+
+async function setupClient() {
+
+  let offlineClient = new OfflineClient(config);
+  let client = await offlineClient.init();
+}
+
+setupClient();</programlisting>
+<simpara>This client can replace an Apollo client as it supports the same functionality.</simpara>
+</section>
+</section>
+<section xml:id="_detecting_mutations_while_offline">
+<title>Detecting mutations while offline</title>
+<simpara>If a mutation occurs while the device is offline, the <literal>client.mutate</literal> function:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>returns immediately</simpara>
+</listitem>
+<listitem>
+<simpara>returns a promise with an error</simpara>
+</listitem>
+</itemizedlist>
+<simpara>You can check the <emphasis>error</emphasis> object to isolate errors relating to offline state.
+Invoking the <literal>watchOfflineChange()</literal> method on an <emphasis>error</emphasis> object watches for when an offline change is synced with the server, and sends a notification when triggered.</simpara>
+<simpara>For example:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">  client.mutate(...).catch((error)=&gt; {
+    // 1. Detect if this was an offline error
+   if(error.networkError &amp;&amp; error.networkError.offline){
+     const offlineError: OfflineError =  error.networkError;
+     // 2. We can still track when offline change is going to be replicated.
+     offlineError.watchOfflineChange().then(...)
+   }
+  });</programlisting>
+<note>
+<simpara>In addition to watching individual mutations, you can add a global offline listener when creating a client as described in <xref linkend="sync-client-offline-queue-listener"/>.</simpara>
+</note>
+</section>
+<section xml:id="_performing_mutations_while_offline">
+<title>Performing mutations while offline</title>
+<simpara>The @aerogear/voyager-client module provides an <literal>offlineMutate</literal> method which extends Apollo&#8217;s mutate function with some extra functionality.
+This includes automatically adding some fields to each operation&#8217;s context.</simpara>
+<simpara>To set up the offline client, see <xref linkend="setup-offline-client"/>.</simpara>
+<simpara>Once set up is complete, <literal>offlineMutate</literal> is then available to use.</simpara>
+<simpara>Note: The <literal>offlineMutate</literal> method accepts the same parameters as <literal>mutate</literal> with some additional optional parameters also available.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">  const { CacheOperation } = require('@aerogear/voyager-client');
+
+  client.offlineMutate({
+    ...
+    updateQuery: GET_TASKS, <co xml:id="CO2-1"/>
+    operationType: CacheOperation.ADD, <co xml:id="CO2-2"/>
+    idField: "id", <co xml:id="CO2-3"/>
+    returnType: "Task" <co xml:id="CO2-4"/>
+    ...
+  })</programlisting>
+<calloutlist>
+<callout arearefs="CO2-1">
+<para>The query or queries which should be updated with the result of the mutation.</para>
+</callout>
+<callout arearefs="CO2-2">
+<para>The type of operation being performed. Should be "add", "refresh" or "delete". Defaults to "add" if not provided.</para>
+</callout>
+<callout arearefs="CO2-3">
+<para>The field on the object used to identify it. Defaults to "id" if not provided.</para>
+</callout>
+<callout arearefs="CO2-4">
+<para>The type of object being operated on.</para>
+</callout>
+</calloutlist>
+<section xml:id="_supporting_app_restarts_while_offline">
+<title>Supporting app restarts while offline</title>
+<simpara>An Apollo client holds all mutation parameters in memory.
+An offline Apollo client continues to store mutation parameters and once online, it restores all mutations to memory.
+Any update functions that are supplied to mutations cannot be cached by an Apollo client resulting in the loss of all optimistic responses after a restart.
+<emphasis>Update functions</emphasis> supplied to mutations cannot be saved in the cache.
+As a result, all <emphasis>optimisticResponses</emphasis> disappear from the application after a restart and  only reappear when the Apollo client becomes online and successfully syncs with the server.</simpara>
+<simpara>To prevent the loss of all <emphasis>optimisticResponses</emphasis> after a restart, you can configure the <emphasis>Update Functions</emphasis> to restore all <emphasis>optimisticResponses</emphasis>.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const updateFunctions = {
+  // Can contain update functions from each component
+  ...ItemUpdates,
+  ...TasksUpdates
+}
+
+let config = {
+  mutationCacheUpdates: updateFunctions,
+}</programlisting>
+<simpara>You can also use <literal>getUpdateFunction</literal> to automatically generate functions:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { createMutationOptions, CacheOperation } = require('@aerogear/voyager-client');
+
+const updateFunctions = {
+  // Can contain update functions from each component
+  createTask: getUpdateFunction({
+      mutationName: 'createTask',
+      idField: 'id',
+      updateQuery: GET_TASKS,
+      operationType: CacheOperation.ADD
+    }),
+  deleteTask: getUpdateFunction({
+      mutationName: 'deleteTask',
+      idField: 'id',
+      updateQuery: GET_TASKS,
+      operationType: CacheOperation.DELETE
+    })
+}
+
+let config = {
+  ...
+  mutationCacheUpdates: updateFunctions,
+  ...
+}</programlisting>
+</section>
+<section xml:id="_ensuring_specified_mutations_are_performed_online_only">
+<title>Ensuring specified mutations are performed online only</title>
+<simpara>If you wish to ensure certain mutations are only executed when the client is online, use the GraphQL directive <literal>@onlineOnly</literal>, for example:</simpara>
+<programlisting language="graphql" linenumbering="unnumbered">exampleMutation(...) @onlineOnly {
+  ...
+}</programlisting>
+</section>
+<section xml:id="sync-client-offline-queue-listener">
+<title>Listening for events</title>
+<simpara>To handle all notifications about offline related events, use the <emphasis role="strong">offlineQueueListener</emphasis> listener in the config object</simpara>
+<simpara>The following events are emitted:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>onOperationEnqueued</literal> - Called when new operation is being added to offline queue</simpara>
+</listitem>
+<listitem>
+<simpara><literal>onOperationSuccess</literal> - Called when back online and operation succeeds</simpara>
+</listitem>
+<listitem>
+<simpara><literal>onOperationFailure</literal> - Called when back online and operation fails with GraphQL error</simpara>
+</listitem>
+<listitem>
+<simpara><literal>queueCleared</literal> - Called when offline operation queue is cleared</simpara>
+</listitem>
+</itemizedlist>
+<simpara>You can use this listener to build User Interfaces that show pending changes.</simpara>
+</section>
+<section xml:id="cache-update-helpers">
+<title>Using cache update helpers</title>
+<simpara>The @aerogear/voyager-client module provides an out of the box solution for managing updates to your application&#8217;s cache.
+It can intelligently generate cache update methods for both mutations and subscriptions.</simpara>
+<section xml:id="_using_cache_update_helpers_for_mutations">
+<title>Using cache update helpers for mutations</title>
+<simpara>The following example shows how to use these helper methods for mutations.
+To use these methods, create an offline client as described in <xref linkend="setup-offline-client"/> and then use the  <literal>offlineMutate</literal> method.
+The <literal>offlineMutate</literal> function accepts a <literal>MutationHelperOptions</literal> object as a parameter.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { createMutationOptions, CacheOperation } = require('@aerogear/voyager-client');
+
+const mutationOptions = {
+  mutation: ADD_TASK,
+  variables: {
+    title: 'item title'
+  },
+  updateQuery: {
+    query: GET_TASKS,
+    variables: {
+      filterBy: 'some filter'
+    }
+  },
+  typeName: 'Task',
+  operationType: CacheOperation.ADD,
+  idField: 'id'
+};</programlisting>
+<simpara>You can also provide more than one query to update the cache by providing an array to the <literal>updateQuery</literal> parameter:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const mutationOptions = {
+  ...
+  updateQuery: [
+    { query: GET_TASKS, variables: {} }
+  ]
+  ,
+  ...
+};</programlisting>
+<simpara>The following example shows how to prepare an offline mutation to add a task using the <literal>mutationOptions</literal> object and how to update the <literal>GET_TASK</literal> query for the client&#8217;s cache.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { createMutationOptions, CacheOperation } = require('@aerogear/voyager-client');
+
+client.offlineMutate&lt;Task&gt;(mutationOptions);</programlisting>
+<simpara>If you do not want to use the offline client you can also use the <literal>createMutationOptions</literal> function directly.
+This function provides an Apollo compatible <literal>MutationOptions</literal> object to pass to your pre-existing client.
+The following example shows how to use this function where <literal>mutationOptions</literal> is the same object as the previous code example.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const options = createMutationOptions(mutationOptions);
+
+client.mutate&lt;Task&gt;(options);</programlisting>
+</section>
+<section xml:id="_using_cache_update_helpers_for_subscriptions">
+<title>Using cache update helpers for subscriptions</title>
+<simpara>The @aerogear/voyager-client module provides a subscription helper which can generate the necessary options to be used with Apollo Client&#8217;s <literal>subscribeToMore</literal> function.</simpara>
+<simpara>To use this helper, we first need to create some options, for example:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { CacheOperation } = require('@aerogear/voyager-client');
+
+const options = {
+  subscriptionQuery: TASK_ADDED_SUBSCRIPTION,
+  cacheUpdateQuery: GET_TASKS,
+  operationType: CacheOperation.ADD
+}</programlisting>
+<simpara>This options object informs the subscription helper that for every data object
+received because of the <literal>TASK_ADDED_SUBSCRIPTION</literal> the <literal>GET_TASKS</literal> query should also be kept up to date in the cache.</simpara>
+<simpara>You can then create the required cache update functions:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { createSubscriptionOptions } = require('@aerogear/voyager-client');
+
+const subscriptionOptions = createSubscriptionOptions(options);</programlisting>
+<simpara>To use this helper, pass this <literal>subscriptionOptions</literal> variable to the <literal>subscribeToMore</literal> function of our <literal>ObservableQuery</literal>.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const query = client.watchQuery&lt;AllTasks&gt;({
+  query: GET_TASKS
+});
+
+query.subscribeToMore(subscriptionOptions);</programlisting>
+<simpara>The cache is kept up to date while automatically performing data deduplication.</simpara>
+</section>
+<section xml:id="_using_cache_update_helpers_for_multiple_subscriptions">
+<title>Using cache update helpers for multiple subscriptions</title>
+<simpara>The @aerogear/voyager-client module provides the ability to automatically call <literal>subscribeToMore</literal> on your <literal>ObservableQuery</literal>.
+This can be useful in a situation where you may have multiple subscriptions which can affect one single query.
+For example, if you have a <literal>TaskAdded</literal>, <literal>TaskDeleted</literal>, and a <literal>TaskUpdated</literal> subscription you require three separate <literal>subscribeToMore</literal> function calls.
+To avoid this, use the <literal>subscribeToMoreHelper</literal> function from the @aerogear/voyager-client module to automatically handle this by passing an array of subscriptions and their corresponding queries:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { CacheOperation } = require('@aerogear/voyager-client');
+
+const addOptions = {
+  subscriptionQuery: TASK_ADDED_SUBSCRIPTION,
+  cacheUpdateQuery: GET_TASKS,
+  operationType: CacheOperation.ADD
+}
+
+const deleteOptions = {
+  subscriptionQuery: TASK_DELETED_SUBSCRIPTION,
+  cacheUpdateQuery: GET_TASKS,
+  operationType: CacheOperation.DELETE
+}
+
+const updateOptions = {
+  subscriptionQuery: TASK_UPDATED_SUBSCRIPTION,
+  cacheUpdateQuery: GET_TASKS,
+  operationType: CacheOperation.REFRESH
+}
+
+const query = client.watchQuery&lt;AllTasks&gt;({
+  query: GET_TASKS
+});
+
+subscribeToMoreHelper(query, [addOptions, deleteOptions, updateOptions]);</programlisting>
+</section>
+</section>
+</section>
+<section xml:id="_detecting_network_status">
+<title>Detecting Network Status</title>
+<simpara>Use the NetworkStatus interface to check the current network status, or to register a listener which performs actions when the status of the network changes.</simpara>
+<simpara>Two default implementations are provided:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><emphasis role="strong">WebNetworkStatus</emphasis>  for web browsers</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">CordovaNetworkStatus</emphasis> for Cordova</simpara>
+</listitem>
+</itemizedlist>
+<simpara>The following example demonstrates how to register a listener using <literal>CordovaNetworkStatus</literal>:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">import { CordovaNetworkStatus, NetworkInfo } from '@aerogear/voyager-client';
+const networkStatus = new CordovaNetworkStatus();
+
+networkStatus.onStatusChangeListener({
+  onStatusChange: info =&gt; {
+    const online = info.online;
+    if (online) {
+      //client is online, perform some actions
+    } else {
+      //client is offline
+    }
+  }
+});
+
+let config = {
+  ...
+  networkStatus: networkStatus,
+  ...
+};
+
+//create a new client using the config</programlisting>
+</section>
+<section xml:id="realtime_data-sync">
+<title>Supporting real-time updates in your mobile app</title>
+
+</section>
+<section xml:id="realtime-intro-data-sync">
+<title>Introduction to real-time updates</title>
+<simpara>After developing some queries and mutations, you might want to implement real-time updates.
+These are supported in the GraphQL specification by an operation type called <literal>Subscription</literal>.
+To support subscriptions in a production environment, Data Sync implements subscriptions using an MQTT PubSub subscription mechanism, however you might want to use the Apollo PubSub module to develop proof-of-concept applications.</simpara>
+<simpara>When coding for real-time updates, you use the following modules:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>@aerogear/voyager-server - supports clients that use voyager-client to enable GraphQL queries and mutations</simpara>
+</listitem>
+<listitem>
+<simpara>@aerogear/voyager-subscriptions - supports clients that use voyager-client to enable GraphQL subscriptions</simpara>
+</listitem>
+<listitem>
+<simpara>@aerogear/graphql-mqtt-subscriptions - supports GraphQL resolvers connections to a MQTT broker</simpara>
+</listitem>
+</itemizedlist>
+<simpara>GraphQL Subscriptions enable clients to subscribe to server events over a websocket connection.</simpara>
+<simpara>The flow can be summarized as follows:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Client connects to the server using websockets, and subscribes to certain events.</simpara>
+</listitem>
+<listitem>
+<simpara>As events occur, the server notifies the clients that are subscribed to those events.</simpara>
+</listitem>
+<listitem>
+<simpara>Any <emphasis>currently connected</emphasis> client that is subscribed to a given event receives it.</simpara>
+</listitem>
+<listitem>
+<simpara>The client can close the connection at any time and no longer receives updates.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>To receive updates, the client must be currently connected to the server.
+The client does not receive events from subscriptions while offline.
+To support inactive clients, use Push Notifications.</simpara>
+<itemizedlist>
+<title>Additional resources</title>
+<listitem>
+<simpara>For more information about GraphQL subscriptions, see the <link xl:href="https://www.apollographql.com/docs/apollo-server/features/subscriptions.html">Subscriptions documentation</link>.</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="realtime-updates-data-sync">
+<title>Implementing real-time updates on a Data Sync server</title>
+<simpara>The follow code shows typical code for a Data Sync Server without subscriptions:</simpara>
+<informalexample>
+<programlisting language="js" linenumbering="unnumbered">const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+const app = express()
+apolloServer.applyMiddleware({ app })
+
+app.listen({ port }, () =&gt;
+  console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`)
+)</programlisting>
+</informalexample>
+<simpara>The following sections outline the steps required to enable real-time updates:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Implement a SubscriptionServer</simpara>
+</listitem>
+<listitem>
+<simpara>Implement a Publish Subscribe Mechanism</simpara>
+</listitem>
+<listitem>
+<simpara>Define subscriptions in the schema</simpara>
+</listitem>
+<listitem>
+<simpara>Implement resolvers</simpara>
+</listitem>
+</orderedlist>
+<section xml:id="_implementing_a_subscriptionserver_using_voyager_subscription">
+<title>Implementing a SubscriptionServer using voyager-subscription</title>
+<simpara>To allow you create GraphQL subscription types in your schema:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Install the <literal>@aerogear/voyager-subscriptions</literal> package:</simpara>
+<screen>$ npm i @aerogear/voyager-subscriptions</screen>
+</listitem>
+<listitem>
+<simpara>Configure SubscriptionServer using <literal>@aerogear/voyager-subscriptions</literal></simpara>
+<informalexample>
+<programlisting language="js" linenumbering="unnumbered">const { createSubscriptionServer } = require('@aerogear/voyager-subscriptions')
+
+const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+const app = express()
+apolloServer.applyMiddleware({ app })
+const port = 4000
+
+const server = app.listen({ port }, () =&gt; {
+  console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`)
+
+  createSubscriptionServer({ schema: apolloServer.schema }, {
+    server,
+    path: '/graphql'
+  })
+})</programlisting>
+</informalexample>
+<simpara>The <literal>createSubscriptionServer</literal> code:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>returns a <literal>SubscriptionServer</literal> instance</simpara>
+</listitem>
+<listitem>
+<simpara>installs handlers for</simpara>
+<itemizedlist>
+<listitem>
+<simpara>managing websocket connections</simpara>
+</listitem>
+<listitem>
+<simpara>delivering subscriptions on the server</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>provides integrations with other modules such as <literal>@aerogear/voyager-keycloak</literal>.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+<formalpara>
+<title>Additional Information</title>
+<para>For more information about arguments and options, see the <link xl:href="https://npm.im/subscriptions-transport-ws">subscriptions-transport-ws</link> module.</para>
+</formalpara>
+</section>
+<section xml:id="_implementing_a_publish_subscribe_mechanism">
+<title>Implementing a Publish Subscribe Mechanism</title>
+<warning>
+<simpara>This procedure describes an in-memory implementation which is useful for prototyping but not suitable for production. Red Hat recommends using <link xl:href="npm.im/@aerogear/graphql-mqtt-subscriptions">MQTT PubSub</link> in production. See <xref linkend="pub-sub"/> for more information about all the implementation methods.</simpara>
+</warning>
+<simpara>To provide a channel to push updates to the client using the default <literal>PubSub</literal> provided by <literal>apollo-server</literal>, you implement a Publish Subscribe mechanism, for example:</simpara>
+<informalexample>
+<programlisting language="js" linenumbering="unnumbered">const { PubSub } = require('apollo-server')
+
+const pubsub = new PubSub()</programlisting>
+</informalexample>
+<formalpara>
+<title>Addtional Information</title>
+<para>Subscriptions depend on a <link xl:href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">publish subscribe</link> mechanism to generate the events that notify a subscription. There are <link xl:href="https://www.apollographql.com/docs/apollo-server/features/subscriptions/#pubsub-implementations">several PubSub implementations</link> available based on the <literal>PubSubEngine</literal> interface.</para>
+</formalpara>
+</section>
+<section xml:id="_defining_subscriptions_in_the_schema">
+<title>Defining subscriptions in the schema</title>
+<simpara>Subscriptions are a root level type.
+They are defined in the schema similar to <literal>Query</literal> and <literal>Mutation</literal>.
+For example, in the following schema, a <literal>Task</literal> type is defined and so are mutations and subscriptions.</simpara>
+<informalexample>
+<screen>type Subscription {
+  taskCreated: Task
+}
+
+type Mutation {
+  createTask(title: String!, description: String!): Task
+}
+
+type Task {
+  id: ID!
+  title: String!
+  description: String!
+}</screen>
+</informalexample>
+</section>
+<section xml:id="_implementing_resolvers">
+<title>Implementing resolvers</title>
+<simpara>Inside the resolver map, subscription resolvers return an <literal>AsyncIterator,</literal> which listens for events.
+To generate an event, call the <literal>publish</literal> method.
+The <literal>pubsub.publish</literal> code is typically located inside a mutation resolver.</simpara>
+<simpara>In the following example, when a new task is created, the <literal>createTask</literal> resolver publishes the result of this mutation to the <literal>TaskCreated</literal> channel.</simpara>
+<informalexample>
+<programlisting language="js" linenumbering="unnumbered">const TASK_CREATED = 'TaskCreated'
+
+const resolvers = {
+  Subscription: {
+    taskCreated: {
+      subscribe: () =&gt; pubSub.asyncIterator(TASK_CREATED)
+    }
+  },
+  Mutation: {
+    createTask: async (obj, args, context, info) =&gt; {
+      const task = tasks.create(args)
+      pubSub.publish(TASK_CREATED, { taskCreated: task })
+      return task
+    }
+  },
+}</programlisting>
+</informalexample>
+<note>
+<simpara>This subscription server does not implement authentication or authorization. For information about implementing authenication and authorization, see <link xl:href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/developing_a_data_sync_app#auth_data-sync">Supporting authentication and authorization in your mobile app</link>.</simpara>
+</note>
+<formalpara>
+<title>Additional Information</title>
+<para>For information on how to use subscriptions in your client code, see <link linkend="sync-js-client-realtime-updates">Realtime Updates</link>.</para>
+</formalpara>
+</section>
+</section>
+<section xml:id="pub-sub">
+<title>Configuring a Publish Subscribe mechanism</title>
+<simpara>You can use the Apollo PubSub mechanism for development, but you must use the MQTT PubSub mechanism for production.</simpara>
+<section xml:id="_using_the_apollo_pubsub_mechanism">
+<title>Using the Apollo PubSub mechanism</title>
+<simpara>The <xref linkend="realtime-updates-data-sync"/> section describes how to set up the default <literal>PubSub</literal> provided by <literal>apollo-server</literal>. For a production system, you require <link xl:href="npm.im/@aerogear/graphql-mqtt-subscriptions">MQTT PubSub</link>.</simpara>
+</section>
+<section xml:id="_using_the_mqtt_pubsub_mechanism">
+<title>Using the MQTT PubSub mechanism</title>
+<simpara>The <link xl:href="https://npm.im/@aerogear/graphql-mqtt-subscriptions"><literal>@aerogear/graphql-mqtt-subscriptions</literal></link> module provides an <literal>AsyncIterator</literal> interface used for <link linkend="realtime-updates-data-sync">implementing subscription resolvers</link>
+It connects the Data Sync server to an MQTT broker to support horizontally scalable subscriptions.</simpara>
+<simpara>Initialize an MQTT client and pass that client to the <literal>@aerogeaar/graphql-mqtt-subscriptions</literal> module, for example:</simpara>
+<informalexample>
+<programlisting language="js" linenumbering="unnumbered">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const client = mqtt.connect('mqtt://test.mosquitto.org', {
+  reconnectPeriod: 1000,
+})
+
+const pubsub = new MQTTPubSub({
+  client
+})</programlisting>
+</informalexample>
+<simpara>In the example, an <literal>mqtt</literal> client is created using <literal>mqtt.connect</literal> and then this client is passed into an <literal>MQTTPubSub</literal> instance.
+The <literal>pubsub</literal> instance can then be used to publish and subscribe to events in the server.</simpara>
+<itemizedlist>
+<title>Additional Information</title>
+<listitem>
+<simpara><link xl:href="https://www.npmjs.com/package/mqtt#connect">mqtt.connect documentation</link>.</simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://npmjs.com/package/@aerogear/graphql-mqtt-subscriptions">MQTTPubSub documentation</link></simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_configuring_amq_online_for_mqtt_messaging">
+<title>Configuring AMQ Online for MQTT Messaging</title>
+<simpara>Red Hat AMQ supports the MQTT protocol which makes it a suitable PubSub technology for powering GraphQL subscriptions at scale.</simpara>
+<simpara>This section provides recommendations for</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Configuring AMQ Online for MQTT messaging.</simpara>
+</listitem>
+<listitem>
+<simpara>Connecting to AMQ Online and using it as a pubsub within server applications.</simpara>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<title>Terminology</title>
+<listitem>
+<simpara><link xl:href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.2/html-single/using_amq_online_on_openshift_container_platform/index#assembly-intro-using-messaging">AMQ Online</link> is a mechanism that allows developers to consume the features of Red Hat AMQ within OpenShift.</simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.3/html/introducing_red_hat_amq_7/about">Red Hat AMQ</link> provides fast, lightweight, and secure messaging for Internet-scale applications. AMQ Broker supports multiple protocols and fast message persistence.</simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://mqtt.org/">MQTT</link> stands for MQ Telemetry Transport. It is a publish/subscribe, extremely simple and lightweight messaging protocol.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>AMQ Online includes many configuration options that could address the specific needs of your application.
+The minimum configuration steps for using AMQ Online for MQTT messaging and enabling GraphQL subscriptions are:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Create an <literal>AddressSpace</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Create an <literal>Address</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Create a <literal>MessagingUser</literal></simpara>
+</listitem>
+</orderedlist>
+<section xml:id="_creating_an_address_space">
+<title>Creating an address space</title>
+<simpara>A user can request messaging resources by creating an <literal>AddressSpace</literal>. There are two types of address space, <literal>standard</literal> and <literal>brokered</literal>.
+You must use the <literal>brokered</literal> address space for MQTT based applications.</simpara>
+<orderedlist numeration="arabic">
+<title>Procedure</title>
+<listitem>
+<simpara>Create an address space, for example, the following resource creates a brokered <literal>AddressSpace</literal>:</simpara>
+<programlisting language="yaml" linenumbering="unnumbered">apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: myaddressspace
+spec:
+  type: brokered
+  plan: brokered-single-broker</programlisting>
+</listitem>
+<listitem>
+<simpara>Create the <literal>AddressSpace</literal>.</simpara>
+<screen>oc create -f brokered-address-space.yaml</screen>
+</listitem>
+<listitem>
+<simpara>Check the status of the address space:</simpara>
+<screen>oc get &lt;`AddressSpace` name&gt; -o yaml</screen>
+<simpara>The output displays information about the address space, including details required for connecting applications.</simpara>
+</listitem>
+</orderedlist>
+<formalpara>
+<title>Additional Information</title>
+<para>See <link xl:href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.3/html-single/using_amq_online_on_openshift_container_platform/index#create-address-space-cli-messaging">Creating address spaces using the command line</link> for more information.</para>
+</formalpara>
+</section>
+<section xml:id="_creating_an_address">
+<title>Creating an Address</title>
+<simpara>An adress is part of an <literal>AddressSpace</literal> and represents a destination for sending and receiving messages.
+Use an <literal>Address</literal> with type <literal>topic</literal> to represent an MQTT topic.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Create an address definition:</simpara>
+<screen>apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+    name: myaddressspace.myaddress # must have the format &lt;`AddressSpace` name&gt;.&lt;address name&gt;
+spec:
+    address: myaddress
+    type: topic
+    plan: brokered-topic</screen>
+</listitem>
+<listitem>
+<simpara>Create the address:</simpara>
+<screen>oc create -f topic-address.yaml</screen>
+</listitem>
+</orderedlist>
+<note>
+<simpara>See the <link linkend="realtime-updates-data-sync">Configuring your server for real-time updates</link> guide for more information about using <literal>pubsub.asyncIterator()</literal>.
+Create an Address for each topic name passed into <literal>pubsub.asyncIterator()</literal>.</simpara>
+</note>
+<formalpara>
+<title>Additional Information</title>
+<para>See <link xl:href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.2/html-single/using_amq_online_on_openshift_container_platform/index#create-address-cli-messaging">Creating addresses using the command line</link> for more information.</para>
+</formalpara>
+</section>
+<section xml:id="_creating_an_amq_online_user">
+<title>Creating an AMQ Online user</title>
+<simpara>A messaging client connects using an AMQ Online user, also known as a`MessagingUser`.
+A <literal>MessagingUser</literal> specifies an authorization policy that controls which addresses can be used and the operations that can be performed on those addresses.</simpara>
+<simpara>Users are configured as <literal>MessagingUser</literal> resources.
+Users can be created, deleted, read, updated, and listed.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Create a user definition:</simpara>
+<screen>apiVersion: user.enmasse.io/v1beta1
+kind: MessagingUser
+metadata:
+  name: myaddressspace.mymessaginguser # must be in the format &lt;`AddressSpace` name&gt;.&lt;username&gt;
+spec:
+  username: mymessaginguser
+  authentication:
+    type: password
+    password: cGFzc3dvcmQ= # must be Base64 encoded. Password is 'password'
+  authorization:
+    - addresses: ["*"]
+      operations: ["send", "recv"]</screen>
+</listitem>
+<listitem>
+<simpara>Create the <literal>MessagingUser</literal>.</simpara>
+<screen>oc create -f my-messaging-user.yaml</screen>
+</listitem>
+</orderedlist>
+<simpara>An application can now connect to an AMQ Online address using this user&#8217;s credentials.</simpara>
+<simpara>For more information see the <link xl:href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.2/html-single/using_amq_online_on_openshift_container_platform/index#con-user-model-messaging">AMQ Online User Model</link>.</simpara>
+</section>
+</section>
+<section xml:id="_using_graphql_mqtt_pubsub_with_amq_online">
+<title>Using GraphQL MQTT PubSub with AMQ Online</title>
+<formalpara>
+<title>Prerequisites</title>
+<para>The following AMQ Online resources are available for MQTT Applications</para>
+</formalpara>
+<itemizedlist>
+<listitem>
+<simpara>AddressSpace</simpara>
+</listitem>
+<listitem>
+<simpara>Address</simpara>
+</listitem>
+<listitem>
+<simpara>MessagingUser</simpara>
+</listitem>
+</itemizedlist>
+<simpara>This section describes how to use <link xl:href="https://npm.im/@aerogear/graphql-mqtt-subscriptions"><literal>@aerogear/graphql-mqtt-subscriptions</literal></link> to connect to an AMQ Online <literal>Address</literal>.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Retrieve the connection details for the <literal>AddressSpace</literal> you want to use:</simpara>
+<screen>oc get addressspace &lt;addressspace&gt; -o yaml</screen>
+</listitem>
+<listitem>
+<simpara>Determine which method you want to use to connect to the address:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Using the service hostname - Allows clients to connect from within the OpenShift cluster.</simpara>
+<simpara>Red Hat recommends that applications running inside OpenShift connect using the service hostname.
+The service hostname is only accessible within the OpenShift cluster. This ensures messages routed between your application and AMQ Online stay within the OpenShift cluster and never go onto the public internet.</simpara>
+</listitem>
+<listitem>
+<simpara>Using the external hostname - Allows clients to connect from outside the OpenShift cluster.</simpara>
+<simpara>The external hostname allows connections from outside the OpenShift cluster. This is useful for the following cases:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Production applications running outside of OpenShift connecting and publishing messages.</simpara>
+</listitem>
+<listitem>
+<simpara>Quick Prototyping and local development. Create a non-production <literal>AddressSpace</literal>, allowing developers to connect applications from their local environments.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>To connect to an AMQ Online <literal>Address</literal> using the service hostname</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Retrieve the service hostname:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">oc get addressspace &lt;addressspace name&gt; -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].serviceHost</programlisting>
+</listitem>
+<listitem>
+<simpara>Add code to create the connection, for example:</simpara>
+<programlisting language="js" linenumbering="unnumbered">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const client = mqtt.connect({
+  host: '&lt;internal host name&gt;',
+  username: '&lt;MessagingUser name&gt;',
+  password: '&lt;MessagingUser password&gt;',
+  port: 5762,
+})
+
+const pubsub = new MQTTPubSub({ client })</programlisting>
+</listitem>
+<listitem>
+<simpara>To encrypt all messages between your application and the AMQ Online broker, enable TLS, for example:</simpara>
+<programlisting language="js" linenumbering="unnumbered">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const host = '&lt;internal host name&gt;'
+
+const client = mqtt.connect({
+  host: host,
+  servername: host,
+  username: '&lt;MessagingUser name&gt;',
+  password: '&lt;MessagingUser password&gt;',
+  port: 5761,
+  protocol: 'tls',
+  rejectUnauthorized: false,
+})
+
+const pubsub = new MQTTPubSub({ client })</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>To connect to an AMQ Online <literal>Address</literal> using the external hostname:</simpara>
+<note>
+<simpara>The external hostname typically accept only accept TLS connections.</simpara>
+</note>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Retrieve the external hostname:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">oc get addressspace &lt;addressspace name&gt; -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].externalHost</programlisting>
+</listitem>
+<listitem>
+<simpara>Connect to the external hostname, for example:</simpara>
+<programlisting language="js" linenumbering="unnumbered">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const host = '&lt;internal host name&gt;'
+
+const client = mqtt.connect({
+  host: host,
+  servername: host,
+  username: '&lt;MessagingUser name&gt;',
+  password: '&lt;MessagingUser password&gt;',
+  port: 443,
+  protocol: 'tls',
+  rejectUnauthorized: false,
+})
+
+const pubsub = new MQTTPubSub({ client })</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>If you use TLS, note the following additional <literal>mqtt.connect</literal> options:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>servername</literal> - when connecting to a message broker in OpenShift using TLS, this property must be set otherwise the connection will fail, because the messages are being routed through a proxy resulting in the client being presented with multiple certificates. By setting the <literal>servername</literal>, the client will use <link xl:href="https://en.wikipedia.org/wiki/Server_Name_Indication">Server Name Indication (SNI)</link> to request the correct certificate as part of the TLS connection setup.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>protocol</literal> - must be set to <literal>'tls'</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>rejectUnauthorizated</literal> - must be set to false, otherwise the connection will fail. This tells the client to ignore certificate errors. Again, this is needed because the client is presented with multiple certificates and one of the certificates is for a different hostname than the one being requested, which normally results in an error.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>port</literal> - must be set to 5761 for service hostname or 443 for external hostname.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+<section xml:id="_using_environment_variables_for_configuration">
+<title>Using environment variables for configuration</title>
+<simpara>Red Hat recommends that you use environment variables for connection, for example:</simpara>
+<programlisting language="js" linenumbering="unnumbered">const mqtt = require('mqtt')
+const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+
+const host = process.env.MQTT_HOST || 'localhost'
+
+const client = mqtt.connect({
+  host: host,
+  servername: host,
+  username: process.env.MQTT_USERNAME,
+  password: process.env.MQTT_PASSWORD,
+  port: process.env.MQTT_PORT || 1883,
+  protocol: process.env.MQTT_PROTOCOL || 'mqtt',
+  rejectUnauthorized: false,
+})
+
+const pubsub = new MQTTPubSub({ client })</programlisting>
+<simpara>In this example, the connection options can be configured using environment variables, but sensible defaults for the <literal>host</literal>, <literal>port</literal> and <literal>protocol</literal> are provided for local development.</simpara>
+</section>
+<section xml:id="_troubleshooting_mqtt_connection_issues">
+<title>Troubleshooting MQTT Connection Issues</title>
+<section xml:id="_troubleshooting_mqtt_events">
+<title>Troubleshooting MQTT Events</title>
+<simpara>The <literal>mqtt</literal> module emits various events during runtime.
+It recommended to add listeners for these events for regular operation and for troubleshooting.</simpara>
+<programlisting language="js" linenumbering="unnumbered">client.on('connect', () =&gt; {
+  console.log('client has connected')
+})
+
+client.on('reconnect', () =&gt; {
+  console.log('client has reconnected')
+})
+
+client.on('offline', () =&gt; {
+  console.log('Client has gone offline')
+})
+
+client.on('error', (error) =&gt; {
+  console.log(`an error has occurred ${error}`)
+})</programlisting>
+<simpara>Read the <link xl:href="https://www.npmjs.com/package/mqtt"><literal>mqtt documentation</literal></link> to learn about all of the events and what causes them.</simpara>
+</section>
+<section xml:id="_troubleshooting_mqtt_configuration_issues">
+<title>Troubleshooting MQTT Configuration Issues</title>
+<simpara>If your application is experiencing connection errors, the most important thing to check is the configuration being passed into <literal>mqtt.connect</literal>. Because your application may run locally or in OpenShift, it may connect using internal or external hostnames, and it may or may not use TLS, it&#8217;s very easy to accidentally provide the wrong configuration.</simpara>
+<simpara>The Node.js <literal>mqtt</literal> module does not report any errors if parameters such as <literal>hostname</literal> or <literal>port</literal> are incorrect. Instead, it will silently fail and allow your application to start without messaging capabilities.</simpara>
+<simpara>It may be necessary to handle this scenario in your application. The following workaround can be used.</simpara>
+<programlisting language="js" linenumbering="unnumbered">const TIMEOUT = 10 // number of seconds to wait before checking if the client is connected
+
+setTimeout(() =&gt; {
+  if (!client.connected) {
+    console.log(`client not connected after ${TIMEOUT} seconds`)
+	// process.exit(1) if you wish
+  }
+}, TIMEOUT * 1000)</programlisting>
+<simpara>This code can be used to detect if the MQTT client hasn&#8217;t connected. This can be helpful for detecting potential configuration issues and allows your application to respond to that scenario.</simpara>
+</section>
+</section>
+</section>
+</section>
+<section xml:id="sync-js-client-realtime-updates">
+<title>Implementing real-time updates on on the client</title>
+<simpara>A core concept of the GraphQL specification is an operation type called <literal>Subscription</literal>, they provide a mechanism for real time updates.
+For more information on GraphQL subscriptions  see the <link xl:href="https://www.apollographql.com/docs/apollo-server/features/subscriptions.html">Subscriptions documentation</link>.</simpara>
+<simpara>To do this GraphQL Subscriptions utilise websockets to enable clients to subscribe to published changes.</simpara>
+<simpara>The architecture of websockets is as follows:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Client connects to websocket server.</simpara>
+</listitem>
+<listitem>
+<simpara>Upon certain events, the server can publish the results of these events to the websocket.</simpara>
+</listitem>
+<listitem>
+<simpara>Any <emphasis>currently connected</emphasis> client to that websocket receives these results.</simpara>
+</listitem>
+<listitem>
+<simpara>The client can close the connection at any time and no longer receives updates.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Websockets are a perfect solution for delivering messages to currently active clients.
+To receive updates the client must be currently connected to the websocket server, updates made over this websocket while the client is offline are not consumed by the client.
+For this use case Push Notifications are recommended.</simpara>
+<simpara>Voyager Client comes with subscription support out of the box including auto-reconnection upon device restart or network reconnect.
+To enable subscriptions on your client set the following
+paramater in the Voyager Client config object. A DataSyncConfig interface is also available from Voyager Client if you wish to use it.</simpara>
+<section xml:id="_setting_up_a_client_to_use_subscriptions">
+<title>Setting up a client to use subscriptions</title>
+<simpara>To set up a client to use subscriptions:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Provide a <literal>wsUrl</literal> string in the config object as follows:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const config = {
+    wsUrl: "ws://&lt;your_websocket_url&gt;"
+}</programlisting>
+<simpara>where <literal>&lt;your_websocket_url&gt;</literal> is the full URL of the websocket endpoint of your GraphQL server.</simpara>
+</listitem>
+<listitem>
+<simpara>Use the object from step 1 to initialise Voyager Client:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { createClient } = require("@aerogear/voyager-client");
+
+const client = createClient(config)</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_using_subscriptions">
+<title>Using Subscriptions</title>
+<simpara>A standard flow to utilise subscriptions is as follows:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Make a network query to get data from the server</simpara>
+</listitem>
+<listitem>
+<simpara>Watch the cache for changes to queries</simpara>
+</listitem>
+<listitem>
+<simpara>Subscribe to changes pushed from the server</simpara>
+</listitem>
+<listitem>
+<simpara>Unsubscibe when leaving the view where there is an active subscription</simpara>
+</listitem>
+</orderedlist>
+<simpara>In the three examples below, <literal>subscribeToMore</literal> ensures that any further updates received from the server force the updateQuery function to be called with <literal>subscriptionData</literal> from the server.</simpara>
+<simpara>Using <literal>subscribeToMore</literal> ensures the cache is easily updated as all GraphQL queries are automatically notified.</simpara>
+<simpara>For more information, see the  <link xl:href="https://www.apollographql.com/docs/angular/features/subscriptions.html#subscribe-to-more">subscribeToMore documentation</link>.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">getTasks() {
+  const tasks = client.watchQuery({
+    query: GET_TASKS
+  });
+
+  tasks.subscribeToMore({
+    document: TASK_ADDED_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) =&gt; {
+    // Update logic here.
+    }
+  });
+  return tasks;
+}</programlisting>
+<simpara>To allow Voyager Client to automatically generate the <literal>updateQuery</literal> function for you, please see the <link linkend="cache-update-helpers">Cache Update Helpers</link> section.</simpara>
+<simpara>You can then use this query in our application to subscribe to changes so that the front end is always updated when new
+data is returned from the server.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">this.tasks = [];
+this.getTasks().subscribe(result =&gt; {
+  this.tasks = result.data &amp;&amp; result.data.allTasks;
+})</programlisting>
+<simpara>Note that it is also a good idea to unsubscribe from a query upon leaving a page. This prevents possible memory leaks.
+This can be done by calling unsubscribe() as shown in the following example. This code should be placed in the appropriate place.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">this.getTasks().unsubscribe();</programlisting>
+</section>
+<section xml:id="_handling_network_state_changes">
+<title>Handling network state changes</title>
+<simpara>When using subscriptions to provide your client with realtime updates it is important to monitor network state because the client will be out of sync if the server if updated when the the client is offline.</simpara>
+<simpara>To avoid this, Voyager Client provides a <literal>NetworkStatus</literal> interface which can be used along with the <literal>NetworkInfo</literal> interface to implement custom checks of network status.</simpara>
+<simpara>For more information about how to import and configure a custom network status checker, see <link linkend="sync-js-client-advanced-topics">Advanced Topics</link>.</simpara>
+<simpara>Use the following example to re-run a query after a client returns to an online state:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { CordovaNetworkStatus, NetworkInfo } = require("@aerogear/voyager-client");
+const networkStatus = new CordovaNetworkStatus();
+
+networkStatus.onStatusChangeListener({
+  onStatusChange(networkInfo: NetworkInfo) {
+    const online = networkInfo.online;
+    if (online) {
+      client.watchQuery({
+        query: GET_TASKS
+      });
+    }
+  }
+});</programlisting>
+</section>
+</section>
+<section xml:id="auth_data-sync">
+<title>Supporting authentication and authorization in your mobile app</title>
+
+</section>
+<section xml:id="sync-server-auth">
+<title>Configuring your server for authentication and authorization using Red Hat Single Sign-On</title>
+<simpara>Using the Identity Management service and the <link xl:href="https://www.npmjs.com/package/@aerogear/voyager-keycloak">@aerogear/voyager-keycloak</link> module, it is possible to add security to a Voyager Server application.</simpara>
+<simpara>The <literal>@aerogear/voyager-keycloak</literal> module provides the following features out of the box:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Authentication - Ensure only authenticated users can access your server endpoints, including the main GraphQL endpoint.</simpara>
+</listitem>
+<listitem>
+<simpara>Authorization - Use the <literal>@hasRole()</literal> directive within the GraphQL schema to implement role based access control (RBAC) on the GraphQL level.</simpara>
+</listitem>
+<listitem>
+<simpara>Integration with GraphQL context - Use the <literal>context</literal> object within the GraphQL resolvers to access user credentials and several helper functions.</simpara>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>There is a Red Hat Single Sign-On service available.</simpara>
+</listitem>
+<listitem>
+<simpara>You must add a valid <literal>keycloak.json</literal> config file to your project.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Create a client for your application in the Keycloak administration console.</simpara>
+</listitem>
+<listitem>
+<simpara>Click on the Installation tab.</simpara>
+</listitem>
+<listitem>
+<simpara>Select <emphasis role="strong">Keycloak OIDC JSON</emphasis> for Format option, and click <emphasis role="strong">Download</emphasis>.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</itemizedlist>
+<section xml:id="_protecting_voyager_server_using_red_hat_single_sign_on">
+<title>Protecting Voyager Server using Red Hat Single Sign-On</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Import the <literal>@aerogear/voyager-keycloak</literal> module</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { KeycloakSecurityService } = require('@aerogear/voyager-keycloak')</programlisting>
+</listitem>
+<listitem>
+<simpara>Read the Keycloak config and pass it to initialise the <literal>KeycloakSecurityService</literal>.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const keycloakConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, './path/to/keycloak.json')))
+const keycloakService = new KeycloakSecurityService(keycloakConfig)</programlisting>
+</listitem>
+<listitem>
+<simpara>Use the <literal>keycloakService</literal> instance to protect your app:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const app = express()
+keycloakService.applyAuthMiddleware(app)</programlisting>
+</listitem>
+<listitem>
+<simpara>Configure the Voyager server so that the <literal>keycloakService</literal> is used as the security service:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const voyagerConfig = {
+  securityService: keycloakService
+}
+const server = VoyagerServer(apolloConfig, voyagerConfig)</programlisting>
+</listitem>
+</orderedlist>
+<simpara>The <link xl:href="https://github.com/aerogear/voyager-server/blob/master/examples/keycloak">Keycloak Example Server Guide</link> has an example server based off the instructions above and shows all of the steps needed to get it running.</simpara>
+</section>
+<section xml:id="_using_the_hasrole_directive_in_a_schema">
+<title>Using the hasRole directive in a schema</title>
+<simpara>The Voyager Keycloak module provides the <literal>@hasRole</literal> directive to define role based authorisation in your schema. The <literal>@hasRole</literal> directive is a special annotation that can be applied to</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Fields</simpara>
+</listitem>
+<listitem>
+<simpara>Queries</simpara>
+</listitem>
+<listitem>
+<simpara>Mutations</simpara>
+</listitem>
+<listitem>
+<simpara>Subscriptions</simpara>
+</listitem>
+</itemizedlist>
+<simpara>The <literal>@hasRole</literal> usage is as follows:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>@hasRole(role: String)</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Example - <literal>@hasRole(role: "admin"])</literal></simpara>
+</listitem>
+<listitem>
+<simpara>If the authenticated user has the role <literal>admin</literal> they will be authorized.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>@hasRole(role: [String])</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Example - <literal>@hasRole(role: ["admin", "editor"])</literal></simpara>
+</listitem>
+<listitem>
+<simpara>If the authenticated user has at least one of the roles in the list, they will be authorized.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>The default behaviour is to check client roles. For example, <literal>@hasRole(role: "admin")</literal> will check that user has a client role called <literal>admin</literal>. <literal>@hasRole(role: "realm:admin")</literal> will check if that user has a realm role called <literal>admin</literal></simpara>
+<simpara>The syntax for checking a realm role is <literal>@hasRole(role: "realm:&lt;role&gt;")</literal>. For example, <literal>@hasRole(role: "realm:admin")</literal>. Using a list of roles, it is possible to check for both client and realm roles at the same time.</simpara>
+<formalpara>
+<title>Example: Using the @hasRole Directive to Apply Role Based Authorization in a Schema</title>
+<para>The following example demonstrates how the <literal>@hasRole</literal> directive can be used to define role based authorization on various parts of a GraphQL schema. This example schema represents publishing application like a news or blog website.</para>
+</formalpara>
+<programlisting language="graphql" linenumbering="unnumbered">type Post {
+  id: ID!
+  title: String!
+  author: Author!
+  content: String!
+  createdAt: Int!
+}
+
+type Author {
+  id: ID!
+  name: String!
+  posts: [Post]!
+  address: String! @hasRole(role: "admin")
+  age: Int! @hasRole(role: "admin")
+}
+
+type Query {
+  allPosts:[Post]!
+  getAuthor(id: ID!):Author!
+}
+
+type Mutation {
+  editPost:[Post]! @hasRole(role: ["editor", "admin"])
+  deletePost(id: ID!):[Post] @hasRole(role: "admin")
+}</programlisting>
+<simpara>There are two types:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Post</literal> - This might be an article or a blog post</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Author</literal> - This would represent the person that authored a Post</simpara>
+</listitem>
+</itemizedlist>
+<simpara>There are two Queries:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>allPosts</literal> - This might return a list of posts</simpara>
+</listitem>
+<listitem>
+<simpara><literal>getAuthor</literal> - This would return details about an Author</simpara>
+</listitem>
+</itemizedlist>
+<simpara>There are two Mutations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>editPost</literal> - This would edit an existing post</simpara>
+</listitem>
+<listitem>
+<simpara><literal>deletePost</literal> - This would delete a post.</simpara>
+</listitem>
+</itemizedlist>
+<formalpara>
+<title>Role Based Authorization on Queries and Mutations</title>
+<para>In the example schema, the <literal>@hasRole</literal> directive has been applied to the <literal>editPost</literal> and <literal>deletePost</literal> mutations. The same could be done on Queries.</para>
+</formalpara>
+<itemizedlist>
+<listitem>
+<simpara>Only users with the roles <literal>editor</literal> and/or <literal>admin</literal> are allowed to perform the <literal>editPost</literal> mutation.</simpara>
+</listitem>
+<listitem>
+<simpara>Only users with the role <literal>admin</literal> are allowed to perform the <literal>deletePost</literal> mutation.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>This example shows how the <literal>@hasRole</literal> directive can be used on various queries and mutations.</simpara>
+<formalpara>
+<title>Role Based Authorization on Fields</title>
+<para>In the example schema, the <literal>Author</literal> type has the fields <literal>address</literal> and <literal>age</literal> which both have <literal>hasRole(role: "admin")</literal> applied.</para>
+</formalpara>
+<simpara>This means that users without the role <literal>admin</literal> are not authorized to request these fields in any query or mutation.</simpara>
+<simpara>For example, non admin users are allowed to run the <literal>getAuthor</literal> query, but they cannot request back the <literal>address</literal> or <literal>age</literal> fields.</simpara>
+</section>
+</section>
+<section xml:id="authentication-and-authorization-websockets-data-sync">
+<title>Authentication Over Websockets using Red Hat Single Sign-On</title>
+<simpara>Prerequisites:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><link linkend="sync-server-auth">Configure Data Sync Server for Authentication and Authorization</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="ds-realtime.xml#realtime-updates-data-sync">Configuring Your Server for real-time updates</link></simpara>
+</listitem>
+</itemizedlist>
+<simpara>This section describes how to implement Authentication and Authorization over websockets with Red Hat Single Sign-On. For more generic documentation on Authentication over Websockets, read Apollo&#8217;s <link xl:href="https://www.apollographql.com/docs/apollo-server/features/subscriptions/#authentication-over-websocket">Authentication Over Websocket</link> document.</simpara>
+<simpara>The Voyager Client supports adding token information to <literal>connectionParams</literal> that will be sent with the first WebSocket message. In the server, this token is used to authenticate the connection and to allow the subscription to proceeed. Read the section on <link linkend="sync-js-client-auth">Red Hat Single Sign-On Authentication in Voyager Client</link> to ensure the Red Hat Single Sign-On token is being sent to the server.</simpara>
+<simpara>In the server, <literal>createSubscriptionServer</literal> accepts a <literal>SecurityService</literal> instance in addition to the regular options that can be passed to a standard <literal>SubscriptionServer</literal>. The <literal>KeycloakSecurityService</literal> from <literal>@aerogear/voyager-keycloak</literal> is used to validate the Red Hat Single Sign-On token passed by the client in the initial WebSocket message.</simpara>
+<programlisting language="js" linenumbering="unnumbered">const { createSubscriptionServer } = require('@aerogear/voyager-subscriptions')
+const { KeycloakSecurityService } = require('@aerogear/voyager-keycloak')
+const keycloakConfig = require('./keycloak.json') // typical Keycloak OIDC installation
+
+const apolloServer = VoyagerServer({
+  typeDefs,
+  resolvers
+})
+
+securityService = new KeycloakSecurityService(keycloakConfig)
+
+const app = express()
+
+keycloakService.applyAuthMiddleware(app)
+apolloServer.applyMiddleware({ app })
+
+const server = app.listen({ port }, () =&gt;
+  console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`)
+
+  createSubscriptionServer({ schema: apolloServer.schema }, {
+    securityService,
+    server,
+    path: '/graphql'
+  })
+)</programlisting>
+<simpara>The example shows how the Red Hat Single Sign-On <literal>securityService</literal> is created and how it is passed into <literal>createSubscriptionServer</literal>. This enables Red Hat Single Sign-On authentication on all subscriptions.</simpara>
+<section xml:id="_red_hat_single_sign_on_authorization_in_subscriptions">
+<title>Red Hat Single Sign-On Authorization in Subscriptions</title>
+<simpara>The Red Hat Single Sign-On <literal>securityService</literal> will validate and parse the token sent by the client into a <link xl:href="https://github.com/keycloak/keycloak-nodejs-connect/blob/master/middleware/auth-utils/token.js">Token Object</link>. This token is available in Subscription resolvers with <literal>context.auth</literal> and can be used to implement finer grained role based access control.</simpara>
+<programlisting language="js" linenumbering="unnumbered">const resolvers = {
+  Subscription: {
+    taskAdded: {
+      subscribe: (obj, args, context, info) =&gt; {
+        const role = 'admin'
+        if (!context.auth.hasRole(role)) {
+          return new Error(`Access Denied - missing role ${role}`)
+        }
+        return pubSub.asyncIterator(TASK_ADDED)
+      }
+    },
+}</programlisting>
+<simpara>The above example shows role based access control inside a subscription resolver. <literal>context.auth</literal> is a full <link xl:href="https://github.com/keycloak/keycloak-nodejs-connect/blob/master/middleware/auth-utils/token.js">Keycloak Token Object</link> which means methods like <literal>hasRealmRole</literal> and <literal>hasApplicationRole</literal> are available.</simpara>
+<simpara>The user details can be accessed through <literal>context.auth.content</literal>. Here is an example.</simpara>
+<screen>{
+  "jti": "dc1d6286-c572-43c1-99c7-4f36982b0e56",
+  "exp": 1561495720,
+  "nbf": 0,
+  "iat": 1561461830,
+  "iss": "http://localhost:8080/auth/realms/voyager-testing",
+  "aud": "voyager-testing-public",
+  "sub": "57e1dcda-990f-4cc2-8542-0d1f9aae302b",
+  "typ": "Bearer",
+  "azp": "voyager-testing-public",
+  "nonce": "552c3cba-a6c2-490a-9914-28784ba0e4bc",
+  "auth_time": 1561459720,
+  "session_state": "ed35e1b4-b43c-438f-b1a3-18b1be8c6307",
+  "acr": "0",
+  "allowed-origins": [
+    "*"
+  ],
+  "realm_access": {
+    "roles": [
+      "developer",
+      "uma_authorization"
+    ]
+  },
+  "resource_access": {
+    "voyager-testing-public": {
+      "roles": [
+        "developer"
+      ]
+    },
+    "account": {
+      "roles": [
+        "manage-account",
+        "manage-account-links",
+        "view-profile"
+      ]
+    }
+  },
+  "preferred_username": "developer"
+}</screen>
+<simpara>Having access to the user details (e.g. <literal>context.auth.content.sub</literal> is the authenticated user&#8217;s ID) means it is possible to implement <link xl:href="https://www.apollographql.com/docs/apollo-server/features/subscriptions/#subscription-filters">Subscription Filters</link> and to subscribe to more fine grained pubsub topics based off the user details.</simpara>
+</section>
+</section>
+<section xml:id="sync-js-client-auth">
+<title>Implementing authentication and authorization on your client</title>
+<simpara>With Voyager Client, user information can be passed to a Data Sync server application in two ways: headers or tokens.</simpara>
+<simpara>Headers are used to authentication HTTP requests to the server, which are used for queries and mutations.</simpara>
+<simpara>Tokens are used to authenticate WebSocket connections, which are used for subscriptions.</simpara>
+<simpara>Both of them can be set via the <literal>authContextProvider</literal> configuration option. Here is an example</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">//get the token value from somewhere, for example the authentication service
+const token = "REPLACE_WITH_REAL_TOKEN";
+
+const config = {
+  ...
+  authContextProvider: function() {
+    return {
+      header: {
+        "Authorization": `Bearer ${token}`
+      },
+      token: token
+    }
+  },
+  ...
+};
+
+//create a new client</programlisting>
+<simpara>For information about how to perform authentication and authorization on the server, see the <link linkend="sync-server-auth">Server Authentication and Authorization Guide</link>.</simpara>
+</section>
+<section xml:id="filesdata-sync">
+<title>Allowing users upload files from your mobile app</title>
+
+</section>
+<section xml:id="_enabling_file_uploads_on_the_server">
+<title>Enabling file uploads on the server</title>
+<simpara>Voyager Server provides support for uploading binary data along with the GraphQL queries.
+The implementation relies on upstream <literal>Apollo Server</literal> capabilities.</simpara>
+<simpara>The upload functionality uses the GraphQL multipart form requests specification.
+File upload needs to be implemented on both server and client:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>On the client HTML FileList objects are mapped into a mutation and sent to the server in a multipart request.</simpara>
+</listitem>
+<listitem>
+<simpara>On the server: The multipart request is handled. The server processes it and provides an upload argument to a resolver.
+In the resolver function, the upload promise resolves an object.</simpara>
+</listitem>
+</orderedlist>
+<note>
+<simpara>File upload is based on <link xl:href="https://github.com/jaydenseric/graphql-multipart-request-spec">graphql-multipart-request-spec</link>.</simpara>
+</note>
+<formalpara>
+<title>Procedure</title>
+<para>To enable file uploads, create a schema and use the <literal>Upload</literal> scalar.
+For example:</para>
+</formalpara>
+<programlisting language="javascript" linenumbering="unnumbered">const { ApolloServer, gql } = require('apollo-server');
+
+const typeDefs = gql`
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+  type Query {
+    uploads: [File]
+  }
+  type Mutation {
+    singleUpload(file: Upload!): File!
+  }
+`;</programlisting>
+<simpara>The following schema enables file uploads. The <literal>Upload</literal> scalar will be injected as one of the arguments in the resolvers.
+The <literal>Upload</literal> scalar contains all file metadata and a <link xl:href="https://nodejs.org/api/stream.html#stream_readable_streams">Readable Stream</link> that can be used to save the file to a specific location.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">    async singleUpload(parent, { file }) {
+      const { stream, filename, mimetype, encoding } = await file;
+      // Save file and return required metadata
+    }</programlisting>
+<simpara>See <link xl:href="https://blog.apollographql.com/file-uploads-with-apollo-server-2-0-5db2f3f60675">Official Apollo blog post</link> for more information.</simpara>
+</section>
+<section xml:id="_implementing_file_upload_on_the_client">
+<title>Implementing file upload on the client</title>
+<simpara>Voyager Client provides support for uploading binary data along with the GraphQL queries.
+The binary upload implementation uses the <literal>apollo-upload-client</literal> package built by the Apollo community.</simpara>
+<section xml:id="_introduction">
+<title>Introduction</title>
+<simpara>The upload functionality uses the GraphQL multipart form requests specification.
+The File upload needs to be implemented on both server and client:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>On the client HTML FileList objects are mapped into a mutation and sent to the server in a multipart request.</simpara>
+</listitem>
+<listitem>
+<simpara>On the server: The multipart request is handled. The server processes it and provides an upload argument to a resolver.
+In the resolver function, the upload promise resolves an object.</simpara>
+</listitem>
+</orderedlist>
+<note>
+<simpara>File upload is based on <link xl:href="https://github.com/jaydenseric/graphql-multipart-request-spec">graphql-multipart-request-spec</link>.</simpara>
+</note>
+</section>
+<section xml:id="_enabling_file_upload">
+<title>Enabling File Upload</title>
+<simpara>File upload feature needs to be enabled by passing <literal>fileUpload</literal> flag to config object:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const config = {
+  ...
+  fileUpload: true
+  ...
+};
+
+//create a new client</programlisting>
+</section>
+</section>
+<section xml:id="_uploading_files_from_graphql">
+<title>Uploading Files from GraphQL</title>
+<simpara>File upload capability adds a new GraphQL scalar <literal>Upload</literal> that can be used for mutations that operate on binary data.
+The <literal>Upload</literal> scalar maps html <literal>FileList</literal> HTML5 object in GraphQL schemas.
+The first step required to work with binary uploads is to write mutation that will contain <literal>Upload</literal> scalar.
+The following example demonstrates how to upload a profile picture:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">import gql from 'graphql-tag'
+import { Mutation } from 'react-apollo'
+
+export const UPLOAD_PROFILE = gql`
+mutation changeProfilePicture($file: Upload!) {
+  changeProfilePicture(file: $file) {
+    filename
+    mimetype
+    encoding
+  }
+}
+`;</programlisting>
+<section xml:id="_executing_mutations">
+<title>Executing mutations</title>
+<simpara>The <literal>Upload</literal> scalar will be mapped  to object returned from HTML file input.</simpara>
+<simpara>The following example shows file upload in a React application.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const uploadOneFile = () =&gt; {
+  return (
+    &lt;Mutation mutation={UPLOAD_PROFILE}&gt;
+      {uploadFile =&gt; (
+        &lt;input
+        type="file"
+        required
+        onChange={({ target: { validity, files: [file] } }) =&gt;
+          validity.valid &amp;&amp; uploadFile({ variables: { file } });
+        }
+       /&gt;
+      )}
+    &lt;/Mutation&gt;
+  );
+};</programlisting>
+</section>
+</section>
+<section xml:id="audit_data-sync">
+<title>Enabling audit logs and viewing reports</title>
+
+</section>
+<section xml:id="sync-server-audit-logs">
+<title>Enabling audit logs on the server</title>
+<simpara>Audit logging is a mechanism to track all of the actions that occur inside your application. Audit Logging in Voyager Server provides two main benefits.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>It is possible to build a detailed audit trail of every action that has occured in the application. This can also include information about the user that performed the action, and the mobile device they were using.</simpara>
+</listitem>
+<listitem>
+<simpara>The data from the audit logs can be aggregated and visualised to provide more insight into how your application is used.</simpara>
+</listitem>
+</orderedlist>
+<section xml:id="_audit_logging_architecture">
+<title>Audit Logging Architecture</title>
+<simpara>Audit logging can be enabled in Voyager Server using the <link xl:href="https://www.npmjs.com/package/@aerogear/voyager-audit">@aerogear/voyager-audit</link> module. When enabled, all actions such as GraphQL mutations, queries and subscriptions are logged in great detail to <literal>stdout</literal> in JSON format.</simpara>
+<simpara>An audit log example message is shown below.</simpara>
+<programlisting language="json" linenumbering="unnumbered">{
+  "level": 30,
+  "time": 1545385687476,
+  "pid": 11889,
+  "hostname": "localhost.localdomain",
+  "tag": "AUDIT",
+  "logType" "RESOLVER_COMPLETION",
+  "msg": "",
+  "operationType": "query",
+  "fieldName": "hello",
+  "parentTypeName": "Query",
+  "path": "hello",
+  "success": true,
+  "arguments": {},
+  "clientInfo": {
+    "clientId": "848d2a10-0505-11e9-888f-8d166149101a",
+    "timestamp": 1545385686843,
+    "data": {
+      "app": {
+        "appId": "org.aerogear.sync.example",
+        "appVersion": "0.0.1",
+        "sdkVersion": "0.0.1",
+        "framework": "cordova"
+      },
+      "device": {
+        "platform": "android",
+        "platformVersion": "9",
+        "device": "General Mobile GM8 Pro"
+      }
+    }
+  },
+  "userInfo": {
+    "jti": "6ae0966a-9d61-430b-8167-d2b3c0b42709",
+    "exp": 1545761725,
+    "nbf": 0,
+    "iat": 1545725725,
+    "iss": "http://localhost:8080/auth/realms/voyager-testing",
+    "aud": "voyager-testing",
+    "sub": "ea2312e9-1aae-4b67-8674-a3aacf20a71d",
+    "typ": "Bearer",
+    "azp": "voyager-testing",
+    "auth_time": 1545725725,
+    "session_state": "1ba4d429-8010-4f38-8002-9cc72550850d",
+    "acr": "1",
+    "allowed-origins": [
+      "*"
+    ],
+    "realm_access": {
+      "roles": [
+        "admin",
+        "uma_authorization"
+      ]
+    },
+    "resource_access": {
+      "voyager-testing": {
+        "roles": [
+          "admin"
+        ]
+      },
+      "account": {
+        "roles": [
+          "manage-account",
+          "manage-account-links",
+          "view-profile"
+        ]
+      }
+    },
+    "name": "Ali Ok",
+    "preferred_username": "developer",
+    "given_name": "Ali",
+    "family_name": "Ok",
+    "email": "aliok@example.com"
+  },
+  "v": 1
+}</programlisting>
+<simpara>The <literal>clientInfo</literal> property of the audit log message is available only if the client is sending the client information to Voyager Server. That has to be enabled separately in the client. Additionally, data in that property can only be collected if the app is a Cordova app or a native app. Simple web clients cannot get the device, client nor app details and cannot send this information.</simpara>
+<simpara>The <literal>userInfo</literal> property is available only if Voyager Server is protected by an identity manager, such as Red Hat Single Sign-On, and if the user is authenticated. See  see <xref linkend="sync-server-auth"/>.</simpara>
+</section>
+<section xml:id="_enabling_audit_logging_in_voyager_server">
+<title>Enabling Audit Logging in Voyager Server</title>
+<simpara>Audit logging is enabled in Voyager Server using the <link xl:href="https://www.npmjs.com/package/@aerogear/voyager-audit">@aerogear/voyager-audit</link></simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Import the <literal>@aerogear/voyager-audit</literal> module</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const auditLogger = require('@aerogear/voyager-audit')</programlisting>
+</listitem>
+<listitem>
+<simpara>Inject the auditLogger module into the Voyager Server. This enables audit logging within your application.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const voyagerConfig = {
+  auditLogger
+}
+const server = VoyagerServer(apolloConfig, voyagerConfig)</programlisting>
+</listitem>
+</orderedlist>
+<simpara>The <link xl:href="https://github.com/aerogear/voyager-server/tree/master/examples/audit_logging">Audit Logging Example Server Guide</link> has an example server based off the instructions above and shows all of the steps needed to get it running.</simpara>
+<simpara>Alternatively, if the default audit logger does not match your requirements, you can create an audit logger that implements the <literal>AuditLogger</literal> interface as defined below.</simpara>
+<formalpara>
+<title>Definition of the <literal>AuditLogger</literal> interface</title>
+<para>
+<programlisting language="typescript" linenumbering="unnumbered">export interface AuditLogger {
+  logResolverCompletion(msg: string, success: boolean, obj: any, args: any, context: any, info: GraphQLResolveInfo): void
+  logConflict (msg: string, serverData: any, clientData: any, obj: any, args: any, context: any, info: GraphQLResolveInfo): void
+  auditLog(msg: string, obj: any, args: any, context: any, info: GraphQLResolveInfo): void
+}</programlisting>
+</para>
+</formalpara>
+<simpara>The following example implements an <literal>AuditLogger</literal> and injects it into the Voyager Server.
+The example redacts the arguments using a <literal>myCustomRedactionFunction</literal> function.</simpara>
+<programlisting language="typescript" linenumbering="unnumbered">const { buildPath } = require('@aerogear/voyager-tools')
+// ...
+
+const auditLogger = {
+  auditLog: function(msg, obj, args, context, info){
+    console.log(JSON.stringify(
+      {
+        audit: {
+          tag: 'AUDIT',
+          logType: logType,
+          msg: msg || '',
+          requestId: context &amp;&amp; context.request ? context.request.id : '',
+          operationType: info.operation.operation,
+          fieldName: info.fieldName,
+          parentTypeName: info.parentType.name,
+          path: buildPath(info.path),
+          parent: obj,
+          arguments: myCustomRedactionFunction(args),
+          clientInfo: context &amp;&amp; context.request &amp;&amp; context.request.body &amp;&amp; context.request.body.extensions &amp;&amp; context.request.body.extensions.metrics || undefined,
+          authenticated: !!(context &amp;&amp; context.auth &amp;&amp; context.auth.isAuthenticated()),
+          userInfo: (context &amp;&amp; context.auth &amp;&amp; context.auth.accessToken) ? context.auth.accessToken.content : undefined
+        }
+      }
+    ));
+  },
+
+  logResolverCompletion: function(msg, success, obj, args, context, info){
+    console.log(JSON.stringify(
+      {
+        audit: {
+          tag: 'AUDIT',
+          logType: 'RESOLVER_COMPLETION',
+          msg: msg || '',
+          requestId: context &amp;&amp; context.request ? context.request.id : '',
+          operationType: info.operation.operation,
+          fieldName: info.fieldName,
+          parentTypeName: info.parentType.name,
+          path: buildPath(info.path),
+          success,
+          parent: obj,
+          arguments: myCustomRedactionFunction(args),
+          clientInfo: context &amp;&amp; context.request &amp;&amp; context.request.body &amp;&amp; context.request.body.extensions &amp;&amp; context.request.body.extensions.metrics || undefined,
+          authenticated: !!(context &amp;&amp; context.auth &amp;&amp; context.auth.isAuthenticated()),
+          userInfo: (context &amp;&amp; context.auth &amp;&amp; context.auth.accessToken) ? context.auth.accessToken.content : undefined
+        }
+      }
+    ));
+  },
+
+  logConflict: function (msg, serverData, clientData, obj, args, context, info) {
+    console.log(JSON.stringify(
+      {
+        audit: {
+          tag: 'AUDIT',
+          logType: LOG_TYPE_CONFLICT,
+          msg: msg || '',
+          requestId: context &amp;&amp; context.request ? context.request.id : '',
+          operationType: info.operation.operation,
+          fieldName: info.fieldName,
+          parentTypeName: info.parentType.name,
+          path: buildPath(info.path),
+          parent: obj,
+          arguments: myCustomRedactionFunction(args),
+          clientInfo: context &amp;&amp; context.request &amp;&amp; context.request.body &amp;&amp; context.request.body.extensions &amp;&amp; context.request.body.extensions.metrics || undefined,
+          authenticated: !!(context &amp;&amp; context.auth &amp;&amp; context.auth.isAuthenticated()),
+          userInfo: (context &amp;&amp; context.auth &amp;&amp; context.auth.accessToken) ? context.auth.accessToken.content : undefined,
+          conflict: true,
+          conflictData: {
+            message: msg,
+            myCustomRedactionFunction(serverData),
+            myCustomRedactionFunction(clientData),
+          }
+        }
+      }
+    ));
+  }
+}
+
+// ...
+
+const voyagerConfig = {
+  auditLogger
+}
+const server = VoyagerServer(apolloConfig, voyagerConfig)</programlisting>
+</section>
+<section xml:id="_sending_device_information_in_voyager_client">
+<title>Sending Device Information in Voyager Client</title>
+<simpara>See the <link linkend="sync-js-client-audit-logs">Voyager Client Audit Logs</link> section for more information.</simpara>
+</section>
+<section xml:id="_exploring_audit_logs">
+<title>Exploring Audit Logs</title>
+<simpara>Voyager Server simply prints audit logs to <literal>stdout</literal> and it is the responsibility of another component to pick up these logs and provide
+functionality to the user to make use of the logs.</simpara>
+<simpara>The <emphasis role="strong">EFK stack</emphasis> (ElasticSearch, Fluentd and Kibana) on OpenShift is the recommended solution in this guide. We provide Kibana dashboards with a number of useful visualisations and insights into Voyager Server.</simpara>
+<simpara>All application logs printed to <literal>stdout</literal> are sent to ElasticSearch by Fluentd. However, the audit log messages printed by <literal>@aerogear/voyager-audit</literal> are printed in a format that is used by the Kibana dashboards.</simpara>
+</section>
+<section xml:id="_configuring_openshift_logging">
+<title>Configuring OpenShift Logging</title>
+<simpara>OpenShift logging can be enabled as described in <link xl:href="https://docs.okd.io/3.11/install_config/aggregate_logging.html">OpenShift documentation</link>.</simpara>
+<simpara>Once enabled, OpenShift logging will create a Fluentd instance per cluster node that reads the <literal>stdout</literal> and <literal>stderr</literal> of the pods in that node
+and pushes the readings to the centralized ElasticSearch instance. Documents created in ElasticSearch instance can be then explored and
+visualized by the Kibana instance, which is also installed by OpenShift logging.</simpara>
+<simpara>OpenShift logging creates an index per namespace and that index is only available to users who have access to that namespace.
+It also creates the index patterns in Kibana in the same way.</simpara>
+<simpara>By default, OpenShift also provides a <link xl:href="https://www.elastic.co/guide/en/elasticsearch/client/curator/current/about.html">curator</link> which deletes the old
+log messages from ElasticSearch to reduce storage needs and improve performance. This has an impact on audit trails and also metrics.</simpara>
+<simpara>For long term audit trails, curator can be configured to delete messages older than your choice. If this is not sufficient,
+Fluentd can be configured to write log messages to a separate storage, such as <link xl:href="https://docs.fluentd.org/v0.12/articles/out_s3">S3</link>.</simpara>
+<simpara>In terms of metrics, curator&#8217;s deletion age config should not be set shorter than the desired time range that you would like
+to see the metrics for.</simpara>
+</section>
+<section xml:id="_importing_kibana_saved_objects">
+<title>Importing Kibana Saved Objects</title>
+<simpara>Kibana is a visualization tool that has a great integration with ElasticSearch.</simpara>
+<simpara>A template for Kibana saved objects is available. When the saved objects are imported, a number of saved searches, visualizations and a
+dashboard are created in Kibana. These then can be used to have an overview of the Voyager application.</simpara>
+<simpara>See the screenshot of the provided dashboard below.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="shared/images/kibana-dashboard-screenshot.png"/>
+</imageobject>
+<textobject><phrase>kibana dashboard screenshot</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>OpenShift logging creates ElasticSearch indices per namespace and the index names have the format <literal>project.&lt;project-name&gt;.&lt;project-uid&gt;</literal>.
+For example <literal>project.myproject.49f9a0b6-09b5-11e9-9597-069f7827c758</literal>.</simpara>
+<simpara>It also creates a Kibana index pattern for that index using the pattern <literal>project.&lt;project-name&gt;.&lt;project-uid&gt;.*</literal>.</simpara>
+<simpara>In order to make sure the Kibana saved objects use the correct index pattern, project UID should be fetched and
+fed to the Kibana import template.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">PROJECT_NAME=&lt;your_project_name&gt;
+# login with your user that has access to your project
+oc login
+# get project UUID, which is used to build the index name
+PROJECT_UUID=`oc get project $PROJECT_NAME -o go-template='{{.metadata.uid}}'`
+
+# replace the placeholders in the template
+sed \
+    -e "s/&lt;PROJECT_NAME&gt;/${PROJECT_NAME}/g" \
+    -e "s/&lt;PROJECT_UUID&gt;/${PROJECT_UUID}/g" \
+ kibanaImportTemplate.json &gt; kibanaImport.json</programlisting>
+<simpara>A template, <literal>kibanaImportTemplate.json</literal> is available from the <link xl:href="https://raw.githubusercontent.com/aerogear/voyager-server/master/doc/guides/kibanaImportTemplate.json">Voyager GitHub repo</link>.</simpara>
+<simpara>Once the <literal>kibanaImport.json</literal> file is generated, import it into Kibana:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Open Kibana using <literal><link xl:href="https://kibana.&lt;domain&gt;.com">https://kibana.&lt;domain&gt;.com</link></literal>. Replace <literal>&lt;domain&gt;</literal> with the name of the cluster&#8217;s main domain.</simpara>
+</listitem>
+<listitem>
+<simpara>Click <emphasis role="strong">Management</emphasis> in the left</simpara>
+</listitem>
+<listitem>
+<simpara>Click <emphasis role="strong">Saved Objects</emphasis></simpara>
+</listitem>
+<listitem>
+<simpara>Click <emphasis role="strong">Import</emphasis> and select <literal>kibanaImport.json</literal></simpara>
+</listitem>
+</itemizedlist>
+<simpara>Imported saved objects include the project name or the UID in their names, so that saved objects in differnt namespaces do not affect each other.</simpara>
+<note>
+<simpara>No index pattern is created in Kibana if there are no logs generated by an application.</simpara>
+<simpara>Also, if the fields referenced in the prepared Kibana saved objects do not exist, errors such as the following can be seen:</simpara>
+<screen>Error: Importing AeroGear Data Sync - top level execution per platform - aaa (top_level_execution_per_platform_49f9a0b6-09b5-11e9-9597-069f7827c758) failed: Could not locate that index-pattern-field (id: audit.clientInfo.data.device.platform.raw)
+Error: Could not locate that index-pattern-field (id: audit.clientInfo.data.device.platform.raw)</screen>
+<simpara>Because of these conditions, Kibana saved objects have to be imported after there are some audit logs already in ElasticSearch.
+At the moment, no mechanisms are provided to overcome this problem.</simpara>
+</note>
+</section>
+</section>
+<section xml:id="_viewing_the_dashboard_and_audit_logs">
+<title>Viewing the Dashboard and Audit Logs</title>
+<simpara>When the Kibana saved objects are imported, a dashboard is available with several visualizations that can be used as an
+overview of the Voyager application status.</simpara>
+<simpara>At the bottom of the dashboard, audit log messages can be explored directly.</simpara>
+<simpara>For more information on how to use Kibana, see the <link xl:href="https://www.elastic.co/products/kibana">Kibana documentation</link>.</simpara>
+</section>
+<section xml:id="sync-js-client-audit-logs">
+<title>Enabling audit logs on the client</title>
+<simpara>As described in the <link linkend="sync-server-audit-logs">Server Audit Logs</link> section, device information can be logged as part of an audit log message. To enable it:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>The Cordova plugin <literal>cordova-plugin-aerogear-metrics</literal> has to be installed so that the device, client and app information can be collected.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cordova plugin add cordova-plugin-aerogear-metrics</programlisting>
+</listitem>
+<listitem>
+<simpara>Set <literal>auditLogging</literal> to true when creating a client instance.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">import { createClient } from '@aerogear/voyager-client';
+
+const config = {
+  ...
+  auditLogging: true,
+  ...
+}
+
+return await createClient(config);</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="sync-js-client-advanced-topics">
+<title>Advanced Topics</title>
+<section xml:id="_logging_debug_messages">
+<title>Logging Debug Messages</title>
+<simpara>The Voyager Client uses the <link xl:href="https://www.npmjs.com/package/debug">debug module</link> to log debug messages.</simpara>
+<simpara>To enable debug logs, run the following code in a browser&#8217;s console:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">localStorage.debug = 'AeroGearSync:*'</programlisting>
+<simpara>Certain features can be enabled separately:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">localStorage.debug = 'AeroGearSync:offlineMutates*'</programlisting>
+</section>
+<section xml:id="_optimistic_ui">
+<title>Optimistic UI</title>
+<simpara>By default mutations are not applied to the UI until responses are received from the server. To provide better user experience, an application may want to update the UI immediately. <link xl:href="https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-mutation-options-optimisticResponse">Optimistic response</link> is an easy way to achieve this goal, and Voyager Client provides a helper method to work with optimistic responses:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered"> import { createOptimisticResponse } from "@aerogear/voyager-client";
+
+ client.mutate({
+   mutation: ADD_TASK,
+   variables: item,
+   optimisticResponse: createOptimisticResponse("createTask", "Task", item);
+ });</programlisting>
+<simpara>To detect if the provided data is an optimistic response, the <literal>optimisticResponse</literal> flag can be used.</simpara>
+<simpara>The <literal>OptimisticResponse</literal> feature and the <link linkend="sync-client-offline-queue-listener">offlineQueueListener</link> can be used together to deliver great offline experience for an application.</simpara>
+</section>
+</section>
+<section xml:id="openshift_data-sync">
+<title>Running a Data Sync app on OpenShift</title>
+<itemizedlist xml:id="sync-server-getting-started-openshift">
+<title>Prerequisites</title>
+<listitem>
+<simpara>You have Docker installed on your local machine.</simpara>
+</listitem>
+<listitem>
+<simpara>You have access to an OpenShift cluster with the Service Catalog.</simpara>
+</listitem>
+<listitem>
+<simpara>You have completed the server getting started guide.</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_overview">
+<title>Overview</title>
+<simpara>To connect your Data Sync server and client to other services, you need to run your application in OpenShift.  Data Sync provides a service catalog item to help with this.</simpara>
+<simpara>Data Sync requires your server application to be packaged as a Docker formatted container and published to a public respository such as <link xl:href="https://hub.docker.com/">Docker hub</link>.</simpara>
+</section>
+<section xml:id="building-and-publishing-the-container">
+<title>Building and publishing the Data Sync server container</title>
+<simpara>To build a server into a container, create a <literal>Dockerfile</literal> in the project&#8217;s directory.  This container will need to include your server source code, its dependencies, and be configured to execute your server.</simpara>
+<simpara>As an example:</simpara>
+<programlisting language="dockerfile" linenumbering="unnumbered">FROM node:8
+WORKDIR /usr/src/app
+# copy Node.js specific files
+COPY package*.json ./
+# copy application source file to the workdir
+COPY index.js .
+RUN npm install
+# TCP port that application is listening on
+EXPOSE 4000
+CMD [ "node", "index.js" ]</programlisting>
+<simpara>Build the Docker container and tag it:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">$ docker build . --tag  &lt;your-repo&gt;/&lt;container-name&gt;</programlisting>
+<simpara>Push your container to Dockerhub&#8217;s repository:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">$ docker push &lt;your-repo&gt;/&lt;container-name&gt;</programlisting>
+</section>
+<section xml:id="sync-server-provisioning-data-sync-templates">
+<title>Provisioning the Data Sync server applications using templates</title>
+<simpara>Data Sync offers following OpenShift templates
+that will help developers with provisioning their DataSync applications to OpenShift platform.</simpara>
+<simpara>Templates:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>DataSync App</simpara>
+</listitem>
+</itemizedlist>
+<simpara>The DataSync App template allows developers to deploy the Node.js DataSync App on Openshift using source code only.
+<emphasis>Node s2i</emphasis>  is used to build the Data Sync App image.
+NOTE: You must set the <literal>NODE_ENV</literal> environment variable to <literal>development</literal> and redeploy the pod to ensure access to the GraphQL playground.</simpara>
+<simpara>The DataSync App can connect with other services running on OpenShift and can also connect to external data sources.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>DataSync Showcase</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Showcase application will deploy fully functional server with example Task implementation.
+Server side requires client application available on github <link xl:href="https://github.com/aerogear/ionic-showcase">aerogear/ionic-showcase</link></simpara>
+<blockquote>
+<simpara>Note: Showcase server template can be used only for demo purposes and it should not be used in production.</simpara>
+</blockquote>
+<simpara>When running on Red Hat Managed Integration templates will be available in <emphasis role="strong">Mobile</emphasis> &gt; <emphasis role="strong">App</emphasis>  category in OpenShift catalog</simpara>
+</section>
+<section xml:id="sync-server-getting-started-mdc-client">
+<title>Connecting a Client</title>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>You have access to an OpenShift cluster with the Service Catalog.</simpara>
+</listitem>
+<listitem>
+<simpara>You have completed the OpenShift getting started guide.</simpara>
+</listitem>
+<listitem>
+<simpara>You have created a mobile client and bound your data sync server.</simpara>
+</listitem>
+<listitem>
+<simpara>You have completed the client getting started guide.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Once a service is bound to a mobile client, MDC will provide a mobile-services.json file that is used by the AeroGear client libraries to automatically configure the Data Sync client.  It is very important that you use your version of this file and not the one used in this example as system specific values will be different.</simpara>
+<section xml:id="_updating_the_hello_world_sync_client">
+<title>Updating the Hello World Sync Client</title>
+<simpara>The Hello World client application we wrote uses a hard coded server url.  We need to remove this url and instead pass the mobile-services config to the client.  We will also use the AeroGear core library to parse this file and pass that configuration to the Data Sync library.</simpara>
+<formalpara>
+<title>Configure the core library with mobile-services.json</title>
+<para>
+<programlisting language="javascript" linenumbering="unnumbered">const { init }  = require("@aerogear/app");
+
+const core = init({
+  "version": 1,
+  "namespace": "myproject",
+  "clientId": "getting-started",
+  "services": [
+    {
+      "id": "0637bfd3-33aa-11e9-968e-52540014a8c2",
+      "name": "sync-app-getting-started-getting-started",
+      "type": "sync-app",
+      "url": "https://sync-app-getting-started-myproject.192.168.42.138.nip.io/graphql",
+      "config": {
+        "websocketUrl": "wss://sync-app-getting-started-myproject.192.168.42.138.nip.io/graphql"
+      }
+    }
+  ]
+});</programlisting>
+</para>
+</formalpara>
+<simpara>Once you have initialized the core, we can use it to configure the Data Sync client by setting the <literal>openShiftConfig</literal> property when we call <literal>createClient</literal>.</simpara>
+<formalpara>
+<title>Updated data sync client</title>
+<para>
+<programlisting language="javascript" linenumbering="unnumbered">let client = await createClient({
+    openShiftConfig:core.config
+  });</programlisting>
+</para>
+</formalpara>
+<simpara>And now, as before, we can use the client to make queries.  A full example may look like the following code</simpara>
+<formalpara>
+<title>Updated hello world index.js</title>
+<para>
+<programlisting language="javascript" linenumbering="unnumbered">import gql from 'graphql-tag';
+const { init }  = require("@aerogear/app");
+import { createClient } from '@aerogear/voyager-client';
+
+const core = init({
+  "version": 1,
+  "namespace": "myproject",
+  "clientId": "getting-started",
+  "services": [
+    {
+      "id": "0637bfd3-33aa-11e9-968e-52540014a8c2",
+      "name": "sync-app-getting-started-getting-started",
+      "type": "sync-app",
+      "url": "https://sync-app-getting-started-myproject.192.168.42.138.nip.io/graphql",
+      "config": {
+        "websocketUrl": "wss://sync-app-getting-started-myproject.192.168.42.138.nip.io/graphql"
+      }
+    }
+  ]
+});
+
+async function helloWorld() {
+  let client = await createClient({
+    openShiftConfig:core.config
+  });
+  client.query({
+      fetchPolicy: 'network-only',
+      query: gql`{hello}`
+    })
+    .then( ({data}) =&gt; {
+      console.log(data.hello)
+    });
+}
+
+helloWorld();</programlisting>
+</para>
+</formalpara>
+</section>
+</section>
+<section xml:id="sync-server-binding">
+<title>Binding a Mobile App with the Data Sync server application service</title>
+<simpara>To use Mobile Developer Services, you must represent your mobile app in <emphasis role="strong">Mobile Developer Console</emphasis>, and that app must be associated with the mobile service.
+This association is called <emphasis role="strong">binding</emphasis> and it is necessary for your mobile app to use that service.</simpara>
+<simpara>To bind a Mobile App with a mobile service:</simpara>
+<orderedlist numeration="arabic">
+<title>Procedure</title>
+<listitem>
+<simpara>Launch Mobile Developer Console</simpara>
+</listitem>
+<listitem>
+<simpara>Click on the Mobile App on the Overview screen</simpara>
+</listitem>
+<listitem>
+<simpara>Navigate to <emphasis role="strong">Mobile Services</emphasis> tab.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="shared/images/mobile-clients-services-all-unbound.png"/>
+</imageobject>
+<textobject><phrase>mobile clients services all unbound</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<note>
+<simpara>It is possible to bind a Mobile App with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.</simpara>
+</note>
+</listitem>
+<listitem>
+<simpara>Press <emphasis role="strong">Bind to App</emphasis> in the Data Sync</simpara>
+</listitem>
+<listitem>
+<simpara>Fill out the binding parameters required by the Data Sync Service.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="sync-server-binding-keycloak">
+<title>Binding Data Sync to Identity Management</title>
+<simpara>In this section, we will show you how to protect your Data Sync application using the Identity Management service.</simpara>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>There is a Identity Management service available.</simpara>
+</listitem>
+<listitem>
+<simpara>You have provisioned a Data Sync application using our playbook.</simpara>
+</listitem>
+<listitem>
+<simpara>oc tools must be installed</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Any application that connects to Identity Management must consume a <literal>keycloak.json</literal> file. This section demonstrates how to add a <literal>keycloak.json</literal> file to your Data Sync application deployment. It is still your application&#8217;s responsibility to consume this file. We have provided an <link xl:href="https://github.com/aerogear/voyager-server/tree/master/examples/keycloak">example project</link>.</simpara>
+<orderedlist numeration="arabic">
+<title>Procedure</title>
+<listitem>
+<simpara>Create a client for your application in the Identity Management Administration Console</simpara>
+</listitem>
+<listitem>
+<simpara>Click on the <literal>Installation</literal> tab, select <literal>Keycloak OIDC JSON</literal> for <literal>Format</literal> Option, and then click on <literal>Download</literal>. Save the downloaded <literal>keycloak.json</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Create a Identity Management secret:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">oc create secret generic sync-keycloak-doc \
+  --from-file=keycloak=./keycloak.json</programlisting>
+<simpara>The command creates a secret named <literal>sync-keycloak-doc</literal>.</simpara>
+<simpara>The secret will contain one key, <literal>keycloak</literal>, with the value being the text of the <literal>keycloak.json</literal> file.</simpara>
+<simpara>You can view the secret with either <literal>oc get secret sync-keycloak-doc</literal> or the OpenShift web console.</simpara>
+</listitem>
+<listitem>
+<simpara>Create a patch for your deployment configuration</simpara>
+<simpara>This step requires patching the Data Sync application&#8217;s deployment config to create and mount a volume with the Identity Management secret we just created. Replace <literal>$YOUR_DEPLOYMENT_CONFIG_NAME</literal> in the following yaml section with the deployment config name of your Data Sync application and save this file as <literal>secret.yaml</literal>.</simpara>
+<programlisting language="yaml" linenumbering="unnumbered">spec:
+  template:
+    spec:
+      containers:
+        - env:
+          - name: KEYCLOAK_CONFIG
+            value: /config/keycloak.json
+          name: $YOUR_DEPLOYMENT_CONFIG_NAME
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /config
+              readOnly: true
+      volumes:
+          - name: secret-volume
+            secret:
+              items:
+                - key: keycloak
+                  path: keycloak.json
+              secretName: sync-keycloak-doc</programlisting>
+</listitem>
+<listitem>
+<simpara>Apply the patch.</simpara>
+<simpara>After replacing <literal>$YOUR_DEPLOYMENT_CONFIG_NAME</literal> with the deployment config name, run the following command to patch the deployment configuration and trigger your application to redeploy.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">oc patch deploymentconfig $YOUR_DEPLOYMENT_CONFIG_NAME -p "$(cat secret.yaml)"</programlisting>
+<simpara>Once your application has redeployed, it should be able to read the keycloak.json file pointed to by the KEYCLOAK_CONFIG environment variable.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</article>

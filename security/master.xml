@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc maxdepth="4"?>
+<?asciidoc-numbered?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>Securing your mobile app</title>
+<date>2019-08-12</date>
+</info>
+<simpara>This guide does not address all mobile security topics. See the <link xl:href="https://www.owasp.org/index.php/OWASP_Mobile_Security_Project">OWASP Mobile Security Project</link> for an introduction to mobile security.
+Red Hat helps you achieve security:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><link linkend="app-security">Using the Mobile Security service</link> - remotely disable specific app variants</simpara>
+</listitem>
+<listitem>
+<simpara><link linkend="device-checks">Adding Device Checks to your mobile app</link> - for example, disable app on rooted devices</simpara>
+</listitem>
+</itemizedlist>
+<section xml:id="app-security">
+<title>Using the Mobile Security Service</title>
+<section xml:id="app-setup">
+<title>Setting Up the Mobile Security Service</title>
+<section xml:id="provisioning-the-security-service">
+<title>Provisioning the Mobile Security Service</title>
+<simpara>This section describes how to set up the Mobile Security Service.</simpara>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>You have logged into the OpenShift console and the Mobile Developer Console.</simpara>
+</listitem>
+</itemizedlist>
+<orderedlist numeration="arabic">
+<title>Procedure</title>
+<listitem>
+<simpara>Log into the OpenShift console.</simpara>
+</listitem>
+<listitem>
+<simpara>Create a new project or choose an existing project.</simpara>
+</listitem>
+<listitem>
+<simpara>Click <emphasis role="strong">Add to Project</emphasis> and choose <emphasis role="strong">Browse Catalog</emphasis> from the options.</simpara>
+<simpara>You can filter the catalog items to only show mobile specific items by clicking the <emphasis role="strong">Mobile</emphasis> tab.</simpara>
+</listitem>
+<listitem>
+<simpara>Click <emphasis role="strong">Services</emphasis> and choose the Mobile Security service.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="shared/images/catalog-mobile-services.png"/>
+</imageobject>
+<textobject><phrase>catalog mobile services</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</listitem>
+<listitem>
+<simpara>Follow the wizard for provisioning that service.</simpara>
+<note>
+<simpara>If prompted to <emphasis role="strong">Create a Binding</emphasis>, choose <emphasis role="strong">Do not bind at this time</emphasis></simpara>
+</note>
+<simpara>Once the wizard steps are completed, navigate to the Project Overview in OpenShift to see the newly provisioned service.
+Provisioning a service may take some time.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="binding-an-app-to-security-service">
+<title>Binding a Mobile App with the Mobile Security Service</title>
+<simpara>To use mobile services, you must represent your mobile app in <emphasis role="strong">Mobile Developer Console</emphasis>, and that app must be associated with the mobile service.
+This association is called <emphasis role="strong">binding</emphasis> and it is necessary for your mobile app to use that service.</simpara>
+<simpara>This section describes how to set up the Mobile Security service.</simpara>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>You have created a Mobile App.</simpara>
+</listitem>
+</itemizedlist>
+<formalpara>
+<title>Procedure</title>
+<para>To bind a Mobile App with a mobile service:</para>
+</formalpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Launch Mobile Developer Console.</simpara>
+</listitem>
+<listitem>
+<simpara>Click on the Mobile App on the Overview screen.</simpara>
+</listitem>
+<listitem>
+<simpara>Navigate to <emphasis role="strong">Mobile Services</emphasis> tab.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="shared/images/mobile-clients-services-all-unbound.png"/>
+</imageobject>
+<textobject><phrase>mobile clients services all unbound</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<note>
+<simpara>It is possible to bind a Mobile App with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.</simpara>
+</note>
+</listitem>
+<listitem>
+<simpara>Click <emphasis role="strong">Bind to App</emphasis> for Mobile Security.</simpara>
+</listitem>
+<listitem>
+<simpara>Fill out the binding parameters required by the Mobile Security Service.</simpara>
+</listitem>
+</orderedlist>
+<simpara>The Mobile Security service will now be expandable, details about the service can be viewed.</simpara>
+</section>
+<section xml:id="configuring-security-service">
+<title>Configuring the Mobile Security Service</title>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>An understanding of <link xl:href="https://openid.net/">OpenID</link></simpara>
+</listitem>
+</itemizedlist>
+<orderedlist numeration="arabic">
+<title>Procedure</title>
+<listitem>
+<simpara>Log into the Mobile Developer Console and navigate to the Mobile App screen.</simpara>
+</listitem>
+<listitem>
+<simpara>Select the <emphasis role="strong">Mobile Services</emphasis> tab.</simpara>
+</listitem>
+<listitem>
+<simpara>If a binding to the Mobile Securityservice is in progress, a spinning icon is displayed to the right of the Mobile Securityentry. Wait for the binding process to complete.</simpara>
+</listitem>
+<listitem>
+<simpara>Save your changes.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuring_your_development_environment_for_the_mobile_security_service">
+<title>Configuring your Development Environment for the Mobile Security Service</title>
+<section xml:id="_downloading_the_mobile_services_configuration_file">
+<title>Downloading the Mobile Services Configuration File</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Open your Mobile App in Mobile Developer Console.</simpara>
+</listitem>
+<listitem>
+<simpara>Copy the <literal>mobile-services.json</literal> configuration to your clipboard.</simpara>
+</listitem>
+<listitem>
+<simpara>Save the contents of the clipboard to a new file called <literal>mobile-services.json</literal>.</simpara>
+<note>
+<simpara>The mobile-services.json file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.</simpara>
+</note>
+</listitem>
+<listitem>
+<simpara>Follow the platform-specific instructions:</simpara>
+</listitem>
+</orderedlist>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<simpara>Move mobile-services.json to the following location in your application project:</simpara>
+<simpara><literal>src/mobile-services.json</literal></simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+<section xml:id="_setting_up_mobile_security_service_sdk">
+<title>Setting up Mobile Security service SDK</title>
+<section xml:id="_importing_the_libraries">
+<title>Importing the libraries</title>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Install the <link xl:href="https://www.npmjs.com/package/@aerogear/security">AeroGear Security</link> package from <link xl:href="https://www.npmjs.com/">NPM</link>:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">$ npm install @aerogear/security --save</programlisting>
+</listitem>
+<listitem>
+<simpara>Add the <link xl:href="https://www.npmjs.com/package/@aerogear/cordova-plugin-aerogear-security">AeroGear Security plugin</link> for Cordova:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">$ cordova plugin add @aerogear/cordova-plugin-aerogear-security</programlisting>
+</listitem>
+<listitem>
+<simpara>Import and instantiate <literal>SecurityService</literal> to start using the SDK:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const SecurityService = require("@aerogear/security");
+
+const appSecurity = new SecurityService.AppSecurity(app.config);</programlisting>
+<note>
+<simpara>Any new instantiation of <literal>SecurityService</literal> returns the same instance.</simpara>
+</note>
+</listitem>
+</orderedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+</section>
+</section>
+</section>
+<section xml:id="app-coding">
+<title>Implementing the Mobile Security service in your mobile app</title>
+<simpara>Call the appSecurity clientInit function to implement the App Security Service.
+Call this service on application initialization, for example:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">appSecurity.clientInit()
+.then(clientInit =&gt; {
+  /**
+    You can use clientInit.data.disabled boolean
+    to check if app has been disabled by admin.
+
+    The disabled message is returned if the app is
+    disabled at clientInit.data.disabledMessage
+    This contains a string with a disabled message
+    from the server set by the admin.
+  */
+}).catch(err  =&gt; {
+  /**
+    You can handle errors connecting to the
+    mobile security service here. i.e. if the
+    client is offline that error will be caught
+    here and you can return a response at this
+    point
+    */
+});</programlisting>
+</section>
+<section xml:id="console">
+<title>Managing mobile apps using the Mobile Security Console</title>
+<simpara>To access the Mobile Security Console:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Retrieve the console URL from the list of available services in the Mobile Developer Console (MDC).</simpara>
+</listitem>
+<listitem>
+<simpara>Open the URL in a browser.</simpara>
+</listitem>
+</orderedlist>
+<formalpara>
+<title>Overview of the Mobile Security Console</title>
+<para>The Mobile Security Console allows you to monitor applications, their respective versions, and disable versions of those applications.</para>
+</formalpara>
+<simpara>Opening the console lists all applications. Click on an application to view version details for that application.</simpara>
+<simpara>Below is a detailed description of each of these views and the information you can expect each to contain.</simpara>
+<formalpara>
+<title>Application details view</title>
+<para>This view provides statistics and information about each deployed version of an application:</para>
+</formalpara>
+<itemizedlist>
+<listitem>
+<simpara><emphasis role="strong">App Version</emphasis>: The version of the application.</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Current Installs</emphasis>: Total number of current installed versions of this version of the application.</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Launches</emphasis>: Total number of launches of this version of the application.</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Last launched</emphasis>: The last time this application version was launched.</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Disable on Startup</emphasis>: Whether this application version is disabled on startup.</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Custom Disable Message</emphasis>: A custom message that is displayed when this version of the mobile app is disabled.</simpara>
+</listitem>
+</itemizedlist>
+<section xml:id="_enabling_and_disabling_mobile_app_versions">
+<title>Enabling and disabling mobile app versions</title>
+<simpara>To enable/disable one or more versions of the application:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Toggle the checkbox for that version in the <emphasis role="strong">Disable on Startup</emphasis> column.</simpara>
+</listitem>
+<listitem>
+<simpara>Confirm these changes by clicking the <emphasis role="strong">Save</emphasis> button to persist these changes.</simpara>
+</listitem>
+</orderedlist>
+<simpara>Navigating away from this screen with unsaved changes prompts you to save or discard these changes.</simpara>
+<simpara>To disable all versions of an application:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Click the <emphasis role="strong">Disable App</emphasis> button.</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_adding_or_updating_a_custom_disabled_message">
+<title>Adding or updating a custom disabled message</title>
+<simpara>To add or update a custom message for the version(s) of an application:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Enter the message in the text field for that version under the <emphasis role="strong">Custom Disable Message</emphasis> column.</simpara>
+</listitem>
+<listitem>
+<simpara>Confirm these changes by clicking the <emphasis role="strong">Save</emphasis> button to persist these changes.</simpara>
+</listitem>
+</orderedlist>
+<simpara>Navigating away from this screen with unsaved changes prompts you to save or discard these changes.</simpara>
+</section>
+</section>
+<section xml:id="device-checks">
+<title>Implementing Device Checks in your mobile app</title>
+<simpara>The Device Security service allows you to easily configure and manage device security, and trust checks for your mobile application.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Perform a range of device trust checks on the mobile device, such as checking if the device is rooted, and allows you take proactive action based on the results.</simpara>
+</listitem>
+<listitem>
+<simpara>Distribute SSL certificates with a Mobile App to create a direct chain of trust (certificate pinning).</simpara>
+</listitem>
+</itemizedlist>
+<note>
+<simpara>Device Security is not currently associated with an OpenShift service, so there are no provisioning or binding tasks associated with using Device Security.</simpara>
+</note>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>You understand Device Checks.</simpara>
+</listitem>
+<listitem>
+<simpara>You have logged into the OpenShift console and the Mobile Developer Console.</simpara>
+</listitem>
+<listitem>
+<simpara>You are developing an Ionic app, plain Cordova is not supported.</simpara>
+</listitem>
+</itemizedlist>
+<section xml:id="security-terminology-security">
+<title>Device Checks Terminology</title>
+<simpara>This section describes terminology that is associated with Device Checks.</simpara>
+<variablelist>
+<varlistentry>
+<term>Root Access Detection (ROOT_ENABLED)</term>
+<listitem>
+<simpara>Use it to help prevent your app running in a device that has been rooted/jailbroken. A device is considered rooted if <emphasis role="strong">any</emphasis> of the following are true:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>A custom key has been used to sign the kernel</simpara>
+</listitem>
+<listitem>
+<simpara>The <literal>su</literal> binaries are present</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Developer Mode Detection (DEVELOPER_MODE_ENABLED)</term>
+<listitem>
+<simpara>To detect if Developer Mode has been enabled on the device the <literal>DeviceCheckType#DEVELOPER_MODE_ENABLED</literal> function can be used. This function uses Android’s <link xl:href="https://developer.android.com/reference/android/provider/Settings.html">Settings</link> class.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Debugger Detection (DEBUGGER_ENABLED)</term>
+<listitem>
+<simpara>To detect if an Android debugger is attached to the app the <literal>DeviceCheckType#DEBUGGER_ENABLED</literal> function can be used. This function uses Android’s <link xl:href="https://developer.android.com/reference/android/os/Debug.html">Debug</link> class.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Emulator Detection (IS_EMULATOR)</term>
+<listitem>
+<simpara>To detect if the app is being run on an emulator the <literal>DeviceCheckType#IS_EMULATOR</literal> function can be used. This function uses Android’s <link xl:href="https://developer.android.com/reference/android/os/Build.html">Build</link> class.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Device Lock Detection (SCREEN_LOCK_ENABLED)</term>
+<listitem>
+<simpara>To detect if a device has a lock screen set (with pin, fingerprint, pattern) the <literal>DeviceCheckType#SCREEN_LOCK_ENABLED</literal> function can be used. This function uses Android’s <link xl:href="https://developer.android.com/reference/android/app/KeyguardManager.html">KeyguardManager</link> class.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>App Data Backup Detection (BACKUP_ENABLED)</term>
+<listitem>
+<simpara>To detect whether the application’s data is configured to be synchronized across devices the <literal>DeviceCheckType#BACKUP_ENABLED</literal> function can be used. The <link xl:href="https://developer.android.com/guide/topics/manifest/application-element.html">allowBackup</link> flag determines whether to allow the application to participate in the backup and restore infrastructure, which might be interesting to avoid depending on your app’s needs.</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Device Encryption Detection (ENCRYPTION_ENABLED)</term>
+<listitem>
+<simpara>To detect whether the devices' filesystem is encrypted the <literal>DeviceCheckType#ENCRYPTION_ENABLED</literal> function can be used. This function uses Android’s <link xl:href="https://developer.android.com/reference/android/app/admin/DevicePolicyManager.html">DevicePolicyManager</link> class.</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</section>
+</section>
+<section xml:id="setting-up-the-device-security-service">
+<title>Configuring your Development Environment for the Device Checks Service</title>
+
+</section>
+<section xml:id="downloading-the-configuration-file-security">
+<title>Downloading the Configuration File</title>
+<simpara>The <literal>mobile-services.json</literal> file provides the information for your mobile app to communicate with services.
+After you change any configuration in the Mobile Developer Console, it is important to update that file in your IDE.</simpara>
+<itemizedlist>
+<title>Prerequisites</title>
+<listitem>
+<simpara>The configuration of your Mobile App in Mobile Developer Console is up-to-date.</simpara>
+</listitem>
+<listitem>
+<simpara>You have set up your mobile app development environment.</simpara>
+</listitem>
+</itemizedlist>
+<orderedlist numeration="arabic">
+<title>Procedure</title>
+<listitem>
+<simpara>Open your Mobile App in Mobile Developer Console.</simpara>
+</listitem>
+<listitem>
+<simpara>Copy the <literal>mobile-services.json</literal> configuration to your clipboard.</simpara>
+</listitem>
+<listitem>
+<simpara>Save the contents of the clipboard to a new file called <literal>mobile-services.json</literal>.</simpara>
+<note>
+<simpara>The <literal>mobile-services.json</literal> file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.</simpara>
+</note>
+</listitem>
+<listitem>
+<simpara>Move <literal>mobile-services.json</literal> to the following location in your application project:</simpara>
+<informalexample>
+<simpara><literal>src/mobile-services.json</literal></simpara>
+</informalexample>
+</listitem>
+</orderedlist>
+<section xml:id="setting-up-sdk-security">
+<title>Setting up Device Checks service SDK</title>
+<simpara>This guide will help you to set up the Device Checks service SDK in your App.</simpara>
+<section xml:id="_importing_the_libraries_2">
+<title>Importing the libraries</title>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Install the <link xl:href="https://www.npmjs.com/package/@aerogear/security">AeroGear Security</link> package from <link xl:href="https://www.npmjs.com/">NPM</link></simpara>
+<programlisting language="bash" linenumbering="unnumbered">$ npm install @aerogear/security</programlisting>
+</listitem>
+<listitem>
+<simpara>Add the <link xl:href="https://www.npmjs.com/package/@aerogear/cordova-plugin-aerogear-security">AeroGear Security plugin</link> for Cordova:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">$ cordova plugin add @aerogear/cordova-plugin-aerogear-security</programlisting>
+</listitem>
+<listitem>
+<simpara>Import and instantiate <literal>SecurityService</literal> to start using the SDK:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const SecurityService = require("@aerogear/security");
+
+const securityService = new SecurityService(app.metrics);</programlisting>
+<note>
+<simpara>Any new instantiation of <literal>SecurityService</literal> returns the same instance.</simpara>
+</note>
+</listitem>
+</orderedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+</section>
+</section>
+<section xml:id="performing-device-trust-checks_security">
+<title>Performing Device Trust Checks in your Device</title>
+<simpara>This section describes what Device Trust Checks are available and how to execute them for the supported platforms.
+Also note that Device Checks can be performed either individually or together.</simpara>
+<section xml:id="_root_access_detection">
+<title>Root Access Detection</title>
+<simpara>Use this to help prevent your app running in a device that has been rooted/jailbroken.</simpara>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<programlisting language="javascript" linenumbering="unnumbered">new SecurityService(app.metrics)
+    .check(DeviceCheckType.rootEnabled)
+    .then(result =&gt; {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+<section xml:id="_developer_mode_detection">
+<title>Developer Mode Detection</title>
+<simpara>Use this to detect if Developer Mode has been enabled on the device.</simpara>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<simpara>This check is not available for Cordova.</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+<section xml:id="_debugger_detection">
+<title>Debugger Detection</title>
+<simpara>Use this to detect if a debugger is attached to the app.</simpara>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<programlisting language="javascript" linenumbering="unnumbered">new SecurityService(app.metrics)
+    .check(DeviceCheckType.debugModeEnabled)
+    .then(result =&gt; {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+<section xml:id="_emulator_detection">
+<title>Emulator Detection</title>
+<simpara>Use this to detect if the app is being run on an emulator.</simpara>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<programlisting language="javascript" linenumbering="unnumbered">new SecurityService(app.metrics)
+    .check(DeviceCheckType.isEmulator)
+    .then(result =&gt; {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+<section xml:id="_device_lock_detection">
+<title>Device Lock Detection</title>
+<simpara>Use this to detect if a device has a lock screen set (with pin, fingerprint, pattern&#8230;&#8203;).</simpara>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<note>
+<simpara>For iOS devices this check requires iOS 8 or above.</simpara>
+</note>
+<programlisting language="javascript" linenumbering="unnumbered">new SecurityService(app.metrics)
+    .check(DeviceCheckType.screenLockEnabled)
+    .then(result =&gt; {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+<section xml:id="_app_data_backup_detection">
+<title>App Data Backup Detection</title>
+<simpara>Use this to detect whether the application’s data is configured to be synchronized across devices.</simpara>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<simpara>This is not available for Cordova.</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+<section xml:id="_device_encryption_detection">
+<title>Device Encryption Detection</title>
+<simpara>Use this to detect whether a devices filesystem is encrypted.</simpara>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<simpara>This is not available for Cordova.</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+<section xml:id="_invoking_multiple_device_checks">
+<title>Invoking Multiple Device Checks</title>
+<simpara>Device Checks can be run in group, both synchronously and asynchronously.</simpara>
+<bridgehead xml:id="_synchronously" renderas="sect3">Synchronously</bridgehead>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<simpara>Executing multiple checks synchronously is not directly supported. Instead, it&#8217;s possible to use the <link xl:href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await">await</link> operator.</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const results = await securityService.checkMany(
+    DeviceCheckType.rootEnabled,
+    DeviceCheckType.isEmulator,
+    // Add more checks here
+);</programlisting>
+<note>
+<simpara><literal>DeviceCheckResult</literal> objects in the returning array stay in the same order they were provided.</simpara>
+</note>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+<bridgehead xml:id="_asynchronously" renderas="sect3">Asynchronously</bridgehead>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<simpara>Invoke multiple checks using the <literal>checkMany</literal> method:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const checkResults = securityService.checkMany(
+    DeviceCheckType.rootEnabled,
+    DevoceCheckType.isEmulator,
+    // Add more checks here
+)
+.then(results =&gt; {
+    // Handle results
+});</programlisting>
+<note>
+<simpara>This method returns a Promise with an array containing all <literal>DeviceCheckResult</literal> objects in the same order they were provided.</simpara>
+</note>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+<section xml:id="_additional_resources">
+<title>Additional Resources</title>
+<bridgehead xml:id="_adding_custom_device_checks" renderas="sect3">Adding Custom Device Checks</bridgehead>
+<simpara>It is possible to make use of your own custom checks. Follow the next steps depending on your platform to implement them:</simpara>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Implement the <literal>DeviceCheck</literal> interface:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">class CustomDeviceCheck implements DeviceCheck {
+
+    get name(): string {
+        return "My Custom Check";
+    }
+
+    public check(): Promise&lt;DeviceCheckResult&gt; {
+        // Implement device check logic here
+        return null;
+    }
+
+}</programlisting>
+</listitem>
+<listitem>
+<simpara>Instantiate it to execute it, using the instance of <literal>SecurityService</literal>:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const securityService = new SecurityService(app.metrics);
+
+securityService.check(new CustomDeviceCheck())
+    .then(result =&gt; {
+        // Handle result
+    });</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+<bridgehead xml:id="_reporting_device_checks_results_via_the_metrics_service" renderas="sect3">Reporting Device Checks Results Via the Metrics Service</bridgehead>
+<simpara>In order to report the results of Device Checks utilize this service in conjunction with the Mobile Metrics service.</simpara>
+<informalexample>
+<variablelist>
+<varlistentry>
+<term>Cordova</term>
+<listitem>
+<simpara>Report individual checks via the <literal>checkAndPublishMetric</literal> method:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">new SecurityService(app.metrics)
+    .checkAndPublishMetric(DeviceCheckType.rootEnabled)
+    .then(result =&gt; {
+        // Handle the security result metric
+        // result: { id: string, name: string, passed: boolean }
+    });</programlisting>
+<simpara>Or alternatively report multiple checks using the <literal>checkManyAndPublishMetric</literal> method:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">new SecurityService(app.metrics)
+    .checkManyAndPublishMetric(
+        DeviceCheckType.rootEnabled,
+        DeviceCheckType.isEmulator,
+        // Add more checks here
+    )
+    .then(results =&gt; {
+        // Handle the security results array
+    });</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+</informalexample>
+</section>
+</section>
+<section xml:id="certificate-pinning_security">
+<title>Certificate Pinning in Android Devices</title>
+<simpara><link xl:href="https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning">Certificate pinning</link> can be enabled in individual SDKs through the <literal>mobile-services.json</literal> file.
+Certificate pinning will only be enabled for services which are used directly by the SDKs. For
+other services <emphasis role="strong">SPKI</emphasis> pinning is used. Mobile services must have pinning configured
+separately. For more information on setting up certificate pinning for mobile services see the
+<link xl:href="https://developer.android.com/training/articles/security-config.html#CertificatePinning">Android network security guide</link>.</simpara>
+<section xml:id="_generating_pinning_configuration">
+<title>Generating Pinning Configuration</title>
+<simpara>The AeroGear SDK gets its configuration from the <literal>https</literal> section of the <literal>mobile-services.json</literal> file
+in a project.</simpara>
+<programlisting language="json" linenumbering="unnumbered">{
+    "services":[],
+    "https": {
+        "certificatePins": [{
+            "host": "example.sync.service",
+            "certificateHash": "exampleHash"
+        }]
+    }
+}</programlisting>
+<simpara>To include the <literal>https</literal> section in configuration when generating it using the Mobile CLI use the
+<literal>--include-cert-pins</literal> flag when retrieving a client configuration. By default, self-signed or
+invalid certs will not be permitted to be included in the certificate pinning configuration. To
+allow these to be included use the <literal>--insecure-skip-tls-verify</literal> flag.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">$ ./mobile get clientconfig &lt;client name&gt; --include-cert-pins --insecure-skip-tls-verify</programlisting>
+<bridgehead xml:id="_using_pinning_configuration" renderas="sect3">Using Pinning Configuration</bridgehead>
+<simpara>If the <literal>https</literal> section is included in the <literal>mobile-services.json</literal> file then certificate pinning will
+automatically be enabled for mobile services.</simpara>
+<bridgehead xml:id="_considerations" renderas="sect3">Considerations</bridgehead>
+<simpara>If the certificate authority of a service changes then the <literal>mobile-services.json</literal> file will need to
+be regenerated in order to retrieve the correct <literal>https</literal> configuration. The app will then need to be
+rebuilt and republished for the end users to consume. If this is not done then an app may become
+incapable of making network requests to other services.</simpara>
+</section>
+</section>
+</article>
