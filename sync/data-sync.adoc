@@ -6,7 +6,7 @@ include::shared/downstream-attributes.adoc[]
 :parent-context: {context}
 :service-name: {sync-service}
 
-:upstream-location: https://mobile-docs.netlify.com
+// :upstream-location: https://mobile-docs.netlify.com
 // :upstream-location: ../../mobile-docs/build/site
 
 

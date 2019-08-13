@@ -3,7 +3,7 @@ include::shared/upstream-attributes.adoc[]
 include::shared/downstream-attributes.adoc[]
 
 
-:upstream-location: https://mobile-docs.netlify.com
+//:upstream-location: https://mobile-docs.netlify.com
 // :upstream-location: ../../mobile-docs/build/site
 
 include::{upstream-location}/security.adoc[tags=!excludeDownstream]
