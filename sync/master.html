@@ -448,57 +448,63 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#ref-data-sync-terminology-data-sync">Data Sync terminology</a></li>
 </ul>
 </li>
-<li><a href="#_developing_a_data_sync_application">3. Developing a Data Sync Application</a></li>
-<li><a href="#getting-started-with-hello-world-data-sync">4. Getting Started with Hello World Data Sync</a></li>
-<li><a href="#_querying_a_data_sync_server_using_a_data_sync_client">5. Querying a Data Sync server using a Data Sync client</a></li>
-<li><a href="#_adding_a_mutation_to_a_data_sync_client">6. Adding a mutation to a Data Sync client</a></li>
-<li><a href="#offline-client">7. Supporting offline functionality in your mobile app</a>
+<li><a href="#_developing_a_data_sync_application">3. Developing a Data Sync Application</a>
 <ul class="sectlevel2">
-<li><a href="#_about_offline_functionality">7.1. About offline functionality</a></li>
-<li><a href="#setup-offline-client">7.2. Creating an offline client</a></li>
+<li><a href="#getting-started-with-hello-world-data-sync">3.1. Getting Started with Hello World Data Sync</a></li>
 </ul>
 </li>
-<li><a href="#_detecting_mutations_while_offline">8. Detecting mutations while offline</a></li>
-<li><a href="#_performing_mutations_while_offline">9. Performing mutations while offline</a>
+<li><a href="#_querying_a_data_sync_server_using_a_data_sync_client">4. Querying a Data Sync server using a Data Sync client</a></li>
+<li><a href="#_adding_a_mutation_to_a_data_sync_client">5. Adding a mutation to a Data Sync client</a></li>
+<li><a href="#offline-client">6. Supporting offline functionality in your mobile app</a>
 <ul class="sectlevel2">
-<li><a href="#_supporting_app_restarts_while_offline">9.1. Supporting app restarts while offline</a></li>
-<li><a href="#_ensuring_specified_mutations_are_performed_online_only">9.2. Ensuring specified mutations are performed online only</a></li>
-<li><a href="#sync-client-offline-queue-listener">9.3. Listening for events</a></li>
-<li><a href="#cache-update-helpers">9.4. Using cache update helpers</a>
+<li><a href="#_about_offline_functionality">6.1. About offline functionality</a></li>
+<li><a href="#setup-offline-client">6.2. Creating an offline client</a></li>
+</ul>
+</li>
+<li><a href="#_detecting_mutations_while_offline">7. Detecting mutations while offline</a></li>
+<li><a href="#_performing_mutations_while_offline">8. Performing mutations while offline</a>
+<ul class="sectlevel2">
+<li><a href="#_supporting_app_restarts_while_offline">8.1. Supporting app restarts while offline</a></li>
+<li><a href="#_ensuring_specified_mutations_are_performed_online_only">8.2. Ensuring specified mutations are performed online only</a></li>
+<li><a href="#sync-client-offline-queue-listener">8.3. Listening for events</a></li>
+<li><a href="#cache-update-helpers">8.4. Using cache update helpers</a>
 <ul class="sectlevel3">
-<li><a href="#_using_cache_update_helpers_for_mutations">9.4.1. Using cache update helpers for mutations</a></li>
-<li><a href="#_using_cache_update_helpers_for_subscriptions">9.4.2. Using cache update helpers for subscriptions</a></li>
-<li><a href="#_using_cache_update_helpers_for_multiple_subscriptions">9.4.3. Using cache update helpers for multiple subscriptions</a></li>
+<li><a href="#_using_cache_update_helpers_for_mutations">8.4.1. Using cache update helpers for mutations</a></li>
+<li><a href="#_using_cache_update_helpers_for_subscriptions">8.4.2. Using cache update helpers for subscriptions</a></li>
+<li><a href="#_using_cache_update_helpers_for_multiple_subscriptions">8.4.3. Using cache update helpers for multiple subscriptions</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_detecting_network_status">10. Detecting Network Status</a></li>
-<li><a href="#realtime_data-sync">11. Supporting real-time updates in your mobile app</a></li>
-<li><a href="#realtime-intro-data-sync">12. Introduction to real-time updates</a></li>
-<li><a href="#realtime-updates-data-sync">13. Implementing real-time updates on a Data Sync server</a>
+<li><a href="#_detecting_network_status">9. Detecting Network Status</a></li>
+<li><a href="#realtime_data-sync">10. Supporting real-time updates in your mobile app</a>
 <ul class="sectlevel2">
-<li><a href="#_implementing_a_subscriptionserver_using_voyager_subscription">13.1. Implementing a SubscriptionServer using voyager-subscription</a></li>
-<li><a href="#_implementing_a_publish_subscribe_mechanism">13.2. Implementing a Publish Subscribe Mechanism</a></li>
-<li><a href="#_defining_subscriptions_in_the_schema">13.3. Defining subscriptions in the schema</a></li>
-<li><a href="#_implementing_resolvers">13.4. Implementing resolvers</a></li>
+<li><a href="#realtime-intro-data-sync">10.1. Introduction to real-time updates</a></li>
 </ul>
 </li>
-<li><a href="#pub-sub">14. Configuring a Publish Subscribe mechanism</a>
+<li><a href="#realtime-updates-data-sync">11. Implementing real-time updates on a Data Sync server</a>
 <ul class="sectlevel2">
-<li><a href="#_using_the_apollo_pubsub_mechanism">14.1. Using the Apollo PubSub mechanism</a></li>
-<li><a href="#_using_the_mqtt_pubsub_mechanism">14.2. Using the MQTT PubSub mechanism</a></li>
-<li><a href="#_configuring_amq_online_for_mqtt_messaging">14.3. Configuring AMQ Online for MQTT Messaging</a>
-<ul class="sectlevel3">
-<li><a href="#_creating_an_address_space">14.3.1. Creating an address space</a></li>
-<li><a href="#_creating_an_address">14.3.2. Creating an Address</a></li>
-<li><a href="#_creating_an_amq_online_user">14.3.3. Creating an AMQ Online user</a></li>
+<li><a href="#_implementing_a_subscriptionserver_using_voyager_subscription">11.1. Implementing a SubscriptionServer using voyager-subscription</a></li>
+<li><a href="#_implementing_a_publish_subscribe_mechanism">11.2. Implementing a Publish Subscribe Mechanism</a></li>
+<li><a href="#_defining_subscriptions_in_the_schema">11.3. Defining subscriptions in the schema</a></li>
+<li><a href="#_implementing_resolvers">11.4. Implementing resolvers</a></li>
 </ul>
 </li>
-<li><a href="#_using_graphql_mqtt_pubsub_with_amq_online">14.4. Using GraphQL MQTT PubSub with AMQ Online</a>
+<li><a href="#pub-sub">12. Configuring a Publish Subscribe mechanism</a>
+<ul class="sectlevel2">
+<li><a href="#_using_the_apollo_pubsub_mechanism">12.1. Using the Apollo PubSub mechanism</a></li>
+<li><a href="#_using_the_mqtt_pubsub_mechanism">12.2. Using the MQTT PubSub mechanism</a></li>
+<li><a href="#_configuring_amq_online_for_mqtt_messaging">12.3. Configuring AMQ Online for MQTT Messaging</a>
 <ul class="sectlevel3">
-<li><a href="#_using_environment_variables_for_configuration">14.4.1. Using environment variables for configuration</a></li>
-<li><a href="#_troubleshooting_mqtt_connection_issues">14.4.2. Troubleshooting MQTT Connection Issues</a>
+<li><a href="#_creating_an_address_space">12.3.1. Creating an address space</a></li>
+<li><a href="#_creating_an_address">12.3.2. Creating an Address</a></li>
+<li><a href="#_creating_an_amq_online_user">12.3.3. Creating an AMQ Online user</a></li>
+</ul>
+</li>
+<li><a href="#_using_graphql_mqtt_pubsub_with_amq_online">12.4. Using GraphQL MQTT PubSub with AMQ Online</a>
+<ul class="sectlevel3">
+<li><a href="#_using_environment_variables_for_configuration">12.4.1. Using environment variables for configuration</a></li>
+<li><a href="#_troubleshooting_mqtt_connection_issues">12.4.2. Troubleshooting MQTT Connection Issues</a>
 <ul class="sectlevel4">
 <li><a href="#_troubleshooting_mqtt_events">Troubleshooting MQTT Events</a></li>
 <li><a href="#_troubleshooting_mqtt_configuration_issues">Troubleshooting MQTT Configuration Issues</a></li>
@@ -508,69 +514,84 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#sync-js-client-realtime-updates">15. Implementing real-time updates on on the client</a>
+<li><a href="#sync-js-client-realtime-updates">13. Implementing real-time updates on on the client</a>
 <ul class="sectlevel2">
-<li><a href="#_setting_up_a_client_to_use_subscriptions">15.1. Setting up a client to use subscriptions</a></li>
-<li><a href="#_using_subscriptions">15.2. Using Subscriptions</a></li>
-<li><a href="#_handling_network_state_changes">15.3. Handling network state changes</a></li>
+<li><a href="#_setting_up_a_client_to_use_subscriptions">13.1. Setting up a client to use subscriptions</a></li>
+<li><a href="#_using_subscriptions">13.2. Using Subscriptions</a></li>
+<li><a href="#_handling_network_state_changes">13.3. Handling network state changes</a></li>
 </ul>
 </li>
-<li><a href="#auth_data-sync">16. Supporting authentication and authorization in your mobile app</a></li>
-<li><a href="#sync-server-auth">17. Configuring your server for authentication and authorization using Red Hat Single Sign-On</a>
+<li><a href="#auth_data-sync">14. Supporting authentication and authorization in your mobile app</a>
 <ul class="sectlevel2">
-<li><a href="#_protecting_voyager_server_using_red_hat_single_sign_on">17.1. Protecting Voyager Server using Red Hat Single Sign-On</a></li>
-<li><a href="#_using_the_hasrole_directive_in_a_schema">17.2. Using the hasRole directive in a schema</a></li>
+<li><a href="#sync-server-auth">14.1. Configuring your server for authentication and authorization using Red Hat Single Sign-On</a>
+<ul class="sectlevel3">
+<li><a href="#_protecting_voyager_server_using_red_hat_single_sign_on">14.1.1. Protecting Voyager Server using Red Hat Single Sign-On</a></li>
+<li><a href="#_using_the_hasrole_directive_in_a_schema">14.1.2. Using the hasRole directive in a schema</a></li>
 </ul>
 </li>
-<li><a href="#authentication-and-authorization-websockets-data-sync">18. Authentication Over Websockets using Red Hat Single Sign-On</a>
-<ul class="sectlevel2">
-<li><a href="#_red_hat_single_sign_on_authorization_in_subscriptions">18.1. Red Hat Single Sign-On Authorization in Subscriptions</a></li>
 </ul>
 </li>
-<li><a href="#sync-js-client-auth">19. Implementing authentication and authorization on your client</a></li>
-<li><a href="#filesdata-sync">20. Allowing users upload files from your mobile app</a></li>
-<li><a href="#_enabling_file_uploads_on_the_server">21. Enabling file uploads on the server</a></li>
-<li><a href="#_implementing_file_upload_on_the_client">22. Implementing file upload on the client</a>
+<li><a href="#authentication-and-authorization-websockets-data-sync">15. Authentication Over Websockets using Red Hat Single Sign-On</a>
 <ul class="sectlevel2">
-<li><a href="#_introduction">22.1. Introduction</a></li>
-<li><a href="#_enabling_file_upload">22.2. Enabling File Upload</a></li>
+<li><a href="#_red_hat_single_sign_on_authorization_in_subscriptions">15.1. Red Hat Single Sign-On Authorization in Subscriptions</a></li>
 </ul>
 </li>
-<li><a href="#_uploading_files_from_graphql">23. Uploading Files from GraphQL</a>
+<li><a href="#sync-js-client-auth">16. Implementing authentication and authorization on your client</a></li>
+<li><a href="#filesdata-sync">17. Allowing users upload files from your mobile app</a>
 <ul class="sectlevel2">
-<li><a href="#_executing_mutations">23.1. Executing mutations</a></li>
+<li><a href="#_enabling_file_uploads_on_the_server">17.1. Enabling file uploads on the server</a></li>
 </ul>
 </li>
-<li><a href="#audit_data-sync">24. Enabling audit logs and viewing reports</a></li>
-<li><a href="#sync-server-audit-logs">25. Enabling audit logs on the server</a>
+<li><a href="#_implementing_file_upload_on_the_client">18. Implementing file upload on the client</a>
 <ul class="sectlevel2">
-<li><a href="#_audit_logging_architecture">25.1. Audit Logging Architecture</a></li>
-<li><a href="#_enabling_audit_logging_in_voyager_server">25.2. Enabling Audit Logging in Voyager Server</a></li>
-<li><a href="#_sending_device_information_in_voyager_client">25.3. Sending Device Information in Voyager Client</a></li>
-<li><a href="#_exploring_audit_logs">25.4. Exploring Audit Logs</a></li>
-<li><a href="#_configuring_openshift_logging">25.5. Configuring OpenShift Logging</a></li>
-<li><a href="#_importing_kibana_saved_objects">25.6. Importing Kibana Saved Objects</a></li>
+<li><a href="#_introduction">18.1. Introduction</a></li>
+<li><a href="#_enabling_file_upload">18.2. Enabling File Upload</a></li>
 </ul>
 </li>
-<li><a href="#_viewing_the_dashboard_and_audit_logs">26. Viewing the Dashboard and Audit Logs</a></li>
-<li><a href="#sync-js-client-audit-logs">27. Enabling audit logs on the client</a></li>
-<li><a href="#sync-js-client-advanced-topics">28. Advanced Topics</a>
+<li><a href="#_uploading_files_from_graphql">19. Uploading Files from GraphQL</a>
 <ul class="sectlevel2">
-<li><a href="#_logging_debug_messages">28.1. Logging Debug Messages</a></li>
-<li><a href="#_optimistic_ui">28.2. Optimistic UI</a></li>
+<li><a href="#_executing_mutations">19.1. Executing mutations</a></li>
 </ul>
 </li>
-<li><a href="#openshift_data-sync">29. Running a Data Sync app on OpenShift</a></li>
-<li><a href="#_overview">30. Overview</a></li>
-<li><a href="#building-and-publishing-the-container">31. Building and publishing the Data Sync server container</a></li>
-<li><a href="#sync-server-provisioning-data-sync-templates">32. Provisioning the Data Sync server applications using templates</a></li>
-<li><a href="#sync-server-getting-started-mdc-client">33. Connecting a Client</a>
+<li><a href="#audit_data-sync">20. Enabling audit logs and viewing reports</a>
 <ul class="sectlevel2">
-<li><a href="#_updating_the_hello_world_sync_client">33.1. Updating the Hello World Sync Client</a></li>
+<li><a href="#sync-server-audit-logs">20.1. Enabling audit logs on the server</a>
+<ul class="sectlevel3">
+<li><a href="#_audit_logging_architecture">20.1.1. Audit Logging Architecture</a></li>
+<li><a href="#_enabling_audit_logging_in_voyager_server">20.1.2. Enabling Audit Logging in Voyager Server</a></li>
+<li><a href="#_sending_device_information_in_voyager_client">20.1.3. Sending Device Information in Voyager Client</a></li>
+<li><a href="#_exploring_audit_logs">20.1.4. Exploring Audit Logs</a></li>
+<li><a href="#_configuring_openshift_logging">20.1.5. Configuring OpenShift Logging</a></li>
+<li><a href="#_importing_kibana_saved_objects">20.1.6. Importing Kibana Saved Objects</a></li>
 </ul>
 </li>
-<li><a href="#sync-server-binding">34. Binding a Mobile App with the Data Sync server application service</a></li>
-<li><a href="#sync-server-binding-keycloak">35. Binding Data Sync to Identity Management</a></li>
+<li><a href="#_viewing_the_dashboard_and_audit_logs">20.2. Viewing the Dashboard and Audit Logs</a></li>
+</ul>
+</li>
+<li><a href="#sync-js-client-audit-logs">21. Enabling audit logs on the client</a>
+<ul class="sectlevel2">
+<li><a href="#sync-js-client-advanced-topics">21.1. Advanced Topics</a>
+<ul class="sectlevel3">
+<li><a href="#_logging_debug_messages">21.1.1. Logging Debug Messages</a></li>
+<li><a href="#_optimistic_ui">21.1.2. Optimistic UI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#openshift_data-sync">22. Running a Data Sync app on OpenShift</a>
+<ul class="sectlevel2">
+<li><a href="#_overview">22.1. Overview</a></li>
+<li><a href="#building-and-publishing-the-container">22.2. Building and publishing the Data Sync server container</a></li>
+<li><a href="#sync-server-provisioning-data-sync-templates">22.3. Provisioning the Data Sync server applications using templates</a></li>
+<li><a href="#sync-server-getting-started-mdc-client">22.4. Connecting a Client</a>
+<ul class="sectlevel3">
+<li><a href="#_updating_the_hello_world_sync_client">22.4.1. Updating the Hello World Sync Client</a></li>
+</ul>
+</li>
+<li><a href="#sync-server-binding">22.5. Binding a Mobile App with the Data Sync server application service</a></li>
+<li><a href="#sync-server-binding-keycloak">22.6. Binding Data Sync to Identity Management</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -786,11 +807,8 @@ The Data Sync Framework leverages Apollo functionality.</p>
 </li>
 </ol>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="getting-started-with-hello-world-data-sync">4. Getting Started with Hello World Data Sync</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="getting-started-with-hello-world-data-sync">3.1. Getting Started with Hello World Data Sync</h3>
 <div class="paragraph">
 <p>In this example, you add the Voyager Server library to your <a href="https://expressjs.com/">Express</a> node.js project, create an <code>index-1.js</code> file, run the server, and query GraphQL.</p>
 </div>
@@ -941,8 +959,9 @@ In this app, you can explore a more complex schema.</p>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="_querying_a_data_sync_server_using_a_data_sync_client">5. Querying a Data Sync server using a Data Sync client</h2>
+<h2 id="_querying_a_data_sync_server_using_a_data_sync_client">4. Querying a Data Sync server using a Data Sync client</h2>
 <div class="sectionbody">
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -1177,7 +1196,7 @@ __typename: "Person"</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_adding_a_mutation_to_a_data_sync_client">6. Adding a mutation to a Data Sync client</h2>
+<h2 id="_adding_a_mutation_to_a_data_sync_client">5. Adding a mutation to a Data Sync client</h2>
 <div class="sectionbody">
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -1259,10 +1278,10 @@ addPerson();</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="offline-client">7. Supporting offline functionality in your mobile app</h2>
+<h2 id="offline-client">6. Supporting offline functionality in your mobile app</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_about_offline_functionality">7.1. About offline functionality</h3>
+<h3 id="_about_offline_functionality">6.1. About offline functionality</h3>
 <div class="paragraph">
 <p>Your mobile app can run offline and allow users to query and create mutations using the @aerogear/voyager-client module.</p>
 </div>
@@ -1315,7 +1334,7 @@ The mutation store is sometimes referred to as the offline store.
 </div>
 </div>
 <div class="sect2">
-<h3 id="setup-offline-client">7.2. Creating an offline client</h3>
+<h3 id="setup-offline-client">6.2. Creating an offline client</h3>
 <div class="paragraph">
 <p>The @aerogear/voyager-client module provides an <code>OfflineClient</code> class which exposes the following functionality:</p>
 </div>
@@ -1360,7 +1379,7 @@ setupClient();</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_detecting_mutations_while_offline">8. Detecting mutations while offline</h2>
+<h2 id="_detecting_mutations_while_offline">7. Detecting mutations while offline</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If a mutation occurs while the device is offline, the <code>client.mutate</code> function:</p>
@@ -1409,7 +1428,7 @@ In addition to watching individual mutations, you can add a global offline liste
 </div>
 </div>
 <div class="sect1">
-<h2 id="_performing_mutations_while_offline">9. Performing mutations while offline</h2>
+<h2 id="_performing_mutations_while_offline">8. Performing mutations while offline</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The @aerogear/voyager-client module provides an <code>offlineMutate</code> method which extends Apollo&#8217;s mutate function with some extra functionality.
@@ -1455,7 +1474,7 @@ This includes automatically adding some fields to each operation&#8217;s context
 </ol>
 </div>
 <div class="sect2">
-<h3 id="_supporting_app_restarts_while_offline">9.1. Supporting app restarts while offline</h3>
+<h3 id="_supporting_app_restarts_while_offline">8.1. Supporting app restarts while offline</h3>
 <div class="paragraph">
 <p>An Apollo client holds all mutation parameters in memory.
 An offline Apollo client continues to store mutation parameters and once online, it restores all mutations to memory.
@@ -1511,7 +1530,7 @@ let config = {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ensuring_specified_mutations_are_performed_online_only">9.2. Ensuring specified mutations are performed online only</h3>
+<h3 id="_ensuring_specified_mutations_are_performed_online_only">8.2. Ensuring specified mutations are performed online only</h3>
 <div class="paragraph">
 <p>If you wish to ensure certain mutations are only executed when the client is online, use the GraphQL directive <code>@onlineOnly</code>, for example:</p>
 </div>
@@ -1524,7 +1543,7 @@ let config = {
 </div>
 </div>
 <div class="sect2">
-<h3 id="sync-client-offline-queue-listener">9.3. Listening for events</h3>
+<h3 id="sync-client-offline-queue-listener">8.3. Listening for events</h3>
 <div class="paragraph">
 <p>To handle all notifications about offline related events, use the <strong>offlineQueueListener</strong> listener in the config object</p>
 </div>
@@ -1552,13 +1571,13 @@ let config = {
 </div>
 </div>
 <div class="sect2">
-<h3 id="cache-update-helpers">9.4. Using cache update helpers</h3>
+<h3 id="cache-update-helpers">8.4. Using cache update helpers</h3>
 <div class="paragraph">
 <p>The @aerogear/voyager-client module provides an out of the box solution for managing updates to your application&#8217;s cache.
 It can intelligently generate cache update methods for both mutations and subscriptions.</p>
 </div>
 <div class="sect3">
-<h4 id="_using_cache_update_helpers_for_mutations">9.4.1. Using cache update helpers for mutations</h4>
+<h4 id="_using_cache_update_helpers_for_mutations">8.4.1. Using cache update helpers for mutations</h4>
 <div class="paragraph">
 <p>The following example shows how to use these helper methods for mutations.
 To use these methods, create an offline client as described in <a href="#setup-offline-client">Creating an offline client</a> and then use the  <code>offlineMutate</code> method.
@@ -1624,7 +1643,7 @@ client.mutate&lt;Task&gt;(options);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_cache_update_helpers_for_subscriptions">9.4.2. Using cache update helpers for subscriptions</h4>
+<h4 id="_using_cache_update_helpers_for_subscriptions">8.4.2. Using cache update helpers for subscriptions</h4>
 <div class="paragraph">
 <p>The @aerogear/voyager-client module provides a subscription helper which can generate the necessary options to be used with Apollo Client&#8217;s <code>subscribeToMore</code> function.</p>
 </div>
@@ -1673,7 +1692,7 @@ query.subscribeToMore(subscriptionOptions);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_cache_update_helpers_for_multiple_subscriptions">9.4.3. Using cache update helpers for multiple subscriptions</h4>
+<h4 id="_using_cache_update_helpers_for_multiple_subscriptions">8.4.3. Using cache update helpers for multiple subscriptions</h4>
 <div class="paragraph">
 <p>The @aerogear/voyager-client module provides the ability to automatically call <code>subscribeToMore</code> on your <code>ObservableQuery</code>.
 This can be useful in a situation where you may have multiple subscriptions which can affect one single query.
@@ -1714,7 +1733,7 @@ subscribeToMoreHelper(query, [addOptions, deleteOptions, updateOptions]);</code>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_detecting_network_status">10. Detecting Network Status</h2>
+<h2 id="_detecting_network_status">9. Detecting Network Status</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Use the NetworkStatus interface to check the current network status, or to register a listener which performs actions when the status of the network changes.</p>
@@ -1763,14 +1782,10 @@ let config = {
 </div>
 </div>
 <div class="sect1">
-<h2 id="realtime_data-sync">11. Supporting real-time updates in your mobile app</h2>
+<h2 id="realtime_data-sync">10. Supporting real-time updates in your mobile app</h2>
 <div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="realtime-intro-data-sync">12. Introduction to real-time updates</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="realtime-intro-data-sync">10.1. Introduction to real-time updates</h3>
 <div class="paragraph">
 <p>After developing some queries and mutations, you might want to implement real-time updates.
 These are supported in the GraphQL specification by an operation type called <code>Subscription</code>.
@@ -1829,8 +1844,9 @@ To support inactive clients, use Push Notifications.</p>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="realtime-updates-data-sync">13. Implementing real-time updates on a Data Sync server</h2>
+<h2 id="realtime-updates-data-sync">11. Implementing real-time updates on a Data Sync server</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The follow code shows typical code for a Data Sync Server without subscriptions:</p>
@@ -1875,7 +1891,7 @@ app.listen({ port }, () =&gt;
 </ol>
 </div>
 <div class="sect2">
-<h3 id="_implementing_a_subscriptionserver_using_voyager_subscription">13.1. Implementing a SubscriptionServer using voyager-subscription</h3>
+<h3 id="_implementing_a_subscriptionserver_using_voyager_subscription">11.1. Implementing a SubscriptionServer using voyager-subscription</h3>
 <div class="paragraph">
 <p>To allow you create GraphQL subscription types in your schema:</p>
 </div>
@@ -1954,7 +1970,7 @@ const server = app.listen({ port }, () =&gt; {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_implementing_a_publish_subscribe_mechanism">13.2. Implementing a Publish Subscribe Mechanism</h3>
+<h3 id="_implementing_a_publish_subscribe_mechanism">11.2. Implementing a Publish Subscribe Mechanism</h3>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -1988,7 +2004,7 @@ const pubsub = new PubSub()</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_defining_subscriptions_in_the_schema">13.3. Defining subscriptions in the schema</h3>
+<h3 id="_defining_subscriptions_in_the_schema">11.3. Defining subscriptions in the schema</h3>
 <div class="paragraph">
 <p>Subscriptions are a root level type.
 They are defined in the schema similar to <code>Query</code> and <code>Mutation</code>.
@@ -2018,7 +2034,7 @@ type Task {
 </details>
 </div>
 <div class="sect2">
-<h3 id="_implementing_resolvers">13.4. Implementing resolvers</h3>
+<h3 id="_implementing_resolvers">11.4. Implementing resolvers</h3>
 <div class="paragraph">
 <p>Inside the resolver map, subscription resolvers return an <code>AsyncIterator,</code> which listens for events.
 To generate an event, call the <code>publish</code> method.
@@ -2072,19 +2088,19 @@ This subscription server does not implement authentication or authorization. For
 </div>
 </div>
 <div class="sect1">
-<h2 id="pub-sub">14. Configuring a Publish Subscribe mechanism</h2>
+<h2 id="pub-sub">12. Configuring a Publish Subscribe mechanism</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can use the Apollo PubSub mechanism for development, but you must use the MQTT PubSub mechanism for production.</p>
 </div>
 <div class="sect2">
-<h3 id="_using_the_apollo_pubsub_mechanism">14.1. Using the Apollo PubSub mechanism</h3>
+<h3 id="_using_the_apollo_pubsub_mechanism">12.1. Using the Apollo PubSub mechanism</h3>
 <div class="paragraph">
 <p>The <a href="#realtime-updates-data-sync">Implementing real-time updates on a Data Sync server</a> section describes how to set up the default <code>PubSub</code> provided by <code>apollo-server</code>. For a production system, you require <a href="npm.im/@aerogear/graphql-mqtt-subscriptions">MQTT PubSub</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_the_mqtt_pubsub_mechanism">14.2. Using the MQTT PubSub mechanism</h3>
+<h3 id="_using_the_mqtt_pubsub_mechanism">12.2. Using the MQTT PubSub mechanism</h3>
 <div class="paragraph">
 <p>The <a href="https://npm.im/@aerogear/graphql-mqtt-subscriptions"><code>@aerogear/graphql-mqtt-subscriptions</code></a> module provides an <code>AsyncIterator</code> interface used for <a href="#realtime-updates-data-sync">implementing subscription resolvers</a>
 It connects the Data Sync server to an MQTT broker to support horizontally scalable subscriptions.</p>
@@ -2128,7 +2144,7 @@ The <code>pubsub</code> instance can then be used to publish and subscribe to ev
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuring_amq_online_for_mqtt_messaging">14.3. Configuring AMQ Online for MQTT Messaging</h3>
+<h3 id="_configuring_amq_online_for_mqtt_messaging">12.3. Configuring AMQ Online for MQTT Messaging</h3>
 <div class="paragraph">
 <p>Red Hat AMQ supports the MQTT protocol which makes it a suitable PubSub technology for powering GraphQL subscriptions at scale.</p>
 </div>
@@ -2177,7 +2193,7 @@ The minimum configuration steps for using AMQ Online for MQTT messaging and enab
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_creating_an_address_space">14.3.1. Creating an address space</h4>
+<h4 id="_creating_an_address_space">12.3.1. Creating an address space</h4>
 <div class="paragraph">
 <p>A user can request messaging resources by creating an <code>AddressSpace</code>. There are two types of address space, <code>standard</code> and <code>brokered</code>.
 You must use the <code>brokered</code> address space for MQTT based applications.</p>
@@ -2226,7 +2242,7 @@ spec:
 </div>
 </div>
 <div class="sect3">
-<h4 id="_creating_an_address">14.3.2. Creating an Address</h4>
+<h4 id="_creating_an_address">12.3.2. Creating an Address</h4>
 <div class="paragraph">
 <p>An adress is part of an <code>AddressSpace</code> and represents a destination for sending and receiving messages.
 Use an <code>Address</code> with type <code>topic</code> to represent an MQTT topic.</p>
@@ -2277,7 +2293,7 @@ Create an Address for each topic name passed into <code>pubsub.asyncIterator()</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_creating_an_amq_online_user">14.3.3. Creating an AMQ Online user</h4>
+<h4 id="_creating_an_amq_online_user">12.3.3. Creating an AMQ Online user</h4>
 <div class="paragraph">
 <p>A messaging client connects using an AMQ Online user, also known as a`MessagingUser`.
 A <code>MessagingUser</code> specifies an authorization policy that controls which addresses can be used and the operations that can be performed on those addresses.</p>
@@ -2326,7 +2342,7 @@ spec:
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_graphql_mqtt_pubsub_with_amq_online">14.4. Using GraphQL MQTT PubSub with AMQ Online</h3>
+<h3 id="_using_graphql_mqtt_pubsub_with_amq_online">12.4. Using GraphQL MQTT PubSub with AMQ Online</h3>
 <div class="paragraph">
 <div class="title">Prerequisites</div>
 <p>The following AMQ Online resources are available for MQTT Applications</p>
@@ -2515,7 +2531,7 @@ const pubsub = new MQTTPubSub({ client })</code></pre>
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_using_environment_variables_for_configuration">14.4.1. Using environment variables for configuration</h4>
+<h4 id="_using_environment_variables_for_configuration">12.4.1. Using environment variables for configuration</h4>
 <div class="paragraph">
 <p>Red Hat recommends that you use environment variables for connection, for example:</p>
 </div>
@@ -2544,7 +2560,7 @@ const pubsub = new MQTTPubSub({ client })</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_troubleshooting_mqtt_connection_issues">14.4.2. Troubleshooting MQTT Connection Issues</h4>
+<h4 id="_troubleshooting_mqtt_connection_issues">12.4.2. Troubleshooting MQTT Connection Issues</h4>
 <div class="sect4">
 <h5 id="_troubleshooting_mqtt_events">Troubleshooting MQTT Events</h5>
 <div class="paragraph">
@@ -2606,7 +2622,7 @@ setTimeout(() =&gt; {
 </div>
 </div>
 <div class="sect1">
-<h2 id="sync-js-client-realtime-updates">15. Implementing real-time updates on on the client</h2>
+<h2 id="sync-js-client-realtime-updates">13. Implementing real-time updates on on the client</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A core concept of the GraphQL specification is an operation type called <code>Subscription</code>, they provide a mechanism for real time updates.
@@ -2645,7 +2661,7 @@ To enable subscriptions on your client set the following
 paramater in the Voyager Client config object. A DataSyncConfig interface is also available from Voyager Client if you wish to use it.</p>
 </div>
 <div class="sect2">
-<h3 id="_setting_up_a_client_to_use_subscriptions">15.1. Setting up a client to use subscriptions</h3>
+<h3 id="_setting_up_a_client_to_use_subscriptions">13.1. Setting up a client to use subscriptions</h3>
 <div class="paragraph">
 <p>To set up a client to use subscriptions:</p>
 </div>
@@ -2678,7 +2694,7 @@ const client = createClient(config)</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_subscriptions">15.2. Using Subscriptions</h3>
+<h3 id="_using_subscriptions">13.2. Using Subscriptions</h3>
 <div class="paragraph">
 <p>A standard flow to utilise subscriptions is as follows:</p>
 </div>
@@ -2750,7 +2766,7 @@ This can be done by calling unsubscribe() as shown in the following example. Thi
 </div>
 </div>
 <div class="sect2">
-<h3 id="_handling_network_state_changes">15.3. Handling network state changes</h3>
+<h3 id="_handling_network_state_changes">13.3. Handling network state changes</h3>
 <div class="paragraph">
 <p>When using subscriptions to provide your client with realtime updates it is important to monitor network state because the client will be out of sync if the server if updated when the the client is offline.</p>
 </div>
@@ -2784,14 +2800,10 @@ networkStatus.onStatusChangeListener({
 </div>
 </div>
 <div class="sect1">
-<h2 id="auth_data-sync">16. Supporting authentication and authorization in your mobile app</h2>
+<h2 id="auth_data-sync">14. Supporting authentication and authorization in your mobile app</h2>
 <div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="sync-server-auth">17. Configuring your server for authentication and authorization using Red Hat Single Sign-On</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="sync-server-auth">14.1. Configuring your server for authentication and authorization using Red Hat Single Sign-On</h3>
 <div class="paragraph">
 <p>Using the Identity Management service and the <a href="https://www.npmjs.com/package/@aerogear/voyager-keycloak">@aerogear/voyager-keycloak</a> module, it is possible to add security to a Voyager Server application.</p>
 </div>
@@ -2835,8 +2847,8 @@ networkStatus.onStatusChangeListener({
 </li>
 </ul>
 </div>
-<div class="sect2">
-<h3 id="_protecting_voyager_server_using_red_hat_single_sign_on">17.1. Protecting Voyager Server using Red Hat Single Sign-On</h3>
+<div class="sect3">
+<h4 id="_protecting_voyager_server_using_red_hat_single_sign_on">14.1.1. Protecting Voyager Server using Red Hat Single Sign-On</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2882,8 +2894,8 @@ const server = VoyagerServer(apolloConfig, voyagerConfig)</code></pre>
 <p>The <a href="https://github.com/aerogear/voyager-server/blob/master/examples/keycloak">Keycloak Example Server Guide</a> has an example server based off the instructions above and shows all of the steps needed to get it running.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_using_the_hasrole_directive_in_a_schema">17.2. Using the hasRole directive in a schema</h3>
+<div class="sect3">
+<h4 id="_using_the_hasrole_directive_in_a_schema">14.1.2. Using the hasRole directive in a schema</h4>
 <div class="paragraph">
 <p>The Voyager Keycloak module provides the <code>@hasRole</code> directive to define role based authorisation in your schema. The <code>@hasRole</code> directive is a special annotation that can be applied to</p>
 </div>
@@ -3036,8 +3048,9 @@ type Mutation {
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="authentication-and-authorization-websockets-data-sync">18. Authentication Over Websockets using Red Hat Single Sign-On</h2>
+<h2 id="authentication-and-authorization-websockets-data-sync">15. Authentication Over Websockets using Red Hat Single Sign-On</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Prerequisites:</p>
@@ -3094,7 +3107,7 @@ const server = app.listen({ port }, () =&gt;
 <p>The example shows how the Red Hat Single Sign-On <code>securityService</code> is created and how it is passed into <code>createSubscriptionServer</code>. This enables Red Hat Single Sign-On authentication on all subscriptions.</p>
 </div>
 <div class="sect2">
-<h3 id="_red_hat_single_sign_on_authorization_in_subscriptions">18.1. Red Hat Single Sign-On Authorization in Subscriptions</h3>
+<h3 id="_red_hat_single_sign_on_authorization_in_subscriptions">15.1. Red Hat Single Sign-On Authorization in Subscriptions</h3>
 <div class="paragraph">
 <p>The Red Hat Single Sign-On <code>securityService</code> will validate and parse the token sent by the client into a <a href="https://github.com/keycloak/keycloak-nodejs-connect/blob/master/middleware/auth-utils/token.js">Token Object</a>. This token is available in Subscription resolvers with <code>context.auth</code> and can be used to implement finer grained role based access control.</p>
 </div>
@@ -3170,7 +3183,7 @@ const server = app.listen({ port }, () =&gt;
 </div>
 </div>
 <div class="sect1">
-<h2 id="sync-js-client-auth">19. Implementing authentication and authorization on your client</h2>
+<h2 id="sync-js-client-auth">16. Implementing authentication and authorization on your client</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>With Voyager Client, user information can be passed to a Data Sync server application in two ways: headers or tokens.</p>
@@ -3211,14 +3224,10 @@ const config = {
 </div>
 </div>
 <div class="sect1">
-<h2 id="filesdata-sync">20. Allowing users upload files from your mobile app</h2>
+<h2 id="filesdata-sync">17. Allowing users upload files from your mobile app</h2>
 <div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_enabling_file_uploads_on_the_server">21. Enabling file uploads on the server</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_enabling_file_uploads_on_the_server">17.1. Enabling file uploads on the server</h3>
 <div class="paragraph">
 <p>Voyager Server provides support for uploading binary data along with the GraphQL queries.
 The implementation relies on upstream <code>Apollo Server</code> capabilities.</p>
@@ -3291,15 +3300,16 @@ The <code>Upload</code> scalar contains all file metadata and a <a href="https:/
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="_implementing_file_upload_on_the_client">22. Implementing file upload on the client</h2>
+<h2 id="_implementing_file_upload_on_the_client">18. Implementing file upload on the client</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Voyager Client provides support for uploading binary data along with the GraphQL queries.
 The binary upload implementation uses the <code>apollo-upload-client</code> package built by the Apollo community.</p>
 </div>
 <div class="sect2">
-<h3 id="_introduction">22.1. Introduction</h3>
+<h3 id="_introduction">18.1. Introduction</h3>
 <div class="paragraph">
 <p>The upload functionality uses the GraphQL multipart form requests specification.
 The File upload needs to be implemented on both server and client:</p>
@@ -3329,7 +3339,7 @@ File upload is based on <a href="https://github.com/jaydenseric/graphql-multipar
 </div>
 </div>
 <div class="sect2">
-<h3 id="_enabling_file_upload">22.2. Enabling File Upload</h3>
+<h3 id="_enabling_file_upload">18.2. Enabling File Upload</h3>
 <div class="paragraph">
 <p>File upload feature needs to be enabled by passing <code>fileUpload</code> flag to config object:</p>
 </div>
@@ -3348,7 +3358,7 @@ File upload is based on <a href="https://github.com/jaydenseric/graphql-multipar
 </div>
 </div>
 <div class="sect1">
-<h2 id="_uploading_files_from_graphql">23. Uploading Files from GraphQL</h2>
+<h2 id="_uploading_files_from_graphql">19. Uploading Files from GraphQL</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>File upload capability adds a new GraphQL scalar <code>Upload</code> that can be used for mutations that operate on binary data.
@@ -3373,7 +3383,7 @@ mutation changeProfilePicture($file: Upload!) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_executing_mutations">23.1. Executing mutations</h3>
+<h3 id="_executing_mutations">19.1. Executing mutations</h3>
 <div class="paragraph">
 <p>The <code>Upload</code> scalar will be mapped  to object returned from HTML file input.</p>
 </div>
@@ -3403,14 +3413,10 @@ mutation changeProfilePicture($file: Upload!) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="audit_data-sync">24. Enabling audit logs and viewing reports</h2>
+<h2 id="audit_data-sync">20. Enabling audit logs and viewing reports</h2>
 <div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="sync-server-audit-logs">25. Enabling audit logs on the server</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="sync-server-audit-logs">20.1. Enabling audit logs on the server</h3>
 <div class="paragraph">
 <p>Audit logging is a mechanism to track all of the actions that occur inside your application. Audit Logging in Voyager Server provides two main benefits.</p>
 </div>
@@ -3424,8 +3430,8 @@ mutation changeProfilePicture($file: Upload!) {
 </li>
 </ol>
 </div>
-<div class="sect2">
-<h3 id="_audit_logging_architecture">25.1. Audit Logging Architecture</h3>
+<div class="sect3">
+<h4 id="_audit_logging_architecture">20.1.1. Audit Logging Architecture</h4>
 <div class="paragraph">
 <p>Audit logging can be enabled in Voyager Server using the <a href="https://www.npmjs.com/package/@aerogear/voyager-audit">@aerogear/voyager-audit</a> module. When enabled, all actions such as GraphQL mutations, queries and subscriptions are logged in great detail to <code>stdout</code> in JSON format.</p>
 </div>
@@ -3518,8 +3524,8 @@ mutation changeProfilePicture($file: Upload!) {
 <p>The <code>userInfo</code> property is available only if Voyager Server is protected by an identity manager, such as Red Hat Single Sign-On, and if the user is authenticated. See  see <a href="#sync-server-auth">Configuring your server for authentication and authorization using Red Hat Single Sign-On</a>.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_enabling_audit_logging_in_voyager_server">25.2. Enabling Audit Logging in Voyager Server</h3>
+<div class="sect3">
+<h4 id="_enabling_audit_logging_in_voyager_server">20.1.2. Enabling Audit Logging in Voyager Server</h4>
 <div class="paragraph">
 <p>Audit logging is enabled in Voyager Server using the <a href="https://www.npmjs.com/package/@aerogear/voyager-audit">@aerogear/voyager-audit</a></p>
 </div>
@@ -3655,14 +3661,14 @@ const server = VoyagerServer(apolloConfig, voyagerConfig)</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_sending_device_information_in_voyager_client">25.3. Sending Device Information in Voyager Client</h3>
+<div class="sect3">
+<h4 id="_sending_device_information_in_voyager_client">20.1.3. Sending Device Information in Voyager Client</h4>
 <div class="paragraph">
 <p>See the <a href="#sync-js-client-audit-logs">Voyager Client Audit Logs</a> section for more information.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_exploring_audit_logs">25.4. Exploring Audit Logs</h3>
+<div class="sect3">
+<h4 id="_exploring_audit_logs">20.1.4. Exploring Audit Logs</h4>
 <div class="paragraph">
 <p>Voyager Server simply prints audit logs to <code>stdout</code> and it is the responsibility of another component to pick up these logs and provide
 functionality to the user to make use of the logs.</p>
@@ -3674,8 +3680,8 @@ functionality to the user to make use of the logs.</p>
 <p>All application logs printed to <code>stdout</code> are sent to ElasticSearch by Fluentd. However, the audit log messages printed by <code>@aerogear/voyager-audit</code> are printed in a format that is used by the Kibana dashboards.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_configuring_openshift_logging">25.5. Configuring OpenShift Logging</h3>
+<div class="sect3">
+<h4 id="_configuring_openshift_logging">20.1.5. Configuring OpenShift Logging</h4>
 <div class="paragraph">
 <p>OpenShift logging can be enabled as described in <a href="https://docs.okd.io/3.11/install_config/aggregate_logging.html">OpenShift documentation</a>.</p>
 </div>
@@ -3701,8 +3707,8 @@ Fluentd can be configured to write log messages to a separate storage, such as <
 to see the metrics for.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_importing_kibana_saved_objects">25.6. Importing Kibana Saved Objects</h3>
+<div class="sect3">
+<h4 id="_importing_kibana_saved_objects">20.1.6. Importing Kibana Saved Objects</h4>
 <div class="paragraph">
 <p>Kibana is a visualization tool that has a great integration with ElasticSearch.</p>
 </div>
@@ -3798,10 +3804,8 @@ At the moment, no mechanisms are provided to overcome this problem.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_viewing_the_dashboard_and_audit_logs">26. Viewing the Dashboard and Audit Logs</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_viewing_the_dashboard_and_audit_logs">20.2. Viewing the Dashboard and Audit Logs</h3>
 <div class="paragraph">
 <p>When the Kibana saved objects are imported, a dashboard is available with several visualizations that can be used as an
 overview of the Voyager application status.</p>
@@ -3814,8 +3818,9 @@ overview of the Voyager application status.</p>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="sync-js-client-audit-logs">27. Enabling audit logs on the client</h2>
+<h2 id="sync-js-client-audit-logs">21. Enabling audit logs on the client</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>As described in the <a href="#sync-server-audit-logs">Server Audit Logs</a> section, device information can be logged as part of an audit log message. To enable it:</p>
@@ -3848,13 +3853,10 @@ return await createClient(config);</code></pre>
 </li>
 </ol>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="sync-js-client-advanced-topics">28. Advanced Topics</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_logging_debug_messages">28.1. Logging Debug Messages</h3>
+<h3 id="sync-js-client-advanced-topics">21.1. Advanced Topics</h3>
+<div class="sect3">
+<h4 id="_logging_debug_messages">21.1.1. Logging Debug Messages</h4>
 <div class="paragraph">
 <p>The Voyager Client uses the <a href="https://www.npmjs.com/package/debug">debug module</a> to log debug messages.</p>
 </div>
@@ -3875,8 +3877,8 @@ return await createClient(config);</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_optimistic_ui">28.2. Optimistic UI</h3>
+<div class="sect3">
+<h4 id="_optimistic_ui">21.1.2. Optimistic UI</h4>
 <div class="paragraph">
 <p>By default mutations are not applied to the UI until responses are received from the server. To provide better user experience, an application may want to update the UI immediately. <a href="https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-mutation-options-optimisticResponse">Optimistic response</a> is an easy way to achieve this goal, and Voyager Client provides a helper method to work with optimistic responses:</p>
 </div>
@@ -3900,8 +3902,9 @@ return await createClient(config);</code></pre>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="openshift_data-sync">29. Running a Data Sync app on OpenShift</h2>
+<h2 id="openshift_data-sync">22. Running a Data Sync app on OpenShift</h2>
 <div class="sectionbody">
 <div id="sync-server-getting-started-openshift" class="ulist">
 <div class="title">Prerequisites</div>
@@ -3917,11 +3920,8 @@ return await createClient(config);</code></pre>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_overview">30. Overview</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_overview">22.1. Overview</h3>
 <div class="paragraph">
 <p>To connect your Data Sync server and client to other services, you need to run your application in OpenShift.  Data Sync provides a service catalog item to help with this.</p>
 </div>
@@ -3929,10 +3929,8 @@ return await createClient(config);</code></pre>
 <p>Data Sync requires your server application to be packaged as a Docker formatted container and published to a public respository such as <a href="https://hub.docker.com/">Docker hub</a>.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="building-and-publishing-the-container">31. Building and publishing the Data Sync server container</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="building-and-publishing-the-container">22.2. Building and publishing the Data Sync server container</h3>
 <div class="paragraph">
 <p>To build a server into a container, create a <code>Dockerfile</code> in the project&#8217;s directory.  This container will need to include your server source code, its dependencies, and be configured to execute your server.</p>
 </div>
@@ -3970,10 +3968,8 @@ CMD [ "node", "index.js" ]</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="sync-server-provisioning-data-sync-templates">32. Provisioning the Data Sync server applications using templates</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="sync-server-provisioning-data-sync-templates">22.3. Provisioning the Data Sync server applications using templates</h3>
 <div class="paragraph">
 <p>Data Sync offers following OpenShift templates
 that will help developers with provisioning their DataSync applications to OpenShift platform.</p>
@@ -4018,10 +4014,8 @@ Server side requires client application available on github <a href="https://git
 <p>When running on Red Hat Managed Integration templates will be available in <strong>Mobile</strong> &gt; <strong>App</strong>  category in OpenShift catalog</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="sync-server-getting-started-mdc-client">33. Connecting a Client</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="sync-server-getting-started-mdc-client">22.4. Connecting a Client</h3>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -4042,8 +4036,8 @@ Server side requires client application available on github <a href="https://git
 <div class="paragraph">
 <p>Once a service is bound to a mobile client, MDC will provide a mobile-services.json file that is used by the AeroGear client libraries to automatically configure the Data Sync client.  It is very important that you use your version of this file and not the one used in this example as system specific values will be different.</p>
 </div>
-<div class="sect2">
-<h3 id="_updating_the_hello_world_sync_client">33.1. Updating the Hello World Sync Client</h3>
+<div class="sect3">
+<h4 id="_updating_the_hello_world_sync_client">22.4.1. Updating the Hello World Sync Client</h4>
 <div class="paragraph">
 <p>The Hello World client application we wrote uses a hard coded server url.  We need to remove this url and instead pass the mobile-services config to the client.  We will also use the AeroGear core library to parse this file and pass that configuration to the Data Sync library.</p>
 </div>
@@ -4126,10 +4120,8 @@ helloWorld();</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="sync-server-binding">34. Binding a Mobile App with the Data Sync server application service</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="sync-server-binding">22.5. Binding a Mobile App with the Data Sync server application service</h3>
 <div class="paragraph">
 <p>To use Mobile Developer Services, you must represent your mobile app in <strong>Mobile Developer Console</strong>, and that app must be associated with the mobile service.
 This association is called <strong>binding</strong> and it is necessary for your mobile app to use that service.</p>
@@ -4175,10 +4167,8 @@ It is possible to bind a Mobile App with a mobile service in the OpenShift conso
 </ol>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="sync-server-binding-keycloak">35. Binding Data Sync to Identity Management</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="sync-server-binding-keycloak">22.6. Binding Data Sync to Identity Management</h3>
 <div class="paragraph">
 <p>In this section, we will show you how to protect your Data Sync application using the Identity Management service.</p>
 </div>
@@ -4274,9 +4264,10 @@ It is possible to bind a Mobile App with a mobile service in the OpenShift conso
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-08-13 15:50:09 +0100
+Last updated 2019-08-14 15:57:42 +0100
 </div>
 </div>
 </body>

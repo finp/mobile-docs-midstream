@@ -136,7 +136,7 @@
 :parent-context: {context}
 :service-name: {sync-service}
 
-:upstream-location: https://mobile-docs.netlify.com
+// :upstream-location: https://mobile-docs.netlify.com
 // :upstream-location: ../../mobile-docs/build/site
 
 
@@ -280,7 +280,7 @@ Unlike other mobile services which provide a server and an API, Data Sync is a f
 :leveloffset: +1
 
 
-:leveloffset: 1
+:leveloffset: +1
 
 [id="getting-started-with-hello-world-{context}"]
 = Getting Started with Hello World {sync-service}
@@ -1057,7 +1057,7 @@ let config = {
 :toc:
 
 
-:leveloffset: 1
+:leveloffset: +1
 
 [id="realtime-intro-{context}"]
 = Introduction to real-time updates
@@ -1091,7 +1091,7 @@ To support inactive clients, use Push Notifications.
 
 :leveloffset!:
 
-:leveloffset: 1
+:leveloffset: +1
 
 [id="realtime-updates-{context}"]
 = Implementing real-time updates on a Data Sync server
@@ -1261,7 +1261,7 @@ For information on how to use subscriptions in your client code, see xref:sync-j
 
 :leveloffset!:
 
-:leveloffset: 1
+:leveloffset: +1
 
 [id="pub-sub"]
 = Configuring a Publish Subscribe mechanism
@@ -1312,7 +1312,7 @@ The `pubsub` instance can then be used to publish and subscribe to events in the
 
 :leveloffset!:
 
-:leveloffset: 2
+:leveloffset: +2
 
 = Configuring AMQ Online for MQTT Messaging
 
@@ -1643,7 +1643,7 @@ This code can be used to detect if the MQTT client hasn't connected. This can be
 
 :leveloffset!:
 
-:leveloffset: 1
+:leveloffset: +1
 
 [[sync-js-client-realtime-updates]]
 = Implementing real-time updates on on the client
@@ -1787,7 +1787,7 @@ networkStatus.onStatusChangeListener({
 
 
 [#sync-server-auth]
-:leveloffset: 1
+:leveloffset: +1
 
 [[authentication-and-authorization]]
 [[sync-server-auth]]
@@ -1938,7 +1938,7 @@ For example, non admin users are allowed to run the `getAuthor` query, but they 
 
 :leveloffset!:
 
-:leveloffset: 1
+:leveloffset: +1
 
 [#sync-server-auth-websockets]
 [id="authentication-and-authorization-websockets-{context}"]
@@ -2057,7 +2057,7 @@ Having access to the user details (e.g. `context.auth.content.sub` is the authen
 :leveloffset!:
 
 [#sync-js-client-auth]
-:leveloffset: 1
+:leveloffset: +1
 
 = Implementing authentication and authorization on your client
 
@@ -2108,7 +2108,7 @@ For information about how to perform authentication and authorization on the ser
 :page-partial:
 :toc:
 
-:leveloffset: 1
+:leveloffset: +1
 
 = Enabling file uploads on the server
 
@@ -2165,7 +2165,7 @@ See link:https://blog.apollographql.com/file-uploads-with-apollo-server-2-0-5db2
 
 :leveloffset!:
 
-:leveloffset: 1
+:leveloffset: +1
 
 = Implementing file upload on the client
 
@@ -2264,7 +2264,7 @@ const uploadOneFile = () => {
 :page-partial:
 :toc:
 
-:leveloffset: 1
+:leveloffset: +1
 
 [#sync-server-audit-logs]
 = Enabling audit logs on the server
@@ -2602,7 +2602,7 @@ For more information on how to use Kibana, see the link:https://www.elastic.co/p
 :leveloffset!:
 
 [#sync-js-client-audit-logs]
-:leveloffset: 1
+:leveloffset: +1
 
 = Enabling audit logs on the client
 
@@ -2640,7 +2640,7 @@ return await createClient(config);
 
 
 
-:leveloffset: 1
+:leveloffset: +1
 
 [[sync-js-client-advanced-topics]]
 = Advanced Topics
@@ -2703,7 +2703,7 @@ The `OptimisticResponse` feature and the <<#sync-client-offline-queue-listener, 
 :page-partial:
 :toc:
 [#sync-server-getting-started-openshift]
-:leveloffset: 1
+:leveloffset: +1
 
 .Prerequisites
 * You have Docker installed on your local machine.
@@ -2752,7 +2752,7 @@ $ docker push <your-repo>/<container-name>
 :leveloffset: 1
 
 [#sync-server-provisioning-data-sync-templates]
-:leveloffset: 1
+:leveloffset: +1
 
 
 = Provisioning the {sync-service} server applications using templates
@@ -2785,7 +2785,7 @@ When running on Red Hat Managed Integration templates will be available in *Mobi
 :leveloffset: 1
 
 [#sync-server-getting-started-mdc-client]
-:leveloffset: 1
+:leveloffset: +1
 
 = Connecting a Client
 
@@ -2880,7 +2880,7 @@ helloWorld();
 :leveloffset: 1
 
 [#sync-server-binding]
-:leveloffset: 1
+:leveloffset: +1
 
 
 = Binding a {mobile-client} with the {sync-service} server application service
@@ -2908,7 +2908,7 @@ NOTE: It is possible to bind a {mobile-client} with a mobile service in the Open
 :leveloffset: 1
 
 [#sync-server-binding-keycloak]
-:leveloffset: 1
+:leveloffset: +1
 
 = Binding {sync-service} to {keycloak-service}
 

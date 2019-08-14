@@ -438,46 +438,54 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Getting Started with Mobile Developer Services</h1>
 <div id="toc" class="toc2">
 <a href=../index.html>Home</a><br><br>
 <ul class="sectlevel1">
-<li><a href="#_introduction">1. Introduction</a></li>
-<li><a href="#_configuring_your_mobile_app_and_mobile_service_in_openshift">2. Configuring your Mobile App and Mobile Service in OpenShift</a></li>
-<li><a href="#registering">3. Registering a Mobile App</a></li>
-<li><a href="#binding">4. Binding a Mobile App with the Identity Management Service</a></li>
-<li><a href="#configuring">5. Configuring the Service</a>
+<li><a href="#_getting_started_with_mobile_developer_services">1. Getting Started with Mobile Developer Services</a>
 <ul class="sectlevel2">
-<li><a href="#_configuring_red_hat_single_sign_on">5.1. Configuring Red Hat Single Sign-On</a></li>
-</ul>
-</li>
-<li><a href="#_setting_up_your_local_development_environment">6. Setting Up your Local Development Environment</a>
-<ul class="sectlevel2">
-<li><a href="#_supported_environments">6.1. Supported Environments</a></li>
-<li><a href="#running">6.2. Running your First Mobile App</a>
+<li><a href="#_introduction">1.1. Introduction</a></li>
+<li><a href="#_configuring_your_mobile_app_and_mobile_service_in_openshift">1.2. Configuring your Mobile App and Mobile Service in OpenShift</a>
 <ul class="sectlevel3">
-<li><a href="#_cloning_the_showcase_app">6.2.1. Cloning the Showcase App</a></li>
+<li><a href="#registering">1.2.1. Registering a Mobile App</a></li>
 </ul>
 </li>
+<li><a href="#binding-an-app-to-downstream">1.3. Binding a Mobile App with the Identity Management Service</a></li>
 </ul>
 </li>
-<li><a href="#_downloading_the_mobile_services_configuration_file">7. Downloading the Mobile Services Configuration File</a></li>
-<li><a href="#_building_the_app">8. Building the app</a></li>
-<li><a href="#_using_self_signed_certificates_in_mobile_apps">9. Using Self-Signed Certificates in Mobile Apps</a>
+<li><a href="#configuring">2. Configuring the Service</a>
 <ul class="sectlevel2">
-<li><a href="#extracting-root-ca">9.1. 1. Extracting the OpenShift Root Certificate Authority Cert</a></li>
-<li><a href="#installing-on-device">9.2. 2. Installing the OpenShift Root Certificate Authority Cert on a Device</a></li>
-<li><a href="#trust-self-signed-cert">9.3. 3. Trusting the Certificate In Your App.</a></li>
+<li><a href="#_configuring_red_hat_single_sign_on">2.1. Configuring Red Hat Single Sign-On</a></li>
+<li><a href="#_setting_up_your_local_development_environment">2.2. Setting Up your Local Development Environment</a>
+<ul class="sectlevel3">
+<li><a href="#_supported_environments">2.2.1. Supported Environments</a></li>
+<li><a href="#running">2.2.2. Running your First Mobile App</a>
+<ul class="sectlevel4">
+<li><a href="#_cloning_the_showcase_app">Cloning the Showcase App</a></li>
 </ul>
 </li>
-<li><a href="#running-emulator">10. Running the app in an emulator</a></li>
+<li><a href="#_downloading_the_mobile_services_configuration_file">2.2.3. Downloading the Mobile Services Configuration File</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_building_the_app">3. Building the app</a></li>
+<li><a href="#_using_self_signed_certificates_in_mobile_apps">4. Using Self-Signed Certificates in Mobile Apps</a>
+<ul class="sectlevel2">
+<li><a href="#extracting-root-ca">4.1. 1. Extracting the OpenShift Root Certificate Authority Cert</a></li>
+<li><a href="#installing-on-device">4.2. 2. Installing the OpenShift Root Certificate Authority Cert on a Device</a></li>
+<li><a href="#trust-self-signed-cert">4.3. 3. Trusting the Certificate In Your App.</a></li>
+</ul>
+</li>
+<li><a href="#running-emulator">5. Running the app in an emulator</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_introduction">1. Introduction</h2>
+<h2 id="_getting_started_with_mobile_developer_services">1. Getting Started with Mobile Developer Services</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_introduction">1.1. Introduction</h3>
 <div class="paragraph">
 <p>Red Hat Mobile Developer Services provides solutions to common development challenges faced by mobile developers.</p>
 </div>
@@ -506,17 +514,27 @@ This configuration file is used to initialize the AeroGear SDK in your mobile ap
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>This guide shows you how to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Register a Mobile App and bind it to a Mobile Service (Identity Management)</p>
+</li>
+<li>
+<p>Set up a local development environment</p>
+</li>
+<li>
+<p>Configure and run the showcase app</p>
+</li>
+</ul>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_configuring_your_mobile_app_and_mobile_service_in_openshift">2. Configuring your Mobile App and Mobile Service in OpenShift</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="registering">3. Registering a Mobile App</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_configuring_your_mobile_app_and_mobile_service_in_openshift">1.2. Configuring your Mobile App and Mobile Service in OpenShift</h3>
+<div class="sect3">
+<h4 id="registering">1.2.1. Registering a Mobile App</h4>
 <div class="paragraph">
 <p>After provisioning Mobile Developer Console, the next step is to register the Mobile App that you are going to develop.</p>
 </div>
@@ -551,24 +569,34 @@ This configuration file is used to initialize the AeroGear SDK in your mobile ap
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="binding">4. Binding a Mobile App with the Identity Management Service</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="binding-an-app-to-downstream">1.3. Binding a Mobile App with the Identity Management Service</h3>
 <div class="paragraph">
 <p>To use mobile services, you must represent your mobile app in <strong>Mobile Developer Console</strong>, and that app must be associated with the mobile service.
 This association is called <strong>binding</strong> and it is necessary for your mobile app to use that service.</p>
 </div>
 <div class="paragraph">
+<p>This section describes how to set up the Identity Management service.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have created a Mobile App.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
 <p>To bind a Mobile App with a mobile service:</p>
 </div>
 <div class="olist arabic">
-<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Launch Mobile Developer Console</p>
+<p>Launch Mobile Developer Console.</p>
 </li>
 <li>
-<p>Click on the Mobile App on the Overview screen</p>
+<p>Click on the Mobile App on the Overview screen.</p>
 </li>
 <li>
 <p>Navigate to <strong>Mobile Services</strong> tab.</p>
@@ -591,7 +619,7 @@ It is possible to bind a Mobile App with a mobile service in the OpenShift conso
 </div>
 </li>
 <li>
-<p>Press <strong>Bind to App</strong> in the Identity Management</p>
+<p>Click <strong>Bind to App</strong> for Identity Management.</p>
 </li>
 <li>
 <p>Fill out the binding parameters required by the Identity Management Service.</p>
@@ -625,8 +653,9 @@ Use <code>Public</code> when binding a Mobile App to a Identity Management. When
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="configuring">5. Configuring the Service</h2>
+<h2 id="configuring">2. Configuring the Service</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The following section will guide you through configuring the schema of the redirect url and web origin for a client in Red Hat Single Sign-On.
@@ -634,7 +663,7 @@ This is required to enable OpenID authentication.
 For an explanation of these terms, see <a href="https://www.keycloak.org/documentation.html">Keycloak Documentation</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_configuring_red_hat_single_sign_on">5.1. Configuring Red Hat Single Sign-On</h3>
+<h3 id="_configuring_red_hat_single_sign_on">2.1. Configuring Red Hat Single Sign-On</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -690,11 +719,8 @@ For an explanation of these terms, see <a href="https://www.keycloak.org/documen
 </ol>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_setting_up_your_local_development_environment">6. Setting Up your Local Development Environment</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_setting_up_your_local_development_environment">2.2. Setting Up your Local Development Environment</h3>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -706,8 +732,8 @@ For an explanation of these terms, see <a href="https://www.keycloak.org/documen
 </li>
 </ul>
 </div>
-<div class="sect2">
-<h3 id="_supported_environments">6.1. Supported Environments</h3>
+<div class="sect3">
+<h4 id="_supported_environments">2.2.1. Supported Environments</h4>
 <div class="paragraph">
 <p>In order to perform local development, you will need to have set up a local development environment or IDE.
 Mobile Developer Services supports mobile app development across iOS Native, Android Native, Cordova and Xamarin.</p>
@@ -759,10 +785,10 @@ You can only use the AeroGear Xamarin SDK to create iOS and Android Apps.
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="running">6.2. Running your First Mobile App</h3>
 <div class="sect3">
-<h4 id="_cloning_the_showcase_app">6.2.1. Cloning the Showcase App</h4>
+<h4 id="running">2.2.2. Running your First Mobile App</h4>
+<div class="sect4">
+<h5 id="_cloning_the_showcase_app">Cloning the Showcase App</h5>
 <div class="exampleblock">
 <div class="content">
 <div class="dlist">
@@ -829,11 +855,8 @@ $ git checkout0.8.0</code></pre>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_downloading_the_mobile_services_configuration_file">7. Downloading the Mobile Services Configuration File</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_downloading_the_mobile_services_configuration_file">2.2.3. Downloading the Mobile Services Configuration File</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -895,14 +918,16 @@ The mobile-services.json file is the link between your provisioned services on O
 </div>
 </div>
 </div>
+</div>
+</div>
 <div class="sect1">
-<h2 id="_building_the_app">8. Building the app</h2>
+<h2 id="_building_the_app">3. Building the app</h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_self_signed_certificates_in_mobile_apps">9. Using Self-Signed Certificates in Mobile Apps</h2>
+<h2 id="_using_self_signed_certificates_in_mobile_apps">4. Using Self-Signed Certificates in Mobile Apps</h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -932,7 +957,7 @@ In such an environment, the client devices cannot establish secure connections w
 <p>The suggested workaround is to manually extract the root certificate from the cluster, install it on the device, and make sure your application trusts the new certificate.</p>
 </div>
 <div class="sect2">
-<h3 id="extracting-root-ca">9.1. 1. Extracting the OpenShift Root Certificate Authority Cert</h3>
+<h3 id="extracting-root-ca">4.1. 1. Extracting the OpenShift Root Certificate Authority Cert</h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -959,7 +984,7 @@ base64 --decode | sed -e '1,/^-----END RSA PRIVATE KEY-----$/ d'  &gt; /tmp/loca
 </div>
 </div>
 <div class="sect2">
-<h3 id="installing-on-device">9.2. 2. Installing the OpenShift Root Certificate Authority Cert on a Device</h3>
+<h3 id="installing-on-device">4.2. 2. Installing the OpenShift Root Certificate Authority Cert on a Device</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="dlist">
@@ -1148,7 +1173,7 @@ See the <a href="https://support.apple.com/en-us/HT204477">Apple support site</a
 </div>
 </div>
 <div class="sect2">
-<h3 id="trust-self-signed-cert">9.3. 3. Trusting the Certificate In Your App.</h3>
+<h3 id="trust-self-signed-cert">4.3. 3. Trusting the Certificate In Your App.</h3>
 <div class="paragraph">
 <p>In the previous procedures, you ensured that the operating system trusts the cert.
 However, if you are using newer versions of the Android or iOS operating systems, you also need to update your mobile app to make sure it trusts the certificate.</p>
@@ -1251,7 +1276,7 @@ Only perform these steps for development or debug purposes, the resulting app wi
 </div>
 </div>
 <div class="sect1">
-<h2 id="running-emulator">10. Running the app in an emulator</h2>
+<h2 id="running-emulator">5. Running the app in an emulator</h2>
 <div class="sectionbody">
 <div class="exampleblock">
 <div class="content">
@@ -1311,7 +1336,7 @@ A running emulator on macOS is required to run an iOS application.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-08-13 15:50:11 +0100
+Last updated 2019-08-14 15:57:44 +0100
 </div>
 </div>
 </body>

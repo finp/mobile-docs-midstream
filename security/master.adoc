@@ -132,7 +132,7 @@
 :data-sync-auth-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#auth_data-sync
 
 
-:upstream-location: https://mobile-docs.netlify.com
+//:upstream-location: https://mobile-docs.netlify.com
 // :upstream-location: ../../mobile-docs/build/site
 
 
