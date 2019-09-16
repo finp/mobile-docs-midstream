@@ -412,6 +412,8 @@ NOTE: The `mobile-services.json` file is the link between your provisioned servi
 [tabs]
 ====
 `src/mobile-services.json`
+
+NOTE: To run the Cordova app on the Android device you also need to download the `google-services.json` from Firebase and put it on the root folder of your project.
 ====
 
 :leveloffset!:
@@ -502,6 +504,17 @@ new PushRegistration(app.config).register().then(() => {
 }).catch(err => {
     // Error on device registration
 });
+----
+
+NOTE: Optionally, you can pass the parameters below to the register method
+
+[source,javascript]
+----
+{
+  alias: 'some-alias',
+  categories: ['one', 'or', 'more', 'categories'],
+  timeout: 5000 // in milliseconds
+}
 ----
 --
 ====
@@ -664,8 +677,10 @@ NOTE: Push notifications that arrive when the application is in the background a
 
 Add the following code to your app:
 
-[source,bash]
+[source,javascript]
 ----
+import { PushRegistration } from "@aerogear/push";
+
 PushRegistration.onMessageReceived((notification: any) => {
   console.log('Received a push notification', notification);
 });

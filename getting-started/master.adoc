@@ -158,15 +158,6 @@ Mobile Developer Console is part of {org-name} {product-name} and allows you to:
 * get the `mobile-services.json` configuration file for use in your local development environment
 // end {partialsdir}/mdc-introduction.adoc[]
 
-IMPORTANT: {org-name} {product-name} is currently in a development phase. This makes it unsuitable for production deployment. Use this community release as an evaluation environment for developing and deploying mobile applications on Openshift.
-
-This guide shows you how to:
-
-* xref:getting-started-installing.adoc[Set up {org-name} {product-name} on OpenShift]
-* xref:getting-started-configuring.adoc[Create a {mobile-client} and a Mobile Service] ({keycloak-service})
-* xref:getting-started-running.adoc[Set up a local development environment]
-* xref:getting-started-running.adoc#running[Configure the {org-name} showcase app for your mobile platform] (Android, iOS, Cordova or Xamarin)
-* xref:getting-started-running.adoc#running-emulator[Run the showcase app and make calls to the {keycloak-service} service]
 
 :leveloffset: 1
 
