@@ -135,7 +135,7 @@
 //:upstream-location: https://mobile-docs.netlify.com
 //:upstream-location: ../../mobile-docs/build/site
 
-:leveloffset: +1
+:leveloffset: 0
 
 
 = Getting Started with {product-name}
@@ -159,7 +159,7 @@ Mobile Developer Console is part of {org-name} {product-name} and allows you to:
 // end {partialsdir}/mdc-introduction.adoc[]
 
 
-:leveloffset: 1
+:leveloffset: 0
 
 :leveloffset: +1
 
@@ -284,7 +284,7 @@ Set the additional value to `http://localhost*`.
 . Create credentials for the new user as described in link:{docs-user-creds}[User Credentials].
 
 
-:leveloffset: 1
+:leveloffset: 0
 
 :leveloffset: +1
 
@@ -643,4 +643,4 @@ NOTE: A running emulator on macOS is required to run an iOS application.
 // start {partialsdir}/identity-management-demo.adoc[tags=idm-demo]
 // end {partialsdir}/identity-management-demo.adoc[tags=idm-demo]
 
-:leveloffset: 1
+:leveloffset: 0
