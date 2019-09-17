@@ -3,9 +3,5 @@ include::shared/upstream-attributes.adoc[]
 include::shared/downstream-attributes.adoc[]
 
 
-//:upstream-location: https://mobile-docs.netlify.com
-// :upstream-location: ../../mobile-docs/build/site
+include::../test-source/showcase-apps.adoc[tags=!excludeDownstream]
 
-include::https://mobile-docs.netlify.com/showcase-apps.adoc[tags=!excludeDownstream]
-
-//include::../../mobile-docs/build/site/showcase-apps.adoc[tags=!excludeDownstream]
