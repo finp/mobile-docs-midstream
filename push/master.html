@@ -952,6 +952,18 @@ The <code>mobile-services.json</code> file is the link between your provisioned 
 <div class="paragraph">
 <p><code>src/mobile-services.json</code></p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+To run the Cordova app on the Android device you also need to download the <code>google-services.json</code> from Firebase and put it on the root folder of your project.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </li>
@@ -1087,6 +1099,27 @@ new PushRegistration(app.config).register().then(() =&gt; {
 }).catch(err =&gt; {
     // Error on device registration
 });</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Optionally, you can pass the parameters below to the register method
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{
+  alias: 'some-alias',
+  categories: ['one', 'or', 'more', 'categories'],
+  timeout: 5000 // in milliseconds
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1335,7 +1368,9 @@ Push notifications that arrive when the application is in the background are alw
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">PushRegistration.onMessageReceived((notification: any) =&gt; {
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import { PushRegistration } from "@aerogear/push";
+
+PushRegistration.onMessageReceived((notification: any) =&gt; {
   console.log('Received a push notification', notification);
 });</code></pre>
 </div>
@@ -1352,7 +1387,7 @@ Push notifications that arrive when the application is in the background are alw
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-08-14 15:57:41 +0100
+Last updated 2019-09-17 11:27:19 +0100
 </div>
 </div>
 </body>
