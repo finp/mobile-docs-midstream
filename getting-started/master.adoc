@@ -293,10 +293,6 @@ Set the additional value to `http://localhost*`.
 :page-partial:
 :toc:
 
-.Prerequisites
-
-* xref:getting-started-installing.adoc[Set up {org-name} {product-name} on OpenShift]
-* xref:getting-started-configuring.adoc[Created a {mobile-client} and a Mobile Service] ({keycloak-service})
 
 
 == Supported Environments
