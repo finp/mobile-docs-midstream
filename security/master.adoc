@@ -84,7 +84,7 @@
 :ProductVersion: 1
 :LatestVersion: 1.0
 
-:DocInfoProductName: mobile_services
+:DocInfoProductName: red_hat_managed_integration
 :DocInfoProductNumber: 1
 
 :org-name: Red Hat
@@ -92,7 +92,7 @@
 
 :keycloak-ui: Red Hat SSO Admin UI
 :idm-name: Red Hat Single Sign-On
-:idm-docs-link:  https://access.redhat.com/products/red-hat-single-sign-on
+:idm-docs-link:  https://access.redhat.com/documentation/en-us/red_hat_single_sign-on
 
 
 
@@ -166,38 +166,6 @@ This guide does not address all mobile security topics. See the link:https://www
 
 // For more information, see: https://redhat-documentation.github.io/modular-docs/
 
-[id='provisioning-the-{context}']
-= Provisioning the {app-security-service} Service
-
-This section describes how to set up the {app-security-service} Service.
-
-.Prerequisites
-
-* You have logged into the OpenShift console and the {mobile-developer-console}.
-
-.Procedure
-
-. Log into the OpenShift console.
-. Create a new project or choose an existing project.
-. Click *Add to Project* and choose *Browse Catalog* from the options.
-+
-You can filter the catalog items to only show mobile specific items by clicking the *Mobile* tab.
-. Click *Services* and choose the {app-security-service} service.
-+
-image::catalog-mobile-services.png[]
-
-. Follow the wizard for provisioning that service.
-+
-NOTE: If prompted to *Create a Binding*, choose *Do not bind at this time*
-+
-Once the wizard steps are completed, navigate to the Project Overview in OpenShift to see the newly provisioned service.
-Provisioning a service may take some time.
-
-:leveloffset!:
-:leveloffset: +2
-
-// For more information, see: https://redhat-documentation.github.io/modular-docs/
-
 [id='binding-an-app-to-{context}']
 = Binding a {mobile-client} with the {app-security-service} Service
 
@@ -233,31 +201,7 @@ NOTE: It is possible to bind a {mobile-client} with a mobile service in the Open
 The {app-security-service} service will now be expandable, details about the service can be viewed.
 
 :leveloffset!:
-:leveloffset: +2
-
-// For more information, see: https://redhat-documentation.github.io/modular-docs/
-
-[id='configuring-{context}']
-= Configuring the {app-security-service} Service
-
-
-.Prerequisites
-
-* An understanding of link:https://openid.net/[OpenID^]
-
-.Procedure
-
-. Log into the {mobile-developer-console} and navigate to the {mobile-client} screen.
-
-. Select the *Mobile Services* tab.
-
-. If a binding to the {app-security-service}service is in progress, a spinning icon is displayed to the right of the {app-security-service}entry. Wait for the binding process to complete.
-
-
-. Save your changes.
-
-
-:leveloffset!:
+// include::_partials/app-security/configuring-the-service.adoc[leveloffset=+2,tags=!excludeUpstream]
 :leveloffset: +2
 
 // For more information, see: https://redhat-documentation.github.io/modular-docs/
@@ -330,7 +274,7 @@ NOTE: Any new instantiation of `SecurityService` returns the same instance.
 :leveloffset!:
 
 [[app-coding]]
-:leveloffset: +1
+:leveloffset: +2
 
 = Implementing the {app-security-service} service in your mobile app
 
@@ -364,7 +308,7 @@ appSecurity.clientInit()
 :leveloffset!:
 
 [[console]]
-:leveloffset: +1
+:leveloffset: +2
 
 = Managing mobile apps using the Mobile Security Console
 
@@ -448,7 +392,7 @@ NOTE: Device Security is not currently associated with an OpenShift service, so 
 * You have logged into the OpenShift console and the Mobile Developer Console.
 * You are developing an Ionic app, plain Cordova is not supported.
 
-:leveloffset: +2
+:leveloffset: +1
 
 //':context:' is a vital parameter. See: http://asciidoctor.org/docs/user-manual/#include-multiple
 

@@ -463,14 +463,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_downloading_the_mobile_services_configuration_file">7. Downloading the Mobile Services Configuration File</a></li>
 <li><a href="#_building_the_app">8. Building the app</a></li>
-<li><a href="#_using_self_signed_certificates_in_mobile_apps">9. Using Self-Signed Certificates in Mobile Apps</a>
+<li><a href="#build">9. Building and Running the Showcase App</a></li>
+<li><a href="#_using_self_signed_certificates_in_mobile_apps">10. Using Self-Signed Certificates in Mobile Apps</a>
 <ul class="sectlevel2">
-<li><a href="#extracting-root-ca">9.1. 1. Extracting the OpenShift Root Certificate Authority Cert</a></li>
-<li><a href="#installing-on-device">9.2. 2. Installing the OpenShift Root Certificate Authority Cert on a Device</a></li>
-<li><a href="#trust-self-signed-cert">9.3. 3. Trusting the Certificate In Your App.</a></li>
+<li><a href="#extracting-root-ca">10.1. 1. Extracting the OpenShift Root Certificate Authority Cert</a></li>
+<li><a href="#installing-on-device">10.2. 2. Installing the OpenShift Root Certificate Authority Cert on a Device</a></li>
+<li><a href="#trust-self-signed-cert">10.3. 3. Trusting the Certificate In Your App.</a></li>
 </ul>
 </li>
-<li><a href="#running-emulator">10. Running the app in an emulator</a></li>
+<li><a href="#running-emulator">11. Running the app in an emulator</a></li>
 </ul>
 </div>
 </div>
@@ -503,6 +504,14 @@ With OpenShift&#8217;s Container technology providing a secure, scalable backend
 <p>get the <code>mobile-services.json</code> configuration file for use in your local development environment</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Below is a high-level architecture diagram, which outlines how your mobile apps and mobile services interact with one another:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="shared/images/mobile-services-arch-i8.png" alt="mobile services arch i8">
+</div>
 </div>
 </div>
 </div>
@@ -693,17 +702,6 @@ For an explanation of these terms, see <a href="https://www.keycloak.org/documen
 <div class="sect1">
 <h2 id="_setting_up_your_local_development_environment">6. Setting Up your Local Development Environment</h2>
 <div class="sectionbody">
-<div class="ulist">
-<div class="title">Prerequisites</div>
-<ul>
-<li>
-<p><a href="getting-started-installing.html">Set up Red Hat Mobile Developer Services on OpenShift</a></p>
-</li>
-<li>
-<p><a href="getting-started-configuring.html">Created a Mobile App and a Mobile Service</a> (Identity Management)</p>
-</li>
-</ul>
-</div>
 <div class="sect2">
 <h3 id="_supported_environments">6.1. Supported Environments</h3>
 <div class="paragraph">
@@ -773,48 +771,6 @@ You can only use the AeroGear Xamarin SDK to create iOS and Android Apps.
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">$ git clone https://github.com/aerogear/ionic-showcase.git
 $ cd ionic-showcase
-$ git checkout0.8.0</code></pre>
-</div>
-</div>
-</div>
-</div>
-</dd>
-<dt class="hdlist1">Android</dt>
-<dd>
-<div class="openblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ git clone https://github.com/aerogear/android-showcase-template.git
-$ cd android-showcase-template
-$ git checkout0.8.0</code></pre>
-</div>
-</div>
-</div>
-</div>
-</dd>
-<dt class="hdlist1">iOS</dt>
-<dd>
-<div class="openblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ git clone https://github.com/aerogear/ios-showcase-template.git
-$ cd ios-showcase-template
-$ git checkout0.8.0</code></pre>
-</div>
-</div>
-</div>
-</div>
-</dd>
-<dt class="hdlist1">Xamarin</dt>
-<dd>
-<div class="openblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ git clone https://github.com/aerogear/xamarin-showcase-template.git
-$ cd xamarin-showcase-template
 $ git checkout0.8.0</code></pre>
 </div>
 </div>
@@ -900,7 +856,83 @@ The mobile-services.json file is the link between your provisioned services on O
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_self_signed_certificates_in_mobile_apps">9. Using Self-Signed Certificates in Mobile Apps</h2>
+<h2 id="build">9. Building and Running the Showcase App</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Build the Mobile App</p>
+</li>
+</ol>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Ionic</dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ npm install
+$ npm run ionic:build</code></pre>
+</div>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Run the Mobile App</p>
+</li>
+</ol>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Ionic</dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>To run the showcase app, use these commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ npm run ionic:android # to run on an Android device or emulator
+$ npm run ionic:ios # to run on an iOS device or emulator</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These commands would run the app on a device if connected or on the emulator if no device is connected.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can use Cordova commands directly to specify the target:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ ionic cordova run android --device      # run on a connected device
+$ ionic cordova run android --emulator    # run on the Android emulator</code></pre>
+</div>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_self_signed_certificates_in_mobile_apps">10. Using Self-Signed Certificates in Mobile Apps</h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -930,7 +962,7 @@ In such an environment, the client devices cannot establish secure connections w
 <p>The suggested workaround is to manually extract the root certificate from the cluster, install it on the device, and make sure your application trusts the new certificate.</p>
 </div>
 <div class="sect2">
-<h3 id="extracting-root-ca">9.1. 1. Extracting the OpenShift Root Certificate Authority Cert</h3>
+<h3 id="extracting-root-ca">10.1. 1. Extracting the OpenShift Root Certificate Authority Cert</h3>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -957,7 +989,7 @@ base64 --decode | sed -e '1,/^-----END RSA PRIVATE KEY-----$/ d'  &gt; /tmp/loca
 </div>
 </div>
 <div class="sect2">
-<h3 id="installing-on-device">9.2. 2. Installing the OpenShift Root Certificate Authority Cert on a Device</h3>
+<h3 id="installing-on-device">10.2. 2. Installing the OpenShift Root Certificate Authority Cert on a Device</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="dlist">
@@ -1146,7 +1178,7 @@ See the <a href="https://support.apple.com/en-us/HT204477">Apple support site</a
 </div>
 </div>
 <div class="sect2">
-<h3 id="trust-self-signed-cert">9.3. 3. Trusting the Certificate In Your App.</h3>
+<h3 id="trust-self-signed-cert">10.3. 3. Trusting the Certificate In Your App.</h3>
 <div class="paragraph">
 <p>In the previous procedures, you ensured that the operating system trusts the cert.
 However, if you are using newer versions of the Android or iOS operating systems, you also need to update your mobile app to make sure it trusts the certificate.</p>
@@ -1249,7 +1281,7 @@ Only perform these steps for development or debug purposes, the resulting app wi
 </div>
 </div>
 <div class="sect1">
-<h2 id="running-emulator">10. Running the app in an emulator</h2>
+<h2 id="running-emulator">11. Running the app in an emulator</h2>
 <div class="sectionbody">
 <div class="exampleblock">
 <div class="content">
@@ -1309,7 +1341,7 @@ A running emulator on macOS is required to run an iOS application.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-17 11:27:22 +0100
+Last updated 2019-09-20 08:21:56 +0100
 </div>
 </div>
 </body>

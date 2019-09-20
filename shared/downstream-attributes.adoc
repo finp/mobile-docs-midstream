@@ -5,9 +5,8 @@
 
 :ProductName: Red Hat Managed Integration
 :ProductShortName: Mobile Developer Services
-:ProductRelease: 1.0
+:ProductRelease: 1.5
 :ProductVersion: 1
-:LatestVersion: 1.0
 
 :DocInfoProductName: mobile_services
 :DocInfoProductNumber: 1

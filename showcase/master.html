@@ -442,33 +442,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <a href=../index.html>Home</a><br><br>
 <ul class="sectlevel1">
-<li><a href="#_about_the_showcase_app">1. About the Showcase App</a>
+<li><a href="#_introducing_the_showcase_app">1. Introducing the Showcase App</a>
 <ul class="sectlevel2">
-<li><a href="#_using_the_showcase_apps">1.1. Using the Showcase Apps</a>
-<ul class="sectlevel3">
-<li><a href="#setting-up-mobile-services-to-demonstrate-showcase-apps">1.1.1. Setting up Mobile Services to Demonstrate Showcase Apps</a></li>
-<li><a href="#app">1.1.2. Setting Up the Showcase App</a></li>
-<li><a href="#binding">1.1.3. Binding the Showcase Mobile App to Mobile Developer Services</a></li>
+<li><a href="#setting-up-mobile-services-to-demonstrate-showcase-apps">1.1. Setting up mobile services to demonstrate Showcase App features</a></li>
+<li><a href="#app">1.2. Setting Up the Showcase App</a></li>
+<li><a href="#binding">1.3. Binding the Showcase Mobile App to Mobile Developer Services</a></li>
 </ul>
 </li>
-<li><a href="#downloading-the-mobile-services-configuration-file">1.2. Downloading the Mobile Services Configuration File</a>
-<ul class="sectlevel3">
-<li><a href="#build">1.2.1. Building and Running the Showcase App</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#features">2. Demonstrating the ShowCase App features</a>
+<li><a href="#downloading-the-mobile-services-configuration-file">2. Downloading the Mobile Services Configuration File</a>
 <ul class="sectlevel2">
-<li><a href="#_identity_management">2.1. Identity Management</a></li>
-<li><a href="#_data_sync">2.2. Data Sync</a></li>
-<li><a href="#_security_services">2.3. Security Services</a>
-<ul class="sectlevel3">
-<li><a href="#_device_checks">2.3.1. Device Checks</a></li>
-<li><a href="#_mobile_security_service">2.3.2. Mobile Security Service</a></li>
+<li><a href="#build">2.1. Building and Running the Showcase App</a></li>
 </ul>
 </li>
-<li><a href="#_push_notifications">2.4. Push Notifications</a></li>
+<li><a href="#features">3. Demonstrating the ShowCase App features</a>
+<ul class="sectlevel2">
+<li><a href="#_identity_management">3.1. Identity Management</a></li>
+<li><a href="#_data_sync">3.2. Data Sync</a></li>
+<li><a href="#_security_services">3.3. Security Services</a>
+<ul class="sectlevel3">
+<li><a href="#_device_checks">3.3.1. Device Checks</a></li>
+<li><a href="#_mobile_security_service">3.3.2. Mobile Security Service</a></li>
+</ul>
+</li>
+<li><a href="#_push_notifications">3.4. Push Notifications</a></li>
 </ul>
 </li>
 </ul>
@@ -476,30 +472,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_about_the_showcase_app">1. About the Showcase App</h2>
+<h2 id="_introducing_the_showcase_app">1. Introducing the Showcase App</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Showcase apps demonstrate many features of Mobile Developer Services.</p>
-</div>
-<div class="paragraph">
-<p>These mobile apps are ready to work with the mobile services, and present an easy
-starting point for the developers.</p>
-</div>
-<div class="sect2">
-<h3 id="_using_the_showcase_apps">1.1. Using the Showcase Apps</h3>
 <div class="paragraph">
 <p>Showcase apps demonstrate many features of Mobile Developer Services. To see these features:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Set up the appropriate services as described in <a href="#setting-up-mobile-services-to-demonstrate-showcase-apps">Setting up Mobile Services to Demonstrate Showcase Apps</a>.</p>
+<p>Set up the appropriate services as described in <a href="#setting-up-mobile-services-to-demonstrate-showcase-apps">Setting up mobile services to demonstrate Showcase App features</a>.</p>
 </li>
 <li>
 <p>Set up the showcase app as described in <a href="#app">Setting Up the Showcase App</a>.</p>
 </li>
 <li>
-<p>Register your showcase app as described in <a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/getting_started">Registering a Mobile App</a>.</p>
+<p>Register your showcase app as described in <a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/getting_started">Registering a Mobile App</a>.</p>
 </li>
 <li>
 <p>Bind your Mobile App to the appropriate services as described in <a href="#binding">Binding the Showcase Mobile App to Mobile Developer Services</a></p>
@@ -512,8 +499,8 @@ starting point for the developers.</p>
 </li>
 </ol>
 </div>
-<div class="sect3">
-<h4 id="setting-up-mobile-services-to-demonstrate-showcase-apps">1.1.1. Setting up Mobile Services to Demonstrate Showcase Apps</h4>
+<div class="sect2">
+<h3 id="setting-up-mobile-services-to-demonstrate-showcase-apps">1.1. Setting up mobile services to demonstrate Showcase App features</h3>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -522,34 +509,34 @@ starting point for the developers.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/using_the_identity_management_mobile_service#configuring-the-service">Set up the Identity Management service</a>.</p>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/using_the_identity_management_mobile_service#configuring-the-service">Set up the Identity Management service</a>.</p>
 </li>
 <li>
-<p>Create a new user to authenticate using the <a href="https://access.redhat.com/products/red-hat-single-sign-on">Identity Management documentation</a>.</p>
+<p>Create a new user to authenticate using the <a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on">Identity Management documentation</a>.</p>
 </li>
 <li>
-<p>Set credentials for the created user. Follow the steps <a href="https://access.redhat.com/products/red-hat-single-sign-on">documentation</a>.</p>
+<p>Set credentials for the created user. Follow the steps <a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on">documentation</a>.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>For more information about features, see <a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/using_the_identity_management_mobile_service">Identity Management Service</a></p>
+<p>For more information about features, see <a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/using_the_identity_management_mobile_service">Identity Management Service</a></p>
 </div>
 </li>
 <li>
-<p>To demonstrate Push Notifications, see <a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/using_the_push_notifications_mobile_service">Push Notifications Service</a></p>
+<p>To demonstrate Push Notifications, see <a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/using_the_push_notifications_mobile_service">Push Notifications Service</a></p>
 </li>
 <li>
-<p>To demonstrate Data Sync, perform the Data Sync solution pattern available from the Solution Explorer.</p>
+<p>To demonstrate Data Sync, perform the Data Sync Solution Pattern available from the Solution Explorer.</p>
 </li>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="app">1.1.2. Setting Up the Showcase App</h4>
+<div class="sect2">
+<h3 id="app">1.2. Setting Up the Showcase App</h3>
 <div class="paragraph">
 <div class="title">Prerequisites</div>
-<p><a href="#setting-up-mobile-services-to-demonstrate-showcase-apps">Setting up Mobile Services to Demonstrate Showcase Apps</a></p>
+<p><a href="#setting-up-mobile-services-to-demonstrate-showcase-apps">Setting up mobile services to demonstrate Showcase App features</a></p>
 </div>
 <div class="olist discrete">
 <div class="title">Procedure</div>
@@ -618,15 +605,15 @@ Firebase Cloud Messaging console.</p>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="binding">1.1.3. Binding the Showcase Mobile App to Mobile Developer Services</h4>
+<div class="sect2">
+<h3 id="binding">1.3. Binding the Showcase Mobile App to Mobile Developer Services</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/using_the_identity_management_mobile_service#binding-a-mobile-client-with-the-identity-management-service">Bind the Mobile App to the Identity Management service</a> if you want to demonstrate authentication.</p>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/using_the_identity_management_mobile_service#binding-a-mobile-client-with-the-identity-management-service">Bind the Mobile App to the Identity Management service</a> if you want to demonstrate authentication.</p>
 </li>
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/using_the_push_notifications_mobile_service#binding-a-mobile-client-with-the-push-notifications-service">Bind the Mobile App to the Push Notifications service</a> if you want to demonstrate Push Notifications.</p>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/using_the_push_notifications_mobile_service#binding-a-mobile-client-with-the-push-notifications-service">Bind the Mobile App to the Push Notifications service</a> if you want to demonstrate Push Notifications.</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -634,21 +621,23 @@ Firebase Cloud Messaging console.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-This step also creates a variant as described in <a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/using_the_push_notifications_mobile_service"> Push Notifications Service</a> terminology.
+This step also creates a variant as described in <a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/using_the_push_notifications_mobile_service"> Push Notifications Service</a> terminology.
 </td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/developing_a_data_sync_app#sync-server-binding">Bind the Mobile App to the Data Sync app</a> if you want to demonstrate Data Sync.</p>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/developing_a_data_sync_app#sync-server-binding">Bind the Mobile App to the Data Sync app</a> if you want to demonstrate Data Sync.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="downloading-the-mobile-services-configuration-file">1.2. Downloading the Mobile Services Configuration File</h3>
+</div>
+<div class="sect1">
+<h2 id="downloading-the-mobile-services-configuration-file">2. Downloading the Mobile Services Configuration File</h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -675,8 +664,8 @@ The mobile-services.json file is the link between the mobile services running on
 </li>
 </ol>
 </div>
-<div class="sect3">
-<h4 id="build">1.2.1. Building and Running the Showcase App</h4>
+<div class="sect2">
+<h3 id="build">2.1. Building and Running the Showcase App</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -751,15 +740,14 @@ $ ionic cordova run android --emulator    # run on the Android emulator</code></
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="features">2. Demonstrating the ShowCase App features</h2>
+<h2 id="features">3. Demonstrating the ShowCase App features</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_identity_management">2.1. Identity Management</h3>
+<h3 id="_identity_management">3.1. Identity Management</h3>
 <div class="paragraph">
 <div class="title">Prerequisite</div>
-<p>Make sure you have created a user and set up credentials for that user as describe in the <a href="https://access.redhat.com/products/red-hat-single-sign-on">Red Hat Single Sign-On Documentation</a>.</p>
+<p>Make sure you have created a user and set up credentials for that user as describe in the <a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on">Red Hat Single Sign-On Documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>From the showcase app:</p>
@@ -794,7 +782,7 @@ $ ionic cordova run android --emulator    # run on the Android emulator</code></
 </div>
 </div>
 <div class="sect2">
-<h3 id="_data_sync">2.2. Data Sync</h3>
+<h3 id="_data_sync">3.2. Data Sync</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -802,19 +790,7 @@ $ ionic cordova run android --emulator    # run on the Android emulator</code></
 <div class="title">Note</div>
 </td>
 <td class="content">
-This is only available in the Cordova showcase app.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-To demonstrate all the features that Data Sync offers, it&#8217;s best to run the same app on multiple devices at the same time.
+To demonstrate all the features that Data Sync offers, use the same app from multiple devices at the same time.
 </td>
 </tr>
 </table>
@@ -825,24 +801,30 @@ To demonstrate all the features that Data Sync offers, it&#8217;s best to run th
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Press the <strong>Manage Tasks</strong> menu item.</p>
+<p>Select the <strong>Manage Tasks</strong> menu item.</p>
 </li>
 <li>
-<p>View tasks created by other people and try to edit them. See them changed on other devices.</p>
+<p>View tasks created from other devices and edit them. Check that the tasks have changed from other devices.</p>
 </li>
 <li>
-<p>Create new tasks and see them show up on other devices.</p>
+<p>Create new tasks and see those tasks displayed on other devices.</p>
 </li>
 <li>
-<p>Bring the device offline by switching to <strong>Airplane Mode</strong>, create a few more tasks and edit a few existing tasks. Then switch the device back online and see them changed on other devices.</p>
+<p>Invoke <strong>Airplane Mode</strong> to bring your device offline.</p>
+</li>
+<li>
+<p>Create more tasks and edit some existing tasks.</p>
+</li>
+<li>
+<p>Switch the device back online and see the new and edited tasks synchronized to the other devices.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_security_services">2.3. Security Services</h3>
+<h3 id="_security_services">3.3. Security Services</h3>
 <div class="sect3">
-<h4 id="_device_checks">2.3.1. Device Checks</h4>
+<h4 id="_device_checks">3.3.1. Device Checks</h4>
 <div class="paragraph">
 <p>Device Trust page will check the mobile device for and give a security rating for the device based on the following checks</p>
 </div>
@@ -880,7 +862,7 @@ To demonstrate all the features that Data Sync offers, it&#8217;s best to run th
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mobile_security_service">2.3.2. Mobile Security Service</h4>
+<h4 id="_mobile_security_service">3.3.2. Mobile Security Service</h4>
 <div class="paragraph">
 <p>Application Trust allows you to connect to the Mobile Security Service and that allows you to enable or disable a mobile app from the Mobile Security console.</p>
 </div>
@@ -906,12 +888,12 @@ To demonstrate all the features that Data Sync offers, it&#8217;s best to run th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_push_notifications">2.4. Push Notifications</h3>
+<h3 id="_push_notifications">3.4. Push Notifications</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p>Send a push notification as described in
-<a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/using_the_push_notifications_mobile_service#sending">Sending a Push Notification</a></p>
+<a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/using_the_push_notifications_mobile_service#sending">Sending a Push Notification</a></p>
 </li>
 <li>
 <p>Launch the showcase app and view the notification.</p>
@@ -924,7 +906,7 @@ To demonstrate all the features that Data Sync offers, it&#8217;s best to run th
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-17 11:27:21 +0100
+Last updated 2019-09-20 08:21:56 +0100
 </div>
 </div>
 </body>
