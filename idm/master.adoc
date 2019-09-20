@@ -80,11 +80,10 @@
 
 :ProductName: Red Hat Managed Integration
 :ProductShortName: Mobile Developer Services
-:ProductRelease: 1.0
+:ProductRelease: 1.5
 :ProductVersion: 1
-:LatestVersion: 1.0
 
-:DocInfoProductName: red_hat_managed_integration
+:DocInfoProductName: mobile_services
 :DocInfoProductNumber: 1
 
 :org-name: Red Hat
@@ -92,7 +91,7 @@
 
 :keycloak-ui: Red Hat SSO Admin UI
 :idm-name: Red Hat Single Sign-On
-:idm-docs-link:  https://access.redhat.com/documentation/en-us/red_hat_single_sign-on
+:idm-docs-link:  https://access.redhat.com/products/red-hat-single-sign-on
 
 
 
@@ -213,7 +212,8 @@ To bind a {mobile-client} with a mobile service:
 
 . Navigate to *Mobile Services* tab.
 +
-image::mobile-clients-services-all-unbound.png[]
+image::mobile-clients-services-all-unbound-down.png[]
+
 
 +
 NOTE: It is possible to bind a {mobile-client} with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.

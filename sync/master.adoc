@@ -81,11 +81,10 @@
 
 :ProductName: Red Hat Managed Integration
 :ProductShortName: Mobile Developer Services
-:ProductRelease: 1.0
+:ProductRelease: 1.5
 :ProductVersion: 1
-:LatestVersion: 1.0
 
-:DocInfoProductName: red_hat_managed_integration
+:DocInfoProductName: mobile_services
 :DocInfoProductNumber: 1
 
 :org-name: Red Hat
@@ -93,7 +92,7 @@
 
 :keycloak-ui: Red Hat SSO Admin UI
 :idm-name: Red Hat Single Sign-On
-:idm-docs-link:  https://access.redhat.com/documentation/en-us/red_hat_single_sign-on
+:idm-docs-link:  https://access.redhat.com/products/red-hat-single-sign-on
 
 
 
@@ -671,17 +670,11 @@ It should include an array similar to the following:
 
 Your mobile app can run offline and allow users to query and create mutations using the @aerogear/voyager-client module.
 
-As shown in the diagram below, all queries are performed against the cache, a mutation store supports offline mutations.
-
-image::datasync-features.png[]
-
-NOTE: The mutation store is sometimes referred to as the offline store.
+All queries are performed against the cache, a mutation store (or offline store) supports offline mutations.
 
 If a client goes offline for a long period of time, the mutation store negotiates local updates with the server using conflict resolution strategies.
 
-When a client comes online again, the mutations are replicated back to the server, as shown in the diagram below:
-
-image::datasync-going_offline.png[]
+When a client comes online again, the mutations are replicated back to the server.
 
 Developers can attach listeners to get notifications about updates applied on the server or failing, and take appropriate actions.
 
@@ -2725,7 +2718,7 @@ As an example:
 
 [source,dockerfile]
 ----
-FROM node:8
+FROM node:10
 WORKDIR /usr/src/app
 # copy Node.js specific files
 COPY package*.json ./
@@ -2775,7 +2768,7 @@ The DataSync App can connect with other services running on OpenShift and can al
 Showcase application will deploy fully functional server with example Task implementation.
 Server side requires client application available on github link:https://github.com/aerogear/ionic-showcase[aerogear/ionic-showcase]
 
-> Note: Showcase server template can be used only for demo purposes and it should not be used in production.
+Note: Use the Showcase server template for demo purposes only. Do not use this template in a production environment.
 
 
 When running on Red Hat Managed Integration templates will be available in *Mobile* > *App*  category in OpenShift catalog
@@ -2898,7 +2891,8 @@ To bind a {mobile-client} with a mobile service:
 
 . Navigate to *Mobile Services* tab.
 +
-image::mobile-clients-services-all-unbound.png[]
+image::mobile-clients-services-all-unbound-down.png[]
+
 +
 NOTE: It is possible to bind a {mobile-client} with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.
 
