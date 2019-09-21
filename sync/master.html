@@ -1186,7 +1186,7 @@ __typename: "Person"</pre>
 <p>You have Node.js and npm installed.</p>
 </li>
 <li>
-<p>You have completed <a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/developing_a_data_sync_app#querying_a_data_sync_server_using_a_data_sync_client">Queries section</a> and the server is still running.</p>
+<p>You have completed <a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/developing_a_data_sync_app#querying_a_data_sync_server_using_a_data_sync_client">Queries section</a> and the server is still running.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1267,35 +1267,13 @@ addPerson();</code></pre>
 <p>Your mobile app can run offline and allow users to query and create mutations using the @aerogear/voyager-client module.</p>
 </div>
 <div class="paragraph">
-<p>As shown in the diagram below, all queries are performed against the cache, a mutation store supports offline mutations.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="shared/images/datasync-features.png" alt="datasync features">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-The mutation store is sometimes referred to as the offline store.
-</td>
-</tr>
-</table>
+<p>All queries are performed against the cache, a mutation store (or offline store) supports offline mutations.</p>
 </div>
 <div class="paragraph">
 <p>If a client goes offline for a long period of time, the mutation store negotiates local updates with the server using conflict resolution strategies.</p>
 </div>
 <div class="paragraph">
-<p>When a client comes online again, the mutations are replicated back to the server, as shown in the diagram below:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="shared/images/datasync-going_offline.png" alt="datasync going offline">
-</div>
+<p>When a client comes online again, the mutations are replicated back to the server.</p>
 </div>
 <div class="paragraph">
 <p>Developers can attach listeners to get notifications about updates applied on the server or failing, and take appropriate actions.</p>
@@ -2059,7 +2037,7 @@ const resolvers = {
 <div class="title">Note</div>
 </td>
 <td class="content">
-This subscription server does not implement authentication or authorization. For information about implementing authenication and authorization, see <a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html/developing_a_data_sync_app#auth_data-sync">Supporting authentication and authorization in your mobile app</a>.
+This subscription server does not implement authentication or authorization. For information about implementing authenication and authorization, see <a href="https://access.redhat.com/documentation/en-us/mobile_services/1/html/developing_a_data_sync_app#auth_data-sync">Supporting authentication and authorization in your mobile app</a>.
 </td>
 </tr>
 </table>
@@ -3941,7 +3919,7 @@ return await createClient(config);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-dockerfile" data-lang="dockerfile">FROM node:8
+<pre class="highlight"><code class="language-dockerfile" data-lang="dockerfile">FROM node:10
 WORKDIR /usr/src/app
 # copy Node.js specific files
 COPY package*.json ./
@@ -4007,12 +3985,8 @@ NOTE: You must set the <code>NODE_ENV</code> environment variable to <code>devel
 <p>Showcase application will deploy fully functional server with example Task implementation.
 Server side requires client application available on github <a href="https://github.com/aerogear/ionic-showcase">aerogear/ionic-showcase</a></p>
 </div>
-<div class="quoteblock">
-<blockquote>
 <div class="paragraph">
-<p>Note: Showcase server template can be used only for demo purposes and it should not be used in production.</p>
-</div>
-</blockquote>
+<p>Note: Use the Showcase server template for demo purposes only. Do not use this template in a production environment.</p>
 </div>
 <div class="paragraph">
 <p>When running on Red Hat Managed Integration templates will be available in <strong>Mobile</strong> &gt; <strong>App</strong>  category in OpenShift catalog</p>
@@ -4150,7 +4124,7 @@ This association is called <strong>binding</strong> and it is necessary for your
 <p>Navigate to <strong>Mobile Services</strong> tab.</p>
 <div class="imageblock">
 <div class="content">
-<img src="shared/images/mobile-clients-services-all-unbound.png" alt="mobile clients services all unbound">
+<img src="shared/images/mobile-clients-services-all-unbound-down.png" alt="mobile clients services all unbound down">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -4276,7 +4250,7 @@ It is possible to bind a Mobile App with a mobile service in the OpenShift conso
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-20 08:21:56 +0100
+Last updated 2019-09-21 21:19:57 +0100
 </div>
 </div>
 </body>

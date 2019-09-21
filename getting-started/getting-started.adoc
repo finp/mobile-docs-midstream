@@ -9,7 +9,7 @@ include::shared/downstream-attributes.adoc[]
 
 include::{upstream-location}/getting-started.adoc[leveloffset=0,tags=!excludeDownstream]
 
-include::{upstream-location}/con_services-down.adoc[leveloffset=1]
+include::{upstream-location}/con_services-down.adoc[]
 
 include::{upstream-location}/getting-started-configuring.adoc[leveloffset=+1,tags=!excludeDownstream]
 
