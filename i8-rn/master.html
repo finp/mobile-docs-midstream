@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Untitled</title>
+<title>Release Notes</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,26 +436,161 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article">
+<body id="assembly_release-notes" class="article">
 <div id="header">
+<h1>Release Notes</h1>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>Unresolved directive in getting-started.adoc - include::{upstream-location}/getting-started.adoc[leveloffset=0,tags=!excludeDownstream]</p>
+<p>These release notes list the components of Red Hat Managed Integration 1.5.0, as well as known and fixed issues in this release.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in getting-started.adoc - include::{upstream-location}/con_services-down.adoc[]</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+When a Managed Integration patch or upgrade is available, you are notified and prompted to create an upgrade schedule. When prompted, see these Release Notes for details regarding changes to your cluster.
+</td>
+</tr>
+</table>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in getting-started.adoc - include::{upstream-location}/getting-started-configuring.adoc[leveloffset=+1,tags=!excludeDownstream]</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="rn-versions-ref">Versions of Components</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Unresolved directive in getting-started.adoc - include::{upstream-location}/getting-started-running.adoc[leveloffset=+1,tags=!excludeDownstream]</p>
+<p>Red Hat Managed Integration 1.5 includes the following software versions:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Component</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Release Notes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supported Configurations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat Fuse Online</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_fuse/7.4/html/release_notes/index">7.4</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/articles/310603" class="bare">https://access.redhat.com/articles/310603</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_fuse/7.4/">7.4</a><br>
+(Click Fuse Online Category)</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat AMQ Online</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.4/html/amq_online_1.2_on_openshift_container_platform_release_notes/">1.2</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/articles/2791941" class="bare">https://access.redhat.com/articles/2791941</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.4">1.2</a><br>
+(Click AMQ Online Category)</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat 3scale API Management</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.6/html/release_notes/index">2.6</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/articles/2798521" class="bare">https://access.redhat.com/articles/2798521</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.6/">2.6</a></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat CodeReady Workspaces for OpenShift</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/1.2/html/release_notes_and_known_issues/index">1.2</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/1.2/">1.2</a></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat Single Sign-On</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.3/html-single/release_notes/index">7.3</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/articles/2342861" class="bare">https://access.redhat.com/articles/2342861</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.3/" class="bare">https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.3/</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rn-known-issues-ref">Known issues</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section lists known issues with  Red Hat Managed Integration 1.5.0:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Any Managed Integration user can determine what Solution Patterns are available in a cluster.
+In a future release, this ability will be restricted to the <code>customer-admin</code> user.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rn-new-and-changed-ref">New and changed features</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_new_component_versions">New component versions</h3>
+<div class="paragraph">
+<p>This release includes new versions of the following component:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Component</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Release Notes</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat Fuse Online</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_fuse/7.4/html/release_notes/index">7.4</a></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat AMQ Online</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_amq/7.4/html/amq_online_1.2_on_openshift_container_platform_release_notes/">1.2</a></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat 3scale API Management</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.6/html/release_notes/index">2.6</a></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat CodeReady Workspaces for OpenShift</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/1.2/html/release_notes_and_known_issues/index">1.2</a></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Red Hat Single Sign-On</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.3/html-single/release_notes/index">7.3</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_new_red_hat_single_sign_on_instance">New Red Hat Single Sign-On instance</h3>
+<div class="paragraph">
+<p>This release includes a second Red Hat Single Sign-On instance, which can be used to define the identities of the end users of the solution developed and hosted on Managed Integration. See the <a href="{gs-link}#sso">Getting Started</a> guide for more information.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_solution_patterns">Adding Solution Patterns</h3>
+<div class="paragraph">
+<p>This release allows users to add Solution Patterns from the Solution Explorer. See the <a href="{gs-link}#gs-publishing-walkthroughs-proc">Getting Started</a> guide for more information.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-20 15:58:47 +0100
+Last updated 2019-09-23 16:08:18 +0100
 </div>
 </div>
 </body>

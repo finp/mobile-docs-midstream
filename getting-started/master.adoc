@@ -1,652 +1,1166 @@
-:org-name: AeroGear
+[id='assembly_getting-started']
 
-:product-name: Mobile Services
+:PRODUCT: Red Hat Managed Integration
+:PRODUCT_SHORT: Managed Integration
+:PRODUCT_INIT: rhmi
+:PRODUCT_INIT_CAP: RHMI
 
-:release-number: 1.0.0
-:showcase-version: 0.8.0
-:installer-release-number: 2.0.0
-:xamarin-sdk-release-number: 2.0.1
-:ios-sdk-release-number: 2.0.0
-:android-sdk-release-number: 2.0.0
+:PRODUCT_VERSION: 1
+:MINOR_VERSION_NO: 1.5
+:PATCH_VERSION_NO: 1.5.0
 
-:service-name:
+:URL_COMPONENT_PRODUCT: red_hat_managed_integration
 
-:mobile-client: Mobile App
-:mobile-client-openshift: Mobile Client in your OpenShift project
-:mobile-cli: Mobile CLI
+:URL_BASE_GITHUB: https://github.com/integr8ly/user-documentation
 
-// Metrics Service
-:metrics-service: Mobile Metrics
-:grafana-ui: Grafana
-:prometheus-ui: Prometheus
+:webapp: Solution Explorer
+:walkthrough-name: Solution Pattern
 
-// IDM Service
-:keycloak-service: Identity Management
-:keycloak-ui: Keycloak Admin UI
-:keycloak-dashboard: Auth Dashboard
-:idm-name: Keycloak
-:idm-docs-link: https://www.keycloak.org/documentation.html
+:fuse-name: Red Hat Fuse Online
+:fuse-version: 7.4
+:fuse-docs: https://access.redhat.com/documentation/en-us/red_hat_fuse/{fuse-version}/
+:fuse-configs: https://access.redhat.com/articles/310603
 
-// Push Service
+:amq-online-name: Red Hat AMQ Online
+:amq-online-version: 1.2
+:amq-online-docs: https://access.redhat.com/documentation/en-us/red_hat_amq/
+:amq-online-configs: https://access.redhat.com/articles/2791941
 
-:unifiedpush-service: Push Notifications
-:push-ui: Unified Push Admin UI
-:push-notification: push notification
+:three-scale-name: Red Hat 3scale API Management
+:three-scale-version: 2.6
+:three-scale-docs: https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/{three-scale-version}/
+:three-scale-configs: https://access.redhat.com/articles/2798521
 
-// Build Service
-:mobile-ci-cd-service: Mobile CI/CD
-:mobilecicd-ui: Jenkins UI
+:code-ready-name: Red Hat CodeReady Workspaces for OpenShift
+:code-ready-version: 1.2
+:code-ready-docs: https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/{code-ready-version}/
+:code-ready-configs: N/A
 
-// Device Security
-:device-security-service: Device Checks
-:app-security-service: Mobile Security
+:rn-link: https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/release_notes/
 
-// Sync Service
-:sync-service: Data Sync
-:sync-server: Voyager Server
-:sync-client: Voyager Client
+:upstream-location: https://raw.githubusercontent.com/integr8ly/user-documentation/master
+//:upstream-location: ../../user-documentation
 
-// TODO: fix this. There are versions on the backend framework libs
-// And a version on the sync client (independent of each other also)
-// :data-sync-version:
-
-:SDK: AeroGear SDK
-:ios-sdk: AeroGear SDK for iOS
-:android-sdk: AeroGear SDK for Android
-:js-sdk: AeroGear SDK for Cordova
-:xamarin-sdk: AeroGear SDK for Xamarin
-
-:mobile-developer-console: Mobile Developer Console
-
-// links
-
-:link-product-doc-home: https://docs.aerogear.org/aerogear/latest
-//:rn-link: {link-product-doc-home}/1.0_release_notes
-:idm-guide-link: {link-product-doc-home}/identity-management.html
-:metrics-guide-link: {link-product-doc-home}/mobile-metrics.html
-:push-guide-link: {link-product-doc-home}/push-notifications.html
-:device-security-guide-link: {link-product-doc-home}/device-security.html
-:getting-started-guide-link: {link-product-doc-home}/getting-started.html
-
-:data-sync-guide-link: {link-product-doc-home}/data-sync.html
-:data-sync-queries-link: {link-product-doc-home}/ds-query.html
-:data-sync-auth-link: {link-product-doc-home}/ds-auth.html
-
-
-:toc:
-:toclevels: 4
-:numbered:
+= Getting Started
+// Context attribute is assembly specific and enables module reuse between assemblies.
 :imagesdir: shared/images
+:context: getting-started
+:customer-realm-name: customer-applications
 
-:ProductName: Red Hat Managed Integration
-:ProductShortName: Mobile Developer Services
-:ProductRelease: 1.5
-:ProductVersion: 1
+NOTE: See the link:{rn-link}[Release Notes] for information about the contents of this release.
 
-:DocInfoProductName: mobile_services
-:DocInfoProductNumber: 1
-
-:org-name: Red Hat
-:product-name: Mobile Developer Services
-
-:keycloak-ui: Red Hat SSO Admin UI
-:idm-name: Red Hat Single Sign-On
-:idm-docs-link:  https://access.redhat.com/products/red-hat-single-sign-on
-
-
-
-:context: downstream
-
-// ENVIRONMENT / CP SERVER - stage, qa, or production
-// default env is prod
-// ifndef::cp-server[]
-:cp-server: access.redhat.com
-// endif::[]
-
-// BUILD LANGUAGE
-// default language is en
-// ifndef::language[]
-:language: en-us
-// endif::[]
-
-// FORMAT AND PAGING
-// default paging is single
-:paging: html-single
-
-// paged only for html format, all other formats (pdf, epub, single) use single
-// ifeval::["{format}" == "html"]
-:paging: html
-// endif::[]
-
-:link-product-doc-home: https://{cp-server}/documentation/{language}/{DocInfoProductName}
-:rn-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/1.0_release_notes
-:idm-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_identity_management_mobile_service
-:metrics-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_mobile_metrics_mobile_service
-:push-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_push_notifications_mobile_service
-:device-security-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/using_the_device_security_service
-:getting-started-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/getting_started
-
-:data-sync-guide-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app
-:data-sync-queries-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#querying_a_data_sync_server_using_a_data_sync_client
-:data-sync-auth-link: {link-product-doc-home}/{DocInfoProductNumber}/{paging}/developing_a_data_sync_app#auth_data-sync
-
-
-//:upstream-location: https://mobile-docs.netlify.com
-//:upstream-location: ../../mobile-docs/build/site
-
-
-:leveloffset: 0
-
-
-= Getting Started with {product-name}
-:page-partial:
-
-== Introduction
-
-{org-name} {product-name} provides solutions to common development challenges faced by mobile developers.
-
-
-
-{mobile-client}s in OpenShift allow you to perform Cloud Native Mobile App Development using OpenShift as the back-end for your mobile apps. A {mobile-client} is a representation of the mobile app that you are developing locally. {mobile-client}s allow you to bind your mobile app to mobile services such as {keycloak-service}, {unifiedpush-service}, {metrics-service} and others. This makes many of the common tasks associated with mobile development much easier and quicker to implement.
-
-A configuration file named `mobile-services.json` acts as the link between your {mobile-client} in OpenShift and your local app in development. This configuration file is used to initialize the {SDK} in your mobile app and to connect to the back-end {product-name} you have provisioned on OpenShift.
-
-// start {partialsdir}/mdc-introduction.adoc[]
-Mobile Developer Console is part of {org-name} {product-name} and allows you to:
-
-* create a representation of your mobile application in OpenShift
-* bind {mobile-client} with mobile services
-* get the `mobile-services.json` configuration file for use in your local development environment
-// end {partialsdir}/mdc-introduction.adoc[]
-
-
-:leveloffset: 0
-
-Below is a high-level architecture diagram, which outlines how your mobile apps and mobile services interact with one another:
-
-image::mobile-services-arch-i8.png[]
+// Purpose statement for the assembly
+This document provides instructions for new users of {PRODUCT}.
 
 :leveloffset: +1
 
+[id='concept-explanation-{context}']
+= Overview of {PRODUCT}
 
+Red Hat Managed Integration delivers managed integration services hosted on the leading container platform, enabling diverse developers to engage in agile, microservices-based application development.
+{PRODUCT_SHORT} enables your team to develop, build and deploy enterprise integration solutions on an OpenShift Dedicated cluster managed by Red Hat.
+{PRODUCT_SHORT} enables developers adopt event-based computing and API-based development with lightweight, loosely coupled, self-service and flexible components.
+{PRODUCT_SHORT} enables the operations team focus on high value objectives while Red Hat manage the infrastructure. All the applications and services are protected by Red Hat Single Sign-On.
 
-:docs-create-user: https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#create-new-user
-:docs-user-creds: https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/#user_credentials
+== Solution Explorer
 
-= Configuring your {mobile-client} and Mobile Service in OpenShift
-:page-partial:
-:toc:
+The {webapp} presents links to the applications available in a {PRODUCT_SHORT} cluster and provides {walkthrough-name}s that guide users through the process of creating various integrated solutions using these applications.
 
+== Applications
 
+{PRODUCT_SHORT} includes the following middleware applications:
 
-[[registering]]
+* *API Designer*,  the Apicurito RESTful API visual designer.
 
-== Registering a {mobile-client}
+* *Red Hat 3scale API Management*, a platform that provide RESTful API Management.
 
-After provisioning Mobile Developer Console, the next step is to register the {mobile-client} that you are going to develop.
+* *Red Hat AMQ*, fast, lightweight, and secure messaging for Internet-scale applications.
 
-.Procedure
+* *Red Hat CodeReady Workspaces*, a developer workspace server and cloud IDE.
 
-To create a {mobile-client}:
+* *Red Hat Developer Launcher*, a platform for continuous application delivery, with a set of templates.
 
-. Log into the OpenShift console.
-. Choose project where you have previously deployed Mobile Developer Console.
-. Open Mobile Developer Console by clicking on its route in the *Overview* screen.
-. Log into the *Mobile Developer Console*.
-. Click on `Create Mobile App` button.
-. Enter a name for your {mobile-client}.
-. Click `Create` button.
+* *Red Hat Fuse Online*, a facility to obtain data from an application or service, operate on that data, and then send the data to another application or service without writing code.
 
-
-
-[[binding]]
-:service-name: Identity Management
-== Binding a {mobile-client} with the {service-name} Service
-
-
-To use mobile services, you must represent your mobile app in *Mobile Developer Console*, and that app must be associated with the mobile service.
-This association is called *binding* and it is necessary for your mobile app to use that service.
-
-To bind a {mobile-client} with a mobile service:
-
-.Procedure
-
-
-. Launch {mobile-developer-console}
-
-. Click on the {mobile-client} on the Overview screen
-
-. Navigate to *Mobile Services* tab.
-+
-image::mobile-clients-services-all-unbound-down.png[]
+* *Red Hat Single Sign-On*, a single sign-on solution for web apps and RESTful web services.
 
 +
-NOTE: It is possible to bind a {mobile-client} with a mobile service in the OpenShift console, however such bindings are not valid for the purposes of this procedure.
-
-. Press *Bind to App* in the {service-name}
-. Fill out the binding parameters required by the {service-name} Service.
-
-+
-image::mobile-clients-services-idm-parameters.png[]
-NOTE: Use `Public` when binding a {mobile-client} to a {service-name}. When binding mobile services to each other, use `Bearer`.
-
-The {service-name} service will now be expandable, details about the service can be viewed.
-
-image::mobile-clients-services-all-idm-provisioned.png[]
-
-[[configuring]]
-== Configuring the Service
-
-The following section will guide you through configuring the schema of the redirect url and web origin for a client in {idm-name}.
-This is required to enable OpenID authentication.
-For an explanation of these terms, see link:https://www.keycloak.org/documentation.html[Keycloak Documentation].
-
-:service-name: Identity Management
-
-=== Configuring {idm-name}
-
-. Log into the {mobile-developer-console} and navigate to the {mobile-client} screen.
-
-. Select the *Mobile Services* tab and if a spinning icon is displayed to the right of the {keycloak-service} entry, wait for the binding process to complete.
-
-. If the _{idm-name} Realm URL_ URL is not visible, expand the Identity Management Service by clicking the > icon.
-
-. Click on the *{idm-name} Realm URL* link to open the {idm-name} Administration Console.
-+
-. Log in to the Administration console (default admin/admin).
-
-. Select *Clients* from the left navigation menu.
-+
-// TODO: with a cordova app, I didn't see mobile development platform
-. Select your client from the list of clients. The name of your client is derived from the name of the {mobile-client}, the name of the mobile development platform and the client type, for example `myapp-android-public`.
-
-
-. Add an additional entry to the *Valid Redirect URIs* input field.
-+
-[tabs]
+[NOTE]
 ====
-Set the additional value to `http://localhost*`.
-====
+Most applications are available in the {webapp}, after you first log in.  However:
 
-. Add an additional entry to *Web Origins*.
-+
-[tabs]
-====
-Set the additional value to `http://localhost*`.
+* If *Red Hat AMQ Online* is displayed as *Not ready* in the *Applications* menu, click *Start service* to provision it.
+* You automatically have access to a shared instance of Fuse Online from the *Applications* menu, and if you create a {walkthrough-name}, you also provision an instance of Fuse Online which is not shared with other cluster users.
 ====
 
 
-. Save your changes.
+.Additional resources
 
-. Create a new user account as described in link:{docs-create-user}[Creating a New User].
+* https://access.redhat.com/documentation/en-us/openshift_dedicated/3/[Product Documentation for OpenShift Dedicated 3]
 
-. Create credentials for the new user as described in link:{docs-user-creds}[User Credentials].
-
-
-:leveloffset: 0
+:leveloffset!:
 
 :leveloffset: +1
 
+[id='gs-adding-users-proc']
 
-= Setting Up your Local Development Environment
-:page-partial:
+
+[[sso]]
+= About Single Sign-On instances
+
+[NOTE]
+====
+You access your cluster using the credentials for the `customer-admin` user received in the _Welcome_ email. This user can:
+
+* access the OpenShift cluser with the permissions of the link:https://docs.openshift.com/dedicated/3/admin_guide/index.html#admin-guide-index-dedicated-admin-role[Dedicated cluster administrator Role], including read-only access to the Fuse Online project.
+* access the services available from the Solution Explorer with administrator privileges, for example:
+
+** 3scale admin access, that is,  full access to all areas and services.
+
+** the `customer-admin` user has the manage-user, view-realm and manage-identity-providers roles in the managed integration SSO instance as described in the link:https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.3/html/server_administration_guide/admin_permissions#realm_specific_roles[Red Hat Single Sign-On documentation]
+
+See the link:{rn-link}[Release Notes] for links to the associated product documentation.
+
+====
+
+:rhmi-sso-name: Managed Integration SSO instance
+:customer-sso-name: End user SSO instance
+:rhsso-name:
+
+
+
+.The two SSO instances in {PRODUCT_SHORT}
+|===
+| |*{rhmi-sso-name}* |*{customer-sso-name}*
+
+|Usage
+|Create the users of the cluster applications accessible from {webapp}, typically developers and integration engineers.
+
+Red Hat manages and provides limited access to this instance. For example, you can implement user federation with this instance, but you cannot create a realm.
+
+|Define the identities of the end users of the solution developed and hosted on {PRODUCT_SHORT}.
+
+Red Hat manages this instance, however the customer-admin user has admin level privileges to configure this instance.
+
+
+|Solution Explorer link
+|Red Hat Single Sign-On (Cluster)
+|Red Hat Single Sign-On
+
+When you click this link the first time an *Account already exists* message and an *Add to existing account* option are displayed.
+
+Choose this option. After logging in as the `customer-admin`, you will have administrator access.
+Subsequent logins do not require this step.
+
+|User access
+|`customer-admin`
+|`customer-admin`
+
+A user named `admin` is also created and is used to manage this instance. Do not delete this user.
+
+|Documentation
+a|
+* xref:managing-users[Managing Users]
+* xref:gs-adding-custom-idp[Adding custom identity providers]
+|link:https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/[Product Documentation]
+
+|===
+
+[NOTE]
+====
+Red Hat recommends that you define users of the solution you are developing in the *{customer-sso-name}*.
+For example, if you use {PRODUCT_SHORT} to develop an solution named `my-app`, define all users of `my-app` in the *{customer-sso-name}* instance only.
+
+Typically, you only use the *{customer-sso-name}* for end users; however, you have the privileges required to use it for developer related activities.
+====
+
+
+[[managing-users]]
+= Managing Users in the {rhmi-sso-name}
+
+You manage users in the context of a Red Hat Single Sign-On realm.
+A realm manages a set of users, credentials, roles, and groups.
+A user belongs to a realm and can log in to this realm.
+
+== Accessing the Red Hat Single Sign-On administration console
+
+To access the Red Hat Single Sign-On administration console:
+
+. Navigate to the *Red Hat Solution Explorer* URL that you received in the _Welcome email_.
+If asked for credentials, log in as `customer-admin` user.
+
+. Click the *Red Hat Single Sign-On* link available in the *Applications* panel.
+
+
+== Viewing Users in the Red Hat Single Sign-On administration console
+
+.Prerequisite
+* You have logged in to the Red Hat Single Sign-On administration console.
+
+
+.Procedure
+To view the user list:
+
+. Navigate to the *Users* menu. The search box at the top of the page can be used to query the list and only display users that match your criteria.
+. Click the *View all users* button at the top of the page. This displays the list of users currently available in the {PRODUCT_SHORT} environment.
+
+== Creating users in the Red Hat Single Sign-On administration console
+
+.Prerequisite
+* You have logged in to the Red Hat Single Sign-On administration console.
+
+
+.Procedure
+To create a user:
+
+. Navigate to the *Users* menu.
+. Click the *Add User* button at the top right corner of the page.
+. Enter the user information:
++
+ * Enter values for `Username` and `Email`.
+ * Set `User Enabled` to *ON*.
+ * Set `Email Verified` to *ON*. This ensures that the user account will be activated in 3scale.
++
+. Click the *Save* button to create the user.
+
+[NOTE]
+====
+You can also import a JSON file with user information as described in the https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html/server_administration_guide/export_import#admin_console_export_import[Red Hat Single Sign-On documentation].
+====
+
+The following example JSON file imports two users:
+
+[source,javascript]
+----
+{ "users": [
+    {
+      "username": "jdoe",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "johndoe@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "realmRoles": ["offline_access", "uma_authorization"],
+      "clientRoles": {
+          "account": ["manage-account", "view-profile"]
+      },
+      "groups": [],
+      "attributes": {},
+      "credentials": [{
+        "type" : "password",
+        "value" : "Password1"
+      }]
+    },
+    {
+      "username": "msmith",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "marysmith@example.com",
+      "firstName": "Mary",
+      "lastName": "Smith",
+      "realmRoles": ["offline_access", "uma_authorization"],
+      "clientRoles": {
+          "account": ["manage-account", "view-profile"]
+      },
+      "groups": [],
+      "attributes": {},
+      "credentials": [{
+        "type" : "password",
+        "value" : "Password1"
+      }]
+    }
+  ]
+}
+----
+
+== Setting user passwords in the Red Hat Single Sign-On administration console
+
+.Prerequisite
+* You have logged in to the Red Hat Single Sign-On administration console.
+
+
+.Procedure
+To set user passwords:
+
+. Navigate to the *Users* menu.
+. Find the user you wish to edit and click on the *Edit* button associated with the user.
+. Go to the *Credentials* tab.
+. Set a password for the user and click the *Reset Password* button to save.
+. If you require the user to update their password upon logging in, set the `Temporary` field to *ON*.
+
+== Deleting users in the Red Hat Single Sign-On administration console
+
+.Prerequisite
+* You have logged in to the Red Hat Single Sign-On administration console.
+
+
+.Procedure
+To delete users:
+
+. Navigate to the *Users* menu
+. Click the *View all users* button at the top of the page.
+. Find the user you wish to delete
+. Click the *Delete* button associated to the user you wish to remove.
+. Click *Delete* in the confirmation box to proceed.
+
+== Managing Red Hat 3scale API Management Platform users
+
+A user created in Red Hat Single Sign-On can log in to the 3scale console; however, the user's account is only created in 3scale after that initial login. The new user is assigned the role `member` and by default does not have permissions set. The user role and permission can only be set once a user account is created in 3scale.
+
+To ensure you create users with the correct roles for Red Hat 3scale API Management Platform:
+
+. Create a user using the Red Hat Single Sign-On administration console.
+. Ensure the user logs in to the Red Hat 3scale API Management Platform console.
+. Log in to the Red Hat 3scale API Management Platform administration console and assign roles to the user.
+
+
+=== Accessing the Red Hat 3scale API Management Platform administration console
+
+To access the Red Hat 3scale API Management Platform administration console:
+
+. Navigate to the *Red Hat Solution Explorer* URL that you received in the _Welcome email_.
+If asked for credentials, log in as the `customer-admin` user.
+
+. Click the *Red Hat 3scale API Management Platform* link available in the *Applications* panel.
+
+
+=== Setting user roles and permissions in Red Hat 3scale API Management Platform administration console
+
+.Prerequisite
+* You have logged in to the Red Hat 3scale API Management Platform administration console using the *Authenticate through Red Hat Single Sign-On* facility.
+
+NOTE: All users in 3scale are created as a `member` with no permissions set by default.
+
+
+.Procedure
+To change permissions for a 3scale user:
+
+. Navigate to *Account Settings* by clicking the gear icon in the top right of the 3scale console.
++
+image:gs-adding-users-3scale-account-settings.png[3scale account settings]
+
+. Select *Listings* from the *Users* menu. A list of users is displayed.
+
+. Find the user you want to change, and click on the *Edit* button for that user.
+
+. On the *Edit User* page, change the user's roles and permissions:
++
+image:gs-adding-users-3scale-edit-user-page.png[3scale edit user page]
++
+For example, you can give the user the *Admin* role.
+
+. Click the *Update User* button to save your changes.
+
+=== Deleting users in the Red Hat 3scale API Management Platform administration console
+
+.Prerequisite
+* You have logged in to the Red Hat 3scale API Management Platform administration console using the *Authenticate through Red Hat Single Sign-On* facility.
+
+
+.Procedure
+To delete 3scale users:
+
+. Navigate to *Account Settings*.
+
+. Go to *Users* > *Listings*.
+. Find the user you wish to delete.
+. Click the *Delete* button associated with that user.
+
+== Giving users permissions to view integration logs and perform 3scale service discovery
+
+This procedure describes how to add the *view* role for a user if that user requires either of the following:
+
+* link:https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.4/html-single/service_discovery/index[Service Discovery] in 3scale, which can be used to add Fuse Online services automatically
+* Access to Fuse Online integration logs
+
+. Log in to OpenShift using `oc` and the `customer-admin` credentials.
+. Run the following command, where `<userid>` is the user you want to give the role to:
++
+----
+oc adm policy add-role-to-user view <userid> -n openshift-fuse
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+[id='gs-publishing-walkthroughs-proc']
+= Adding {walkthrough-name}s to your {PRODUCT} cluster
+
+The home page of {webapp} lists all the {walkthrough-name}s from all the Git repositories you are subscribed to. Any user can add {walkthrough-name}s to your cluster.
+
+For more information on writing {walkthrough-name}s, see documentation on xref:gs-writing-walkthroughs-proc[Creating walkthroughs].
+
+This procedure describes how to subscribe your cluster to a Git repository that contains {walkthrough-name}s.
+
+.Procedure
+
+. Navigate to the *Solution Explorer*.
+
+. Click the gear icon in the top right to display the *Application settings* screen.
+
+. Enter the URLs of the *Solution Pattern* repositories you want to add to your cluster. For example:
++
+----
+https://github.com/integr8ly/example-customisations.git#master
+----
++
+[NOTE]
+====
+* Enter one URL per line.
+* To include a specific branch, use the syntax `#<branch-name>`.
+* List URLs in the order you want them to appear on the homepage.
+====
+
+. Click *Save*.
++
+Editing the value triggers an automatic redeployment of {webapp}.
+
+. When the deployment is complete, refresh your browser.
++
+You should now see new {walkthrough-name}s available from the dashboard.
++
+[NOTE]
+====
+If the Git repository is updated with new content, {webapp} is not automatically updated.
+To redeploy:
+
+. Open the Openshift Console.
+. Find and open the *webapp* project.
+. Find and open the *tutorial-web-app* deployment.
+. Click the *Deploy* button.
+
+====
+
+
+:leveloffset!:
+
+:leveloffset: +1
+
+:linkTroubleshooting: https://github.com/integr8ly/example-customisations/blob/master/docs/troubleshooting.adoc
+:linkGitHubFork: https://help.github.com/articles/fork-a-repo/
+:linkIndexURL: https://github.com/integr8ly/example-customisations/index.adoc
+:walkthrough-1A: Integrating message-oriented middleware with a RESTful API using AMQ Online
+:walkthrough-2: Managing and protecting APIs using API management
+:walkthrough-3: No code API development and SaaS integration
+
+:as described in xref:gs-publishing-walkthroughs-proc[]: Adding {walkthrough-name}s to a cluster
+
+[id='gs-writing-walkthroughs-proc']
+= Creating {PRODUCT} {walkthrough-name}s
 :toc:
 
+== About creating {walkthrough-name}s
 
+{walkthrough-name}s are tutorials available in {PRODUCT_SHORT}. The default {walkthrough-name}s guide you through the following scenarios:
 
-== Supported Environments
+* {walkthrough-1A}
+* {walkthrough-2}
 
-In order to perform local development, you will need to have set up a local development environment or IDE.
-{product-name} supports mobile app development across iOS Native, Android Native, Cordova and Xamarin.
+These {walkthrough-name}s are available in the {webapp}.
 
-NOTE: You can only use the AeroGear Xamarin SDK to create iOS and Android Apps.
+To write {walkthrough-name}s you require a knowledge of:
 
+* Asciidoc - a lightweight markup language, similar to markdown
+* JSON - a lightweight format for storing and transporting data
+* Git - you must push your Asciidoc and JSON files to a Git repository
+* OpenShift - you can add {walkthrough-name}s using the OpenShift console
 
-[tabs]
-====
-Cordova::
-+
---
-You need the following installed on your machine:
+A simple {walkthrough-name} only requires that you edit an Asciidoc file, for example:
 
-* [x] link:https://nodejs.org/[Node.js^] version 8.9.4 runtime and NPM
-* [x] link:https://cordova.apache.org/docs/en/latest/guide/cli/#installing-the-cordova-cli[Cordova CLI^] version 8.0.0
-* [x] link:https://github.com/ionic-team/ionic[Ionic] version 4
-
-For information on how to set up a local Cordova development environment, see the link:https://cordova.apache.org/#getstarted[Cordova documentation^].
---
-====
-
-[[running]]
-
-== Running your First Mobile App
-
-=== Cloning the Showcase App
-
-
-[tabs]
-====
-Ionic::
-+
---
-[source,bash,subs="attributes"]
+[source,asciidoc]
 ----
-$ git clone https://github.com/aerogear/ionic-showcase.git
-$ cd ionic-showcase
-$ git checkout{showcase-version}
+= Demonstrating features <1>
+
+A short description for the feature. <2>
+
+== Doing a task <3>
+
+. Do this first: <4>
+. Do this second:
 ----
---
-====
+<1> {walkthrough-name} title, you can only have a single level 1 heading per file.
+<2> The first line of the introduction is displayed as a tag line for the {walkthrough-name} and displayed on the {webapp} home page.
+Do not use AsciiDoc attributes in this line because they are not displayed correctly on the homepage.
+<3> A task contains one or more subtasks (level 3 headings)
+<4> A numbered list of steps the user must perform.
 
-:leveloffset: 1
+[type={walkthrough-name}Resource]
+.Additional Resources
+****
+* link:http://asciidoc.org/[Asciidoc Homepage^]
+* link:https://asciidoctor-docs.netlify.com/asciidoc/1.5/[AsciiDoc Syntax]
+* link:https://github.com/evanshortiss/integreatly-vscode-asciidoc-snippets/[Visual Studio Code extension]
+****
 
+[time=10]
+== Getting started
 
-//[[downloading-the-mobile-services-configuration-file]]
-= Downloading the Mobile Services Configuration File
+To get started with {walkthrough-name} development you can edit the template repository and learn about the components of a {walkthrough-name}.
 
-. Open your {mobile-client} in Mobile Developer Console.
-. Copy the `mobile-services.json` configuration to your clipboard.
-. Save the contents of the clipboard to a new file called `mobile-services.json`.
-+
-NOTE: The mobile-services.json file is the link between your provisioned services on OpenShift and the mobile app you are developing. This file provides all required configuration to initialise the various SDKs and get them hooked up/connected to the back-end services.
-. Follow the platform-specific instructions:
+=== Downloading the template
 
-[tabs]
-====
-Cordova::
-+
---
+The template contains the directory structure along with a sample {walkthrough-name} and manifest file.
 
-Copy the content of mobile-services.json file and paste it to the following location in your application project to replace the value of `config`
-
-`src/mobile-services.js`
-
---
-+
---
-
-Move mobile-services.json to the following location in your application project:
-
-`src/mobile-services.json`
-
---
-====
-
-:leveloffset!:
-
-
-// == Building the app
-
-
-
-[[building-and-deploying-the-showcase-apps]]
-[#build]
-== Building and Running the Showcase App
-
-. Build the Mobile App
-
-[tabs]
-====
-Ionic::
-+
---
-[source,bash,subs="attributes"]
-----
-$ npm install
-$ npm run ionic:build
-----
---
-====
-
-[start=2]
-. Run the Mobile App
-
-[tabs]
-====
-Ionic::
-+
---
-To run the showcase app, use these commands:
-
-[source,bash,subs="attributes"]
-----
-$ npm run ionic:android # to run on an Android device or emulator
-$ npm run ionic:ios # to run on an iOS device or emulator
-----
-
-These commands would run the app on a device if connected or on the emulator if no device is connected.
-
-Alternatively, you can use Cordova commands directly to specify the target:
-
-[source,bash,subs="attributes"]
-----
-$ ionic cordova run android --device      # run on a connected device
-$ ionic cordova run android --emulator    # run on the Android emulator
-----
---
-====
-
-// start {partialsdir}/proc_self-signed-certs.adoc[leveloffset=3]
-:leveloffset: 1
-
-//[[using-self-signed-certificates-in-mobile-clients]]
-= Using Self-Signed Certificates in Mobile Apps
-
-NOTE: Before you can run a mobile app and connect to {product-name}, you must configure self-signed certificates on the mobile device.
-
-Throughout the development lifecycle of a mobile app, a common requirement is to integrate and connect with back-end services in a secure manner.
-This is achieved using SSL/TLS.
-
-However, in order for the client device to connect over SSL/TLS, it needs to trust the certificates used by the back-end services, which are signed by a certificate authority.
-Most client devices have a list of well-known and trusted certificate authorities pre-installed and this allows the client devices to verify the certificates used by the back-end services.
-
-A typical OpenShift development environment uses self-signed certificates that are not signed by any of the trusted certificate authorities.
-In such an environment, the client devices cannot establish secure connections with the back-end services that are running on a local OpenShift cluster.
-
-The suggested workaround is to manually extract the root certificate from the cluster, install it on the device, and make sure your application trusts the new certificate.
-
-[[extracting-root-ca]]
-== 1. Extracting the OpenShift Root Certificate Authority Cert
-
-.. Log into OpenShift as the admin user:
+. Clone the template repository
 +
 [source,bash]
 ----
-$ oc login -u system:admin
+git clone https://github.com/integr8ly/walkthrough-template.git
 ----
 
-.. Run the following command:
+. Change to the `walkthrough-template` directory:
 +
 [source,bash]
 ----
-$ oc get secret router-certs --template='{{index .data "tls.crt"}}' -n default  |  \
-base64 --decode | sed -e '1,/^-----END RSA PRIVATE KEY-----$/ d'  > /tmp/localcluster.crt
+cd walkthrough-template
 ----
+
+
+=== Understanding the file structure
+
+[source]
+----
+.
+├── walkthroughs-config.json <1>
+└── walkthroughs<2>
+    ├── <identifier> <3>
+    │   ├── images <4>
+    │   │   └── image.png
+    │   ├── walkthrough.adoc <5>
+    │   └── walkthrough.json <6>
+    ├── <walkthrough2-id> <3>
+    └── <walkthrough3-id> <3>
+----
+
+
+<1> This is an optional file that defines metadata for the set of walkthroughs in the repository.
+
+<2> This is a required directory. All {walkthrough-name}s are defined under `walkthroughs`.
+
+<3> The directory name of a {walkthrough-name}. This is also displayed in the URL of {webapp}.
+
+<4> All images for the {walkthrough-name}.
+
+<5> *walkthrough.adoc* is where the content of the {walkthrough-name} is written in Asciidoc format.
+
+<6> *walkthrough.json* is the manifest file of the {walkthrough-name} where you can define extra dependencies.
+
+
+The default `walkthrough.json` does not define any dependent services:
+
+[source,json]
+----
+{
+  "dependencies": {
+    "repos": [],
+    "serviceInstances": []
+  }
+}
+----
+
+=== Committing your {walkthrough-name}s to a remote repository
+
+You can edit the `walkthrough.adoc` file and push your changes to GitHub.
+
+. Create a new remote repository and take note of the remote URL.
+
+. Add the remote to your local clone.
 +
-The resulting file is located in the `/tmp` directory.
+[source,bash]
+----
+git remote add upstream <remote URL>
+----
 
-[[installing-on-device]]
-== 2. Installing the OpenShift Root Certificate Authority Cert on a Device
+. Commit your changes.
 
-[tabs]
+. Push your changes.
++
+[source,bash]
+----
+git push -u upstream master
+----
+
+
+[time=5]
+== Editing overview sections of a {PRODUCT} {walkthrough-name}
+
+The first section of the `walkthrough.adoc` describes your {walkthrough-name},it provides an overview of the purpose of the {walkthrough-name}.
+The overview is displayed when a user clicks on the {walkthrough-name} in {webapp}.
+
+* The overview is defined by a first level heading (in AsciiDoc a line begining with `=`) and finishes at the next second level heading (`==`).
+* The title of the overview becomes the name of the {walkthrough-name}.
+* The overview heading must be followed by a paragraph giving a short introduction to the {walkthrough-name} in one or two sentences.
+This description is displayed in the {webapp} dashboard card for the {walkthrough-name}.
+
+.Prerequisites
+* You have created a repository using the {walkthrough-name} template.
+* You have added the {walkthrough-name} repository to your cluster as described in xref:gs-publishing-walkthroughs-proc[Adding walkthroughs].
+
+
+.Procedure
+
+To add an overview section using the template respository:
+
+. Edit the `walkthroughs/1-template-walkthrough/walkthrough.adoc` file.
+
+. Change the title of the {walkthrough-name}, for example:
++
+[subs="attributes"]
+----
+= My first {walkthrough-name}
+----
+
+. Add an introduction paragraph to your preamble.
+
+. Add another paragraph with more information about the {walkthrough-name}.
+
+. Commit your changes
++
+----
+git commit -am "add overview"
+----
+
+. Push your change to the remote repository
++
+----
+git push upstream master
+----
+
+
+[time=5]
+== Editing task sections of a {PRODUCT} {walkthrough-name}
+
+.Prerequisites
+* You have created a repository using the {walkthrough-name} template.
+* You have added the {walkthrough-name} repository to your cluster as described in xref:gs-publishing-walkthroughs-proc[Adding walkthroughs].
+
+Tasks are procedures that you write as a section of the `walkthrough.adoc` file, the section being defined by a second level heading (`==`).
+
+.Procedure
+
+The template already contains a sample task, you can change it as follows:
+
+. Edit the `walkthroughs/1-template-walkthrough/walkthrough.adoc` file.
+
+. Change the task title, for example, `== Doing the first task`.
+
+. Write a short introduction to the task.
+
+. Change the task timing estimate. Each task has an attribute to communicate the approximate time that the task should take the user to perform.
++
+This is displayed in the {walkthrough-name} overview as part of the task list.
++
+For example to change the estimated time for the first task to 12 minutes:
++
+----
+[time=12]
+== Doing the first task
+----
+
+. Save, commit and push your changes.
++
+NOTE: The content of the {webapp} does not change automatically after a change in the subscribed repository. You must redeploy the {webapp} for the change to be visible.
+
++
+. Redeploy the {webapp}:
+.. Navigate to the *webapp* project in OpenShift.
+.. Click on the *tutorial-web-app* deployment config.
+.. Click the *Deploy* button.
+
++
+NOTE: You can create another level of subtasks by creating a third level heading (`===`). Subtasks are displayed in the {webapp} on the parent task page.
+
+
+
+[time=5]
+== Editing procedures of a {PRODUCT} {walkthrough-name}
+
+A procedure is a set of steps that you perform to complete a task or subtask.
+
+Write procedures using AsciiDoc numbered lists.
+Prepend each step with a `.` to create a simple numbered list.
+
+
+.Prerequisites
+* You have created a repository using the {walkthrough-name} template.
+* You have added the {walkthrough-name} repository to your cluster as described in xref:gs-publishing-walkthroughs-proc[Adding walkthroughs].
+
+
+.Procedure
+
+To edit a procedure in the template respository:
+
+. Edit the `walkthroughs/1-template-walkthrough/walkthrough.adoc` file.
+
+. Edit the numbered list:
++
+----
+. First step
+. Second step
+. Third step
+----
+
+. Save, commit and push your changes.
+
+. Redeploy the {webapp}:
+.. Navigate to the *webapp* project in OpenShift.
+.. Click on the *tutorial-web-app* deployment config.
+.. Click the *Deploy* button.
+
+
+[time=5]
+== Editing {walkthrough-name} resources for a {PRODUCT} {walkthrough-name}
+
+The {webapp} can display helpful information and links on the right hand side panel.
+
+.Prerequisites
+* You have created a repository using the {walkthrough-name} template.
+* You have added the {walkthrough-name} repository to your cluster as described in xref:gs-publishing-walkthroughs-proc[Adding walkthroughs].
+
+
+.Procedure
+
+To add a {walkthrough-name} resources:
+
+. Edit the `walkthroughs/1-template-walkthrough/walkthrough.adoc` file.
+
+. Add {walkthrough-name} resources using block attributes at the end of the overview section, for example:
++
+[source,asciidoc]
+----
+[type=walkthroughResource,serviceName=openshift]
+.OpenShift
+****
+* link:{openshift-host}[Openshift Console, window="_blank"]
+****
+----
+
++
+[NOTE]
 ====
-Android::
-+
---
-To install the cert on an Android emulator:
+* Setting `serviceName` is optional.
 
-. https://support.google.com/android/answer/2819522?hl=en[Set screen lock] on the mobile device to allow for the installation of the certificate.
+* If `serviceName` is set to the name of a middleware service, an icon indicating the service status is displayed next to the resource.
 
-. Click on the *certificate file* and drag it onto the emulator. It should be copied to the _Downloads_ folder on the device.
+* For a list of default services, see link:https://github.com/integr8ly/tutorial-web-app/blob/master/src/common/serviceInstanceHelpers.js[the value for DEFAULT_SERVICES].
 
-. Install the certificate on your device:
-+
-.. To choose a file, navigate to _Settings > Security & location > Advanced > Encryption & credentials > Install from SD card_. From here, navigate to the _Downloads_ folder and you should see the certificate file.
-.. Navigate to the `Downloads` folder and choose the certificate file.
-The Android system detects the certificate and lets you install it. For more information, see the link:https://support.google.com/nexus/answer/2844832?hl=en[sample guide for Google Nexus devices].
-
-To install the cert on a real Android device:
-
-. https://support.google.com/android/answer/2819522?hl=en[Enable screen lock] on the mobile device to allow for the installation of the certificate.
-. Copy the file to your device using one of the following methods:
-+
-* Email attachment (Recommended) - Email the certificate to an address accessible from the device and download the attachment.
-* Cloud service - Use a cloud storage service such as Dropbox or Google Drive that is accessible from the device, and download from the device.
-* USB - Attach the device to a computer and drag the certificate to a devices file system.
-** Use the https://support.google.com/nexus/answer/2840804?hl=en[example guide for Google Nexus devices].
-The procedure might be different for other devices.
-** Use the link:https://developer.android.com/studio/command-line/adb[Android Debug Bridge (adb) documentation^] for the push command to push the certificate to the connected device, for example:
-+
-----
-$ adb push /tmp/localcluster.crt /sdcard/Download/localcluster.crt
-----
-. Install the certificate on your device:
-+
-If you are use the email or cloud service method, you are prompted by the Android system automatically to install the file.
-Follow the instructions to complete the process.
-+
-If you are using the USB approach, you must install the certificate manually:
-+
-.. Go to Settings > Security & location > Advanced > Encryption & credentials > Install from SD card.
-You are prompted to choose a file.
-.. Navigate to the `Downloads` folder and choose the certificate file.
-The Android system detects the certificate and lets you install it. For more information, see the link:https://support.google.com/nexus/answer/2844832?hl=en[sample guide for Google Nexus devices].
-
-To verify the self-signed certificate is installed correctly, use a browser on the device to open the OpenShift web console. You should not see any warnings or errors relating to the certificate.
---
-iOS::
-+
---
-To install the cert on an iOS  simulator:
-
-. Drag and drop the certificate file to the simulator, and use Safari to download the certificate to the simulator.
-
-. Install the downloaded certificate:
-+
-.. Go to Settings > General > Profile.
-You should see a profile with a name similar to `openshift-signer@xxxxxxx`.
-.. Tap on the profile.
-An *Install* button appears in the top right corner of the screen.
-.. Tap the *Install* button to install the cert.
-
-. Trust the installed certificate in iOS.
-Go to Settings > General > About > Certificate Trust Settings, and enable the newly installed root certificate.
-See the link:https://support.apple.com/en-us/HT204477[Apple support site] for more instructions.
-
-To install the cert on a real iOS device:
-
-. Enable https://support.apple.com/en-us/ht204060[Passcode] or https://support.apple.com/en-us/ht201371[TouchID] protection on the mobile device to ensure the certificate can be installed.
-. Copy the file to your device using one of the following methods:
-+
-* Email attachment (Recommended) - Email the certificate to an address accessible from the device and download the attachment.
-* Cloud service - Use a cloud storage service such as Dropbox or Google Drive that is accessible from the device, and download from the device.
-
-. Add the certificate to your device:
-+
-When you download the certificate, the device should automatically detect a profile. Follow the on screen instructions to complete the process.
-
-. Trust the installed certificate in iOS.
-Go to Settings > General > About > Certificate Trust Settings, and enable the newly installed root certificate.
-See the link:https://support.apple.com/en-us/HT204477[Apple support site] for more instructions.
-
-To verify the self-signed certificate is installed correctly, use a browser on the deveice to open the OpenShift web console. You should not see any warnings or errors about the certificate.
-
---
+* Setting the `window="_blank"` parameter for a {walkthrough-name} resource link is also optional, but ensures that the target of the link displays in a separate browser tab.
 ====
-
-[[trust-self-signed-cert]]
-== 3. Trusting the Certificate In Your App.
-
-In the previous procedures, you ensured that the operating system trusts the cert.
-However, if you are using newer versions of the Android or iOS operating systems, you also need to update your mobile app to make sure it trusts the certificate.
-
-[tabs]
-====
-Android::
 +
---
-. Create a `network_security_config.xml` file with the following code.
+NOTE: You can only define {walkthrough-name} resources in the overview section.
+
 +
-[source,xml]
+
+. Save, commit and push your changes.
+
+. Redeploy the {webapp}:
+.. Navigate to the *webapp* project in OpenShift.
+.. Click on the *tutorial-web-app* deployment config.
+.. Click the *Deploy* button.
+
+
+[time=5]
+== Editing task resources for a {PRODUCT} {walkthrough-name}
+
+The {webapp} can display helpful information and links on the right hand side panel that are specific to a task.
+{walkthrough-name} resources are displayed for every task, whereas task resources typically change as the user navigates the {walkthrough-name}.
+
+.Prerequisites
+* You have created a repository using the {walkthrough-name} template.
+* You have added the {walkthrough-name} repository to your cluster as described in xref:gs-publishing-walkthroughs-proc[Adding walkthroughs].
+
+
+.Procedure
+
+To add task resources:
+
+. Edit the `walkthroughs/1-template-walkthrough/walkthrough.adoc` file.
+
+. At the end any task section, add the following:
++
 ----
-<network-security-config>
-  <base-config>
-    <trust-anchors>
-      <certificates src="user"/>
-      <certificates src="system"/>
-    </trust-anchors>
-  </base-config>
-</network-security-config>
+[type=taskResource]
+.Useful links
+****
+* link:https://google.com[Task related link]
+****
+----
+
+. Save, commit and push your changes.
+
+. Redeploy the {webapp}:
+.. Navigate to the *webapp* project in OpenShift.
+.. Click on the *tutorial-web-app* deployment config.
+.. Click the *Deploy* button.
+
+
+[time=10]
+== Adding verifications to a {PRODUCT} {walkthrough-name}
+Verifications are interactive elements in a {walkthrough-name} that confirm whether a user has successfully completed a procedure. They are questions presented to the user, which can be answered with either a `Yes` or `No` response.
+
+NOTE: Every procedure in a task or subtask requires a verification.
+
+
+.Prerequisites
+* You have created a repository using the {walkthrough-name} template.
+* You have added the {walkthrough-name} repository to your cluster as described in xref:gs-publishing-walkthroughs-proc[Adding walkthroughs].
+
+
+.Procedure
+
+To add a verification:
+
+. Edit the `walkthroughs/1-template-walkthrough/walkthrough.adoc` file.
+
+. At the end of the procedure section, following the numbered list add:
++
+:verificationText: verification
+[source,asciidoc,subs="attributes"]
+----
+[type={verificationText}]
+Check that the dashboard of service X reports no errors.
+----
+. Add the following block to cater for users that answer the question with `No`:
++
+[source,asciidoc]
+----
+[type=verificationFail]
+Try turning it off and on again.
+----
+
+. Save, commit and push your changes.
+
+. Redeploy the {webapp}:
+.. Navigate to the *webapp* project in OpenShift.
+.. Click on the *tutorial-web-app* deployment config.
+.. Click the *Deploy* button.
+
+
+[time=5]
+== Adding attributes to a {PRODUCT} {walkthrough-name}
+
+Attributes are used to make external variable users performing a {walkthrough-name}.
+The syntax for using attributes is `{<attribute name>}`. {walkthrough-name}s have access to a number of predefined attributes:
+
+* If a middleware service defines a route you can access it using `{route-<route name>-host}`.
+
+* The OpenShift console is available as `\{openshift-host}`.
+
+Other attributes that are available to {walkthrough-name} authors are:
+
+* Default attributes:
+** OpenShift App Host: `\{openshift-app-host}`
+** CodeReady Workspaces URL: `\{che-url}`.
+** Fuse URL: `\{fuse-url}`
+** Launcher URL: `\{launcher-url}`
+** API Management URL: `\{api-management-url}`
+** AMQ Online URL: `\{enmasse-url}`
+** AMQ Online Broker URL: `\{enmasse-broker-url}`
+** AMQ Online Credential Username: `\{enmasse-credentials-username}`
+** AMQ Online Credential Password: `\{enmasse-credentials-password}`
+* Custom attributes:
+** NodeJS Frontend App Route (provisioned from walkthrough.json): `\{route-frontend-host}`
+
+
+.Prerequisites
+* You have created a repository using the {walkthrough-name} template.
+* You have added the {walkthrough-name} repository to your cluster as described in xref:gs-publishing-walkthroughs-proc[Adding walkthroughs].
+
+
+.Procedure
+
+To add a link to the OpenShift console in the {walkthrough-name}:
+
+. Add another step to the numbered list in your procedure:
++
+----
+. Click on the link to the OpenShift console.
 ----
 +
-Save this file in the following location:
-* the root directory of the project for JavaScript apps
+. Save, commit and push your changes.
+. Redeploy the {webapp}:
+.. Navigate to the *webapp* project in OpenShift.
+.. Click on the *tutorial-web-app* deployment config.
+.. Click the *Deploy* button.
 
-. Update the manifest file of your Android application to use this configuration.
-.. If you are developing a Cordova application, add the following code the `config.xml` file in for the `android` platform:
+
+
+[time=10]
+== Adding custom services to a {PRODUCT} {walkthrough-name}
+
+You can create services from the OpenShift catalog in the cluster as part of the {walkthrough-name} startup process.
+You can also link to the URLs associated with those services in your `walkthrough.adoc` file.
+
+
+.Prerequisites
+* You have created a repository using the {walkthrough-name} template.
+* You have added the {walkthrough-name} repository to your cluster as described in xref:gs-publishing-walkthroughs-proc[].
+* Some experience with the `oc` command. See link:https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html[Getting Started with the OpenShift CLI] for more information about `oc` command.
+
+
+.Procedure
+
+. Find the name of the service you want to provision:
+
+.. Log in to the OpenShift console.
+
+.. Click your username in the top right corner and choose *Copy Login Command* from the menu.
+
+.. Log in to the OpenShift CLI using the `oc` on your clipboard.
+
+.. Run the following command to list all the service names available from your cluster catalog:
 +
-[source,xml]
 ----
-<resource-file src="network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
-<edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-    <application android:networkSecurityConfig="@xml/network_security_config" />
-</edit-config>
+oc get clusterserviceclasses -o custom-columns="Display Name (From Service Catalog):.spec.externalMetadata.displayName, Identifier (clusterServiceClassExternalName):.spec.externalName"
 ----
 +
-You also need to add `xmlns:android="http://schemas.android.com/apk/res/android"` to the `widget` tag in the same `config.xml` file.
-
-For more information, check the link:https://developer.android.com/training/articles/security-config[Android network security configuration guide].
---
-iOS::
+The output lists all the services available in two columns:
 +
---
+* Display Name (From Service Catalog)
+* Identifier (clusterServiceClassExternalName)
 
-. Add the `NSAllowsArbitraryLoads` key to the `Info.plist` file of your iOS project.
-. Set the `NSAllowsArbitraryLoads` key to `Yes` to disable the App Transport Security (ATS) feature for your application.
+.. Choose the service you want to use, and note the value in the `Identifier (clusterServiceClassExternalName)` column.
++
+For example, to use the `CakePHP + MySQL (Ephemeral)` service in your custom {walkthrough-name}, note the value `cakephp-mysql-example`.
 
-NOTE: Only perform these steps for development or debug purposes, the resulting app will not pass the App Store review process.
+. Create a `walkthrough.json` with the following contents to provision the `cakephp-mysql-example` service:
++
+----
+{
+    "dependencies": {
+        "repos": [],
+        "serviceInstances": [
+            {
+                "metadata": {
+                    "name": "cakephp-mysql-example"
+                },
+                "spec": {
+                    "clusterServiceClassExternalName": "cakephp-mysql-example",
+                    "clusterServicePlanExternalName": "default"
+                }
+            }
+        ]
+    }
+}
+----
++
+. Add your {walkthrough-name} to the cluster as described in xref:gs-publishing-walkthroughs-proc[Adding walkthroughs].
+. Navigate the {walkthrough-name} to trigger the provisioning of the custom service, for example, the `cakephp-mysql-example` service.
+. Log in to the OpenShift console.
+. Navigate to the custom project in OpenShift.The project is named using the pattern `<username>-<walkthrough-id>`.
+. Open *Routes* from the *Applications* menu.
+. Note the *Name* of the route you want to reference in your {walkthrough-name} tasks. For example, `cakephp-mysql-example`.
+. Edit the `walkthrough.adoc` file and use the `{route-<route-name>-host}` pattern, whenever you want the route URL to appear.
+For example, to insert a step that asks the user of the {walkthrough-name} to log in to the CakePHP app:
++
+----
+. Log into the link:{route-cakephp-mysql-example-host}[CakePHP app].
+----
++
+NOTE: If you want Asciidoc attributes to render values in code blocks, you must start the code block with `[subs="attributes"]`.
 
-For more information, see the https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW60[Apple developer docs].
---
-====
++
+. Redeploy the *tutorial-web-app* to pick up changes to your {walkthrough-name}.
+. Log in to the {webapp} using a different username to test the {walkthrough-name}.
+
+
+== Defining metadata for your {walkthrough-name} repository
+
+By default, the {walkthrough-name}s from a repository are displayed in {webapp} with a title corresponding to your repository name. You can add a `walkthroughs-config.json` file with the following contents if, for example, you want to title the group `My {walkthrough-name}s`:
+
+
+[source, json]
+----
+{
+    "prettyName": "My Solution Patterns"
+}
+----
+
+== Previewing your {walkthrough-name}
+
+. Log in to the {webapp}
+. Follow the steps described in xref:gs-publishing-walkthroughs-proc[Adding walkthroughs].
 
 :leveloffset!:
-// end {partialsdir}/proc_self-signed-certs.adoc[leveloffset=3]
+
+:leveloffset: +1
+
+[id='gs-using-nexus-proc']
 
 
-[[running-emulator]]
-== Running the app in an emulator
+:nexus-name: Nexus Repository Manager
 
-// start {partialsdir}/running-app-in-emulator.adoc[leveloffset=1]
-:leveloffset: 1
+= Managing Java artifacts using {nexus-name}
 
+The {PRODUCT_SHORT} cluster includes a running instance of {nexus-name}.
+If you are developing Java applications, you might want to use {nexus-name} to cache and manage dependencies.
 
-[tabs]
-====
-Cordova::
+== Using {nexus-name} to build your applications
+
+. Set the `MAVEN_MIRROR_URL` environment variable in your BuildConfig:
 +
---
-
-Install dependencies:
-
-. `npm install -g cordova@8 ionic@4`
-. `npm install`
-
-Cordova cross-platform applications can be run in the following emulators:
-
-* Android: `npm run ionic:android`
-* iOS: `npm run ionic:ios`
-
+----
+MAVEN_MIRROR_URL=http://nexus.openshift-nexus.svc:8081/nexus/content/groups/public
+----
 +
-NOTE: A running emulator on macOS is required to run an iOS application.
+This ensures that Maven uses {nexus-name}.
 
---
-====
+. Build your application.
+. Test your application.
+
+Subsequent builds should be faster due to the {nexus-name} caching.
+
+
+.Additional resources
+
+* link:https://help.sonatype.com/repomanager3[{nexus-name}]
 
 :leveloffset!:
-// end {partialsdir}/running-app-in-emulator.adoc[leveloffset=1]
 
-// start {partialsdir}/identity-management-demo.adoc[tags=idm-demo]
-// end {partialsdir}/identity-management-demo.adoc[tags=idm-demo]
+:leveloffset: +1
 
-:leveloffset: 0
+[id='gs-adding-custom-idp']
+
+
+= Adding custom identity providers to {PRODUCT}
+
+By default, {PRODUCT_SHORT} includes a Single Sign-On solution using Red Hat Single Sign-On (RHSSO).
+This lets users log in to all the middleware services using the same accounts.
+
+Red Hat Single Sign-On allows an administrator to use identity brokering for the {PRODUCT_SHORT} realm.
+
+This section describes how to add a custom identity provider to Red Hat Single Sign-On.
+
+
+.Prerequisite
+* You are logged in to OpenShift as the `customer-admin` user.
+
+
+.Procedure
+
+. Log in to the Red Hat Single Sign-On administration console using the URL and credentials you received in your welcome email.
+
+. Make sure the `openshift` realm is selected on the top left drop down.
+
+. In the menu navigate to `Identity Providers` and pick a provider from the drop down.
+
+. Follow the instructions in the link:https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/index#identity_broker[Red Hat Single Sign-On documentation] to add a new identity provider.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+[id='gs-adding-custom-3scale-routes']
+
+
+= Creating custom URLs for 3scale APIs
+
+NOTE: You cannot delete routes created using the procedure described below.
+
+If you use 3scale to manage your API, you might require that the API URL use a specific host and format.
+For example, you might want to expose an API as `https://mydomain.com/v1/getStuff`.
+To use a custom domain, you must create a route in the OpenShift 3scale project as described below.
+
+.Prerequisites
+* the `customer-admin` user credentials
+* a custom domain registration
+
+.Procedure
+A new OpenShift route for the public has to be created.
+
+. Log in as `customer-admin`:
++
+[source,bash]
+----
+$ oc login -u customer-admin
+----
+
+. Create a file named `custom-route.yaml` using the appropriate values for `<route name>` and `<route host>`:
++
+[source,yaml]
+----
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: <route name>
+  namespace: openshift-3scale
+spec:
+  host: <route host>
+  port:
+    targetPort: gateway
+  tls:
+    insecureEdgeTerminationPolicy: None
+    termination: edge
+  to:
+    kind: Service
+    name: apicast-staging
+    weight: 100
+  wildcardPolicy: None
+----
+
+. Create the route:
++
+[source,bash]
+----
+$ oc create -f ./custom-route.yaml
+----
++
+. Set up your public base URL in APIcast as described in the link:https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.4/html-single/deployment_options/index#configure_your_service[3scale documentation].
+
+
+.Additional resources
+
+* See the link:https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.4/html-single/deployment_options/index#public_base_url[Public Base URL] documentation for an introduction to custom URLs.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+[id='gs-service-discovery-3scale']
+
+
+= Enabling service discovery in 3scale
+
+By default, a {PRODUCT_SHORT} user cannot perform service discovery in 3scale.
+
+To enable service discovery of APIs created in the shared Fuse Online instance:
+
+. Log in to OpenShift as the `customer-admin` user from the command line.
+
+. Enter the following command to enable the `<username>` user perform service discovery of Fuse Online APIs:
+
+[source,bash]
+----
+$ oc adm policy add-role-to-user view <user-name> -n fuse
+----
+
+
+.Additional resources
+
+* link:https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.4/html/service_discovery/index[Service Discovery] 3scale documentation.
+* link:https://access.redhat.com/documentation/en-us/red_hat_fuse/7.3/html/designing_apis_with_apicurito/threescale-discover-service[Service Discovery] Fuse documentation.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+[id='gs-managing-images-proc']
+
+
+= Managing images
+
+{PRODUCT_SHORT} allows you to create and push images to your cluster.
+For the {PRODUCT_SHORT} cluster, the registry is located at:
+
+----
+registry.<clusterid>.openshift.com
+----
+
+where `<clusterid>` is the unique identifier for your cluster.
+
+.Procedure
+. Use the instructions in the link:https://access.redhat.com/documentation/en-us/openshift_dedicated/3/html-single/developer_guide/index#accessing-the-internal-registry[OpenShift documentation] to access the registry.
+. Follow the procedures for link:https://access.redhat.com/documentation/en-us/openshift_dedicated/3/html-single/developer_guide/index#dev-guide-managing-images[Managing Images].
+
+:leveloffset!:

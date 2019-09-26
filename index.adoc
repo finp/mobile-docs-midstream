@@ -1,6 +1,13 @@
-= Mobile Developer Services Documentation
 :nofooter:
 // asciidoctor -b html5  -a toc=left -a theme=flask index.adoc
+
+= Integreatly Docs
+
+* link:i8-gs/master.html[Getting Started]
+* link:i8-rn/master.html[Release Notes]
+
+
+== Mobile Developer Services Documentation
 
 
 * link:getting-started/master.html[Getting Started]

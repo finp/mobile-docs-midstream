@@ -1,0 +1,2333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<title>Getting Started</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment @import statement to use as custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite::before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+:not(pre)>code.nobreak{word-wrap:normal}
+:not(pre)>code.nowrap{white-space:nowrap}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
+table.tableblock{max-width:100%;border-collapse:separate}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+td.tableblock>.content>:last-child.sidebarblock{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot,table.frame-ends{border-width:1px 0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body id="assembly_getting-started" class="article">
+<div id="header">
+<h1>Getting Started</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+See the <a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/release_notes/">Release Notes</a> for information about the contents of this release.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This document provides instructions for new users of Red Hat Managed Integration.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="concept-explanation-getting-started">Overview of Red Hat Managed Integration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Red Hat Managed Integration delivers managed integration services hosted on the leading container platform, enabling diverse developers to engage in agile, microservices-based application development.
+Managed Integration enables your team to develop, build and deploy enterprise integration solutions on an OpenShift Dedicated cluster managed by Red Hat.
+Managed Integration enables developers adopt event-based computing and API-based development with lightweight, loosely coupled, self-service and flexible components.
+Managed Integration enables the operations team focus on high value objectives while Red Hat manage the infrastructure. All the applications and services are protected by Red Hat Single Sign-On.</p>
+</div>
+<div class="sect2">
+<h3 id="_solution_explorer">Solution Explorer</h3>
+<div class="paragraph">
+<p>The Solution Explorer presents links to the applications available in a Managed Integration cluster and provides Solution Patterns that guide users through the process of creating various integrated solutions using these applications.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_applications">Applications</h3>
+<div class="paragraph">
+<p>Managed Integration includes the following middleware applications:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>API Designer</strong>,  the Apicurito RESTful API visual designer.</p>
+</li>
+<li>
+<p><strong>Red Hat 3scale API Management</strong>, a platform that provide RESTful API Management.</p>
+</li>
+<li>
+<p><strong>Red Hat AMQ</strong>, fast, lightweight, and secure messaging for Internet-scale applications.</p>
+</li>
+<li>
+<p><strong>Red Hat CodeReady Workspaces</strong>, a developer workspace server and cloud IDE.</p>
+</li>
+<li>
+<p><strong>Red Hat Developer Launcher</strong>, a platform for continuous application delivery, with a set of templates.</p>
+</li>
+<li>
+<p><strong>Red Hat Fuse Online</strong>, a facility to obtain data from an application or service, operate on that data, and then send the data to another application or service without writing code.</p>
+</li>
+<li>
+<p><strong>Red Hat Single Sign-On</strong>, a single sign-on solution for web apps and RESTful web services.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Most applications are available in the Solution Explorer, after you first log in.  However:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If <strong>Red Hat AMQ Online</strong> is displayed as <strong>Not ready</strong> in the <strong>Applications</strong> menu, click <strong>Start service</strong> to provision it.</p>
+</li>
+<li>
+<p>You automatically have access to a shared instance of Fuse Online from the <strong>Applications</strong> menu, and if you create a Solution Pattern, you also provision an instance of Fuse Online which is not shared with other cluster users.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_dedicated/3/">Product Documentation for OpenShift Dedicated 3</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sso">About Single Sign-On instances</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You access your cluster using the credentials for the <code>customer-admin</code> user received in the <em>Welcome</em> email. This user can:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>access the OpenShift cluser with the permissions of the <a href="https://docs.openshift.com/dedicated/3/admin_guide/index.html#admin-guide-index-dedicated-admin-role">Dedicated cluster administrator Role</a>, including read-only access to the Fuse Online project.</p>
+</li>
+<li>
+<p>access the services available from the Solution Explorer with administrator privileges, for example:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3scale admin access, that is,  full access to all areas and services.</p>
+</li>
+<li>
+<p>the <code>customer-admin</code> user has the manage-user, view-realm and manage-identity-providers roles in the managed integration SSO instance as described in the <a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.3/html/server_administration_guide/admin_permissions#realm_specific_roles">Red Hat Single Sign-On documentation</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See the <a href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/release_notes/">Release Notes</a> for links to the associated product documentation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. The two SSO instances in Managed Integration</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top"><strong>Managed Integration SSO instance</strong></th>
+<th class="tableblock halign-left valign-top"><strong>End user SSO instance</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create the users of the cluster applications accessible from Solution Explorer, typically developers and integration engineers.</p>
+<p class="tableblock">Red Hat manages and provides limited access to this instance. For example, you can implement user federation with this instance, but you cannot create a realm.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Define the identities of the end users of the solution developed and hosted on Managed Integration.</p>
+<p class="tableblock">Red Hat manages this instance, however the customer-admin user has admin level privileges to configure this instance.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Solution Explorer link</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Red Hat Single Sign-On (Cluster)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Red Hat Single Sign-On</p>
+<p class="tableblock">When you click this link the first time an <strong>Account already exists</strong> message and an <strong>Add to existing account</strong> option are displayed.</p>
+<p class="tableblock">Choose this option. After logging in as the <code>customer-admin</code>, you will have administrator access.
+Subsequent logins do not require this step.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User access</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>customer-admin</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>customer-admin</code></p>
+<p class="tableblock">A user named <code>admin</code> is also created and is used to manage this instance. Do not delete this user.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p><a href="#managing-users">Managing Users</a></p>
+</li>
+<li>
+<p><a href="#gs-adding-custom-idp">Adding custom identity providers</a></p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/">Product Documentation</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Red Hat recommends that you define users of the solution you are developing in the <strong>End user SSO instance</strong>.
+For example, if you use Managed Integration to develop an solution named <code>my-app</code>, define all users of <code>my-app</code> in the <strong>End user SSO instance</strong> instance only.</p>
+</div>
+<div class="paragraph">
+<p>Typically, you only use the <strong>End user SSO instance</strong> for end users; however, you have the privileges required to use it for developer related activities.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing-users">Managing Users in the Managed Integration SSO instance</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You manage users in the context of a Red Hat Single Sign-On realm.
+A realm manages a set of users, credentials, roles, and groups.
+A user belongs to a realm and can log in to this realm.</p>
+</div>
+<div class="sect2">
+<h3 id="_accessing_the_red_hat_single_sign_on_administration_console">Accessing the Red Hat Single Sign-On administration console</h3>
+<div class="paragraph">
+<p>To access the Red Hat Single Sign-On administration console:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Red Hat Solution Explorer</strong> URL that you received in the <em>Welcome email</em>.
+If asked for credentials, log in as <code>customer-admin</code> user.</p>
+</li>
+<li>
+<p>Click the <strong>Red Hat Single Sign-On</strong> link available in the <strong>Applications</strong> panel.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_viewing_users_in_the_red_hat_single_sign_on_administration_console">Viewing Users in the Red Hat Single Sign-On administration console</h3>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>You have logged in to the Red Hat Single Sign-On administration console.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To view the user list:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Users</strong> menu. The search box at the top of the page can be used to query the list and only display users that match your criteria.</p>
+</li>
+<li>
+<p>Click the <strong>View all users</strong> button at the top of the page. This displays the list of users currently available in the Managed Integration environment.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_users_in_the_red_hat_single_sign_on_administration_console">Creating users in the Red Hat Single Sign-On administration console</h3>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>You have logged in to the Red Hat Single Sign-On administration console.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To create a user:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Users</strong> menu.</p>
+</li>
+<li>
+<p>Click the <strong>Add User</strong> button at the top right corner of the page.</p>
+</li>
+<li>
+<p>Enter the user information:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Enter values for <code>Username</code> and <code>Email</code>.</p>
+</li>
+<li>
+<p>Set <code>User Enabled</code> to <strong>ON</strong>.</p>
+</li>
+<li>
+<p>Set <code>Email Verified</code> to <strong>ON</strong>. This ensures that the user account will be activated in 3scale.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click the <strong>Save</strong> button to create the user.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can also import a JSON file with user information as described in the <a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html/server_administration_guide/export_import#admin_console_export_import">Red Hat Single Sign-On documentation</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following example JSON file imports two users:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">{ "users": [
+    {
+      "username": "jdoe",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "johndoe@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "realmRoles": ["offline_access", "uma_authorization"],
+      "clientRoles": {
+          "account": ["manage-account", "view-profile"]
+      },
+      "groups": [],
+      "attributes": {},
+      "credentials": [{
+        "type" : "password",
+        "value" : "Password1"
+      }]
+    },
+    {
+      "username": "msmith",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "marysmith@example.com",
+      "firstName": "Mary",
+      "lastName": "Smith",
+      "realmRoles": ["offline_access", "uma_authorization"],
+      "clientRoles": {
+          "account": ["manage-account", "view-profile"]
+      },
+      "groups": [],
+      "attributes": {},
+      "credentials": [{
+        "type" : "password",
+        "value" : "Password1"
+      }]
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_user_passwords_in_the_red_hat_single_sign_on_administration_console">Setting user passwords in the Red Hat Single Sign-On administration console</h3>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>You have logged in to the Red Hat Single Sign-On administration console.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To set user passwords:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Users</strong> menu.</p>
+</li>
+<li>
+<p>Find the user you wish to edit and click on the <strong>Edit</strong> button associated with the user.</p>
+</li>
+<li>
+<p>Go to the <strong>Credentials</strong> tab.</p>
+</li>
+<li>
+<p>Set a password for the user and click the <strong>Reset Password</strong> button to save.</p>
+</li>
+<li>
+<p>If you require the user to update their password upon logging in, set the <code>Temporary</code> field to <strong>ON</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deleting_users_in_the_red_hat_single_sign_on_administration_console">Deleting users in the Red Hat Single Sign-On administration console</h3>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>You have logged in to the Red Hat Single Sign-On administration console.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To delete users:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Users</strong> menu</p>
+</li>
+<li>
+<p>Click the <strong>View all users</strong> button at the top of the page.</p>
+</li>
+<li>
+<p>Find the user you wish to delete</p>
+</li>
+<li>
+<p>Click the <strong>Delete</strong> button associated to the user you wish to remove.</p>
+</li>
+<li>
+<p>Click <strong>Delete</strong> in the confirmation box to proceed.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_managing_red_hat_3scale_api_management_platform_users">Managing Red Hat 3scale API Management Platform users</h3>
+<div class="paragraph">
+<p>A user created in Red Hat Single Sign-On can log in to the 3scale console; however, the user&#8217;s account is only created in 3scale after that initial login. The new user is assigned the role <code>member</code> and by default does not have permissions set. The user role and permission can only be set once a user account is created in 3scale.</p>
+</div>
+<div class="paragraph">
+<p>To ensure you create users with the correct roles for Red Hat 3scale API Management Platform:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a user using the Red Hat Single Sign-On administration console.</p>
+</li>
+<li>
+<p>Ensure the user logs in to the Red Hat 3scale API Management Platform console.</p>
+</li>
+<li>
+<p>Log in to the Red Hat 3scale API Management Platform administration console and assign roles to the user.</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_accessing_the_red_hat_3scale_api_management_platform_administration_console">Accessing the Red Hat 3scale API Management Platform administration console</h4>
+<div class="paragraph">
+<p>To access the Red Hat 3scale API Management Platform administration console:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Red Hat Solution Explorer</strong> URL that you received in the <em>Welcome email</em>.
+If asked for credentials, log in as the <code>customer-admin</code> user.</p>
+</li>
+<li>
+<p>Click the <strong>Red Hat 3scale API Management Platform</strong> link available in the <strong>Applications</strong> panel.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_user_roles_and_permissions_in_red_hat_3scale_api_management_platform_administration_console">Setting user roles and permissions in Red Hat 3scale API Management Platform administration console</h4>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>You have logged in to the Red Hat 3scale API Management Platform administration console using the <strong>Authenticate through Red Hat Single Sign-On</strong> facility.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+All users in 3scale are created as a <code>member</code> with no permissions set by default.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To change permissions for a 3scale user:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to <strong>Account Settings</strong> by clicking the gear icon in the top right of the 3scale console.</p>
+<div class="paragraph">
+<p><span class="image"><img src="shared/images/gs-adding-users-3scale-account-settings.png" alt="3scale account settings"></span></p>
+</div>
+</li>
+<li>
+<p>Select <strong>Listings</strong> from the <strong>Users</strong> menu. A list of users is displayed.</p>
+</li>
+<li>
+<p>Find the user you want to change, and click on the <strong>Edit</strong> button for that user.</p>
+</li>
+<li>
+<p>On the <strong>Edit User</strong> page, change the user&#8217;s roles and permissions:</p>
+<div class="paragraph">
+<p><span class="image"><img src="shared/images/gs-adding-users-3scale-edit-user-page.png" alt="3scale edit user page"></span></p>
+</div>
+<div class="paragraph">
+<p>For example, you can give the user the <strong>Admin</strong> role.</p>
+</div>
+</li>
+<li>
+<p>Click the <strong>Update User</strong> button to save your changes.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deleting_users_in_the_red_hat_3scale_api_management_platform_administration_console">Deleting users in the Red Hat 3scale API Management Platform administration console</h4>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>You have logged in to the Red Hat 3scale API Management Platform administration console using the <strong>Authenticate through Red Hat Single Sign-On</strong> facility.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To delete 3scale users:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to <strong>Account Settings</strong>.</p>
+</li>
+<li>
+<p>Go to <strong>Users</strong> &gt; <strong>Listings</strong>.</p>
+</li>
+<li>
+<p>Find the user you wish to delete.</p>
+</li>
+<li>
+<p>Click the <strong>Delete</strong> button associated with that user.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_giving_users_permissions_to_view_integration_logs_and_perform_3scale_service_discovery">Giving users permissions to view integration logs and perform 3scale service discovery</h3>
+<div class="paragraph">
+<p>This procedure describes how to add the <strong>view</strong> role for a user if that user requires either of the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.4/html-single/service_discovery/index">Service Discovery</a> in 3scale, which can be used to add Fuse Online services automatically</p>
+</li>
+<li>
+<p>Access to Fuse Online integration logs</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to OpenShift using <code>oc</code> and the <code>customer-admin</code> credentials.</p>
+</li>
+<li>
+<p>Run the following command, where <code>&lt;userid&gt;</code> is the user you want to give the role to:</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc adm policy add-role-to-user view &lt;userid&gt; -n openshift-fuse</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gs-publishing-walkthroughs-proc">Adding Solution Patterns to your Red Hat Managed Integration cluster</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The home page of Solution Explorer lists all the Solution Patterns from all the Git repositories you are subscribed to. Any user can add Solution Patterns to your cluster.</p>
+</div>
+<div class="paragraph">
+<p>For more information on writing Solution Patterns, see documentation on <a href="#gs-writing-walkthroughs-proc">Creating walkthroughs</a>.</p>
+</div>
+<div class="paragraph">
+<p>This procedure describes how to subscribe your cluster to a Git repository that contains Solution Patterns.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Solution Explorer</strong>.</p>
+</li>
+<li>
+<p>Click the gear icon in the top right to display the <strong>Application settings</strong> screen.</p>
+</li>
+<li>
+<p>Enter the URLs of the <strong>Solution Pattern</strong> repositories you want to add to your cluster. For example:</p>
+<div class="listingblock">
+<div class="content">
+<pre>https://github.com/integr8ly/example-customisations.git#master</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Enter one URL per line.</p>
+</li>
+<li>
+<p>To include a specific branch, use the syntax <code>#&lt;branch-name&gt;</code>.</p>
+</li>
+<li>
+<p>List URLs in the order you want them to appear on the homepage.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+<div class="paragraph">
+<p>Editing the value triggers an automatic redeployment of Solution Explorer.</p>
+</div>
+</li>
+<li>
+<p>When the deployment is complete, refresh your browser.</p>
+<div class="paragraph">
+<p>You should now see new Solution Patterns available from the dashboard.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the Git repository is updated with new content, Solution Explorer is not automatically updated.
+To redeploy:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open the Openshift Console.</p>
+</li>
+<li>
+<p>Find and open the <strong>webapp</strong> project.</p>
+</li>
+<li>
+<p>Find and open the <strong>tutorial-web-app</strong> deployment.</p>
+</li>
+<li>
+<p>Click the <strong>Deploy</strong> button.</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>:as described in <a href="#gs-publishing-walkthroughs-proc">Adding Solution Patterns to your Red Hat Managed Integration cluster</a>: Adding Solution Patterns to a cluster</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gs-writing-walkthroughs-proc">Creating Red Hat Managed Integration Solution Patterns</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_about_creating_solution_patterns">About creating Solution Patterns</h3>
+<div class="paragraph">
+<p>Solution Patterns are tutorials available in Managed Integration. The default Solution Patterns guide you through the following scenarios:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Integrating message-oriented middleware with a RESTful API using AMQ Online</p>
+</li>
+<li>
+<p>Managing and protecting APIs using API management</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These Solution Patterns are available in the Solution Explorer.</p>
+</div>
+<div class="paragraph">
+<p>To write Solution Patterns you require a knowledge of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Asciidoc - a lightweight markup language, similar to markdown</p>
+</li>
+<li>
+<p>JSON - a lightweight format for storing and transporting data</p>
+</li>
+<li>
+<p>Git - you must push your Asciidoc and JSON files to a Git repository</p>
+</li>
+<li>
+<p>OpenShift - you can add Solution Patterns using the OpenShift console</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A simple Solution Pattern only requires that you edit an Asciidoc file, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= Demonstrating features <b class="conum">(1)</b>
+
+A short description for the feature. <b class="conum">(2)</b>
+
+== Doing a task <b class="conum">(3)</b>
+
+. Do this first: <b class="conum">(4)</b>
+. Do this second:</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Solution Pattern title, you can only have a single level 1 heading per file.</p>
+</li>
+<li>
+<p>The first line of the introduction is displayed as a tag line for the Solution Pattern and displayed on the Solution Explorer home page.
+Do not use AsciiDoc attributes in this line because they are not displayed correctly on the homepage.</p>
+</li>
+<li>
+<p>A task contains one or more subtasks (level 3 headings)</p>
+</li>
+<li>
+<p>A numbered list of steps the user must perform.</p>
+</li>
+</ol>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Additional Resources</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://asciidoc.org/" target="_blank" rel="noopener">Asciidoc Homepage</a></p>
+</li>
+<li>
+<p><a href="https://asciidoctor-docs.netlify.com/asciidoc/1.5/">AsciiDoc Syntax</a></p>
+</li>
+<li>
+<p><a href="https://github.com/evanshortiss/integreatly-vscode-asciidoc-snippets/">Visual Studio Code extension</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_started">Getting started</h3>
+<div class="paragraph">
+<p>To get started with Solution Pattern development you can edit the template repository and learn about the components of a Solution Pattern.</p>
+</div>
+<div class="sect3">
+<h4 id="_downloading_the_template">Downloading the template</h4>
+<div class="paragraph">
+<p>The template contains the directory structure along with a sample Solution Pattern and manifest file.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone the template repository</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/integr8ly/walkthrough-template.git</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Change to the <code>walkthrough-template</code> directory:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">cd walkthrough-template</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_understanding_the_file_structure">Understanding the file structure</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>.
+├── walkthroughs-config.json <b class="conum">(1)</b>
+└── walkthroughs<b class="conum">(2)</b>
+    ├── &lt;identifier&gt; <b class="conum">(3)</b>
+    │   ├── images <b class="conum">(4)</b>
+    │   │   └── image.png
+    │   ├── walkthrough.adoc <b class="conum">(5)</b>
+    │   └── walkthrough.json <b class="conum">(6)</b>
+    ├── &lt;walkthrough2-id&gt; <b class="conum">(3)</b>
+    └── &lt;walkthrough3-id&gt; <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>This is an optional file that defines metadata for the set of walkthroughs in the repository.</p>
+</li>
+<li>
+<p>This is a required directory. All Solution Patterns are defined under <code>walkthroughs</code>.</p>
+</li>
+<li>
+<p>The directory name of a Solution Pattern. This is also displayed in the URL of Solution Explorer.</p>
+</li>
+<li>
+<p>All images for the Solution Pattern.</p>
+</li>
+<li>
+<p><strong>walkthrough.adoc</strong> is where the content of the Solution Pattern is written in Asciidoc format.</p>
+</li>
+<li>
+<p><strong>walkthrough.json</strong> is the manifest file of the Solution Pattern where you can define extra dependencies.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The default <code>walkthrough.json</code> does not define any dependent services:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "dependencies": {
+    "repos": [],
+    "serviceInstances": []
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_committing_your_solution_patterns_to_a_remote_repository">Committing your Solution Patterns to a remote repository</h4>
+<div class="paragraph">
+<p>You can edit the <code>walkthrough.adoc</code> file and push your changes to GitHub.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a new remote repository and take note of the remote URL.</p>
+</li>
+<li>
+<p>Add the remote to your local clone.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git remote add upstream &lt;remote URL&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Commit your changes.</p>
+</li>
+<li>
+<p>Push your changes.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git push -u upstream master</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_editing_overview_sections_of_a_red_hat_managed_integration_solution_pattern">Editing overview sections of a Red Hat Managed Integration Solution Pattern</h3>
+<div class="paragraph">
+<p>The first section of the <code>walkthrough.adoc</code> describes your Solution Pattern,it provides an overview of the purpose of the Solution Pattern.
+The overview is displayed when a user clicks on the Solution Pattern in Solution Explorer.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The overview is defined by a first level heading (in AsciiDoc a line begining with <code>=</code>) and finishes at the next second level heading (<code>==</code>).</p>
+</li>
+<li>
+<p>The title of the overview becomes the name of the Solution Pattern.</p>
+</li>
+<li>
+<p>The overview heading must be followed by a paragraph giving a short introduction to the Solution Pattern in one or two sentences.
+This description is displayed in the Solution Explorer dashboard card for the Solution Pattern.</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have created a repository using the Solution Pattern template.</p>
+</li>
+<li>
+<p>You have added the Solution Pattern repository to your cluster as described in <a href="#gs-publishing-walkthroughs-proc">Adding walkthroughs</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To add an overview section using the template respository:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edit the <code>walkthroughs/1-template-walkthrough/walkthrough.adoc</code> file.</p>
+</li>
+<li>
+<p>Change the title of the Solution Pattern, for example:</p>
+<div class="listingblock">
+<div class="content">
+<pre>= My first Solution Pattern</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add an introduction paragraph to your preamble.</p>
+</li>
+<li>
+<p>Add another paragraph with more information about the Solution Pattern.</p>
+</li>
+<li>
+<p>Commit your changes</p>
+<div class="listingblock">
+<div class="content">
+<pre>git commit -am "add overview"</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Push your change to the remote repository</p>
+<div class="listingblock">
+<div class="content">
+<pre>git push upstream master</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_editing_task_sections_of_a_red_hat_managed_integration_solution_pattern">Editing task sections of a Red Hat Managed Integration Solution Pattern</h3>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have created a repository using the Solution Pattern template.</p>
+</li>
+<li>
+<p>You have added the Solution Pattern repository to your cluster as described in <a href="#gs-publishing-walkthroughs-proc">Adding walkthroughs</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Tasks are procedures that you write as a section of the <code>walkthrough.adoc</code> file, the section being defined by a second level heading (<code>==</code>).</p>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>The template already contains a sample task, you can change it as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edit the <code>walkthroughs/1-template-walkthrough/walkthrough.adoc</code> file.</p>
+</li>
+<li>
+<p>Change the task title, for example, <code>== Doing the first task</code>.</p>
+</li>
+<li>
+<p>Write a short introduction to the task.</p>
+</li>
+<li>
+<p>Change the task timing estimate. Each task has an attribute to communicate the approximate time that the task should take the user to perform.</p>
+<div class="paragraph">
+<p>This is displayed in the Solution Pattern overview as part of the task list.</p>
+</div>
+<div class="paragraph">
+<p>For example to change the estimated time for the first task to 12 minutes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[time=12]
+== Doing the first task</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Save, commit and push your changes.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The content of the Solution Explorer does not change automatically after a change in the subscribed repository. You must redeploy the Solution Explorer for the change to be visible.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Redeploy the Solution Explorer:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the <strong>webapp</strong> project in OpenShift.</p>
+</li>
+<li>
+<p>Click on the <strong>tutorial-web-app</strong> deployment config.</p>
+</li>
+<li>
+<p>Click the <strong>Deploy</strong> button.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+You can create another level of subtasks by creating a third level heading (<code>===</code>). Subtasks are displayed in the Solution Explorer on the parent task page.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_editing_procedures_of_a_red_hat_managed_integration_solution_pattern">Editing procedures of a Red Hat Managed Integration Solution Pattern</h3>
+<div class="paragraph">
+<p>A procedure is a set of steps that you perform to complete a task or subtask.</p>
+</div>
+<div class="paragraph">
+<p>Write procedures using AsciiDoc numbered lists.
+Prepend each step with a <code>.</code> to create a simple numbered list.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have created a repository using the Solution Pattern template.</p>
+</li>
+<li>
+<p>You have added the Solution Pattern repository to your cluster as described in <a href="#gs-publishing-walkthroughs-proc">Adding walkthroughs</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To edit a procedure in the template respository:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edit the <code>walkthroughs/1-template-walkthrough/walkthrough.adoc</code> file.</p>
+</li>
+<li>
+<p>Edit the numbered list:</p>
+<div class="listingblock">
+<div class="content">
+<pre>. First step
+. Second step
+. Third step</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Save, commit and push your changes.</p>
+</li>
+<li>
+<p>Redeploy the Solution Explorer:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the <strong>webapp</strong> project in OpenShift.</p>
+</li>
+<li>
+<p>Click on the <strong>tutorial-web-app</strong> deployment config.</p>
+</li>
+<li>
+<p>Click the <strong>Deploy</strong> button.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_editing_solution_pattern_resources_for_a_red_hat_managed_integration_solution_pattern">Editing Solution Pattern resources for a Red Hat Managed Integration Solution Pattern</h3>
+<div class="paragraph">
+<p>The Solution Explorer can display helpful information and links on the right hand side panel.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have created a repository using the Solution Pattern template.</p>
+</li>
+<li>
+<p>You have added the Solution Pattern repository to your cluster as described in <a href="#gs-publishing-walkthroughs-proc">Adding walkthroughs</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To add a Solution Pattern resources:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edit the <code>walkthroughs/1-template-walkthrough/walkthrough.adoc</code> file.</p>
+</li>
+<li>
+<p>Add Solution Pattern resources using block attributes at the end of the overview section, for example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[type=walkthroughResource,serviceName=openshift]
+.OpenShift
+****
+* link:{openshift-host}[Openshift Console, window="_blank"]
+****</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Setting <code>serviceName</code> is optional.</p>
+</li>
+<li>
+<p>If <code>serviceName</code> is set to the name of a middleware service, an icon indicating the service status is displayed next to the resource.</p>
+</li>
+<li>
+<p>For a list of default services, see <a href="https://github.com/integr8ly/tutorial-web-app/blob/master/src/common/serviceInstanceHelpers.js">the value for DEFAULT_SERVICES</a>.</p>
+</li>
+<li>
+<p>Setting the <code>window="_blank"</code> parameter for a Solution Pattern resource link is also optional, but ensures that the target of the link displays in a separate browser tab.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+You can only define Solution Pattern resources in the overview section.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Save, commit and push your changes.</p>
+</li>
+<li>
+<p>Redeploy the Solution Explorer:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the <strong>webapp</strong> project in OpenShift.</p>
+</li>
+<li>
+<p>Click on the <strong>tutorial-web-app</strong> deployment config.</p>
+</li>
+<li>
+<p>Click the <strong>Deploy</strong> button.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_editing_task_resources_for_a_red_hat_managed_integration_solution_pattern">Editing task resources for a Red Hat Managed Integration Solution Pattern</h3>
+<div class="paragraph">
+<p>The Solution Explorer can display helpful information and links on the right hand side panel that are specific to a task.
+Solution Pattern resources are displayed for every task, whereas task resources typically change as the user navigates the Solution Pattern.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have created a repository using the Solution Pattern template.</p>
+</li>
+<li>
+<p>You have added the Solution Pattern repository to your cluster as described in <a href="#gs-publishing-walkthroughs-proc">Adding walkthroughs</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To add task resources:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edit the <code>walkthroughs/1-template-walkthrough/walkthrough.adoc</code> file.</p>
+</li>
+<li>
+<p>At the end any task section, add the following:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[type=taskResource]
+.Useful links
+****
+* link:https://google.com[Task related link]
+****</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Save, commit and push your changes.</p>
+</li>
+<li>
+<p>Redeploy the Solution Explorer:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the <strong>webapp</strong> project in OpenShift.</p>
+</li>
+<li>
+<p>Click on the <strong>tutorial-web-app</strong> deployment config.</p>
+</li>
+<li>
+<p>Click the <strong>Deploy</strong> button.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_verifications_to_a_red_hat_managed_integration_solution_pattern">Adding verifications to a Red Hat Managed Integration Solution Pattern</h3>
+<div class="paragraph">
+<p>Verifications are interactive elements in a Solution Pattern that confirm whether a user has successfully completed a procedure. They are questions presented to the user, which can be answered with either a <code>Yes</code> or <code>No</code> response.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Every procedure in a task or subtask requires a verification.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have created a repository using the Solution Pattern template.</p>
+</li>
+<li>
+<p>You have added the Solution Pattern repository to your cluster as described in <a href="#gs-publishing-walkthroughs-proc">Adding walkthroughs</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To add a verification:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edit the <code>walkthroughs/1-template-walkthrough/walkthrough.adoc</code> file.</p>
+</li>
+<li>
+<p>At the end of the procedure section, following the numbered list add:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[type=verification]
+Check that the dashboard of service X reports no errors.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the following block to cater for users that answer the question with <code>No</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[type=verificationFail]
+Try turning it off and on again.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Save, commit and push your changes.</p>
+</li>
+<li>
+<p>Redeploy the Solution Explorer:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the <strong>webapp</strong> project in OpenShift.</p>
+</li>
+<li>
+<p>Click on the <strong>tutorial-web-app</strong> deployment config.</p>
+</li>
+<li>
+<p>Click the <strong>Deploy</strong> button.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_attributes_to_a_red_hat_managed_integration_solution_pattern">Adding attributes to a Red Hat Managed Integration Solution Pattern</h3>
+<div class="paragraph">
+<p>Attributes are used to make external variable users performing a Solution Pattern.
+The syntax for using attributes is <code>{&lt;attribute name&gt;}</code>. Solution Patterns have access to a number of predefined attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If a middleware service defines a route you can access it using <code>{route-&lt;route name&gt;-host}</code>.</p>
+</li>
+<li>
+<p>The OpenShift console is available as <code>{openshift-host}</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Other attributes that are available to Solution Pattern authors are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Default attributes:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>OpenShift App Host: <code>{openshift-app-host}</code></p>
+</li>
+<li>
+<p>CodeReady Workspaces URL: <code>{che-url}</code>.</p>
+</li>
+<li>
+<p>Fuse URL: <code>{fuse-url}</code></p>
+</li>
+<li>
+<p>Launcher URL: <code>{launcher-url}</code></p>
+</li>
+<li>
+<p>API Management URL: <code>{api-management-url}</code></p>
+</li>
+<li>
+<p>AMQ Online URL: <code>{enmasse-url}</code></p>
+</li>
+<li>
+<p>AMQ Online Broker URL: <code>{enmasse-broker-url}</code></p>
+</li>
+<li>
+<p>AMQ Online Credential Username: <code>{enmasse-credentials-username}</code></p>
+</li>
+<li>
+<p>AMQ Online Credential Password: <code>{enmasse-credentials-password}</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Custom attributes:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>NodeJS Frontend App Route (provisioned from walkthrough.json): <code>{route-frontend-host}</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have created a repository using the Solution Pattern template.</p>
+</li>
+<li>
+<p>You have added the Solution Pattern repository to your cluster as described in <a href="#gs-publishing-walkthroughs-proc">Adding walkthroughs</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>To add a link to the OpenShift console in the Solution Pattern:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add another step to the numbered list in your procedure:</p>
+<div class="listingblock">
+<div class="content">
+<pre>. Click on the link to the OpenShift console.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Save, commit and push your changes.</p>
+</li>
+<li>
+<p>Redeploy the Solution Explorer:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the <strong>webapp</strong> project in OpenShift.</p>
+</li>
+<li>
+<p>Click on the <strong>tutorial-web-app</strong> deployment config.</p>
+</li>
+<li>
+<p>Click the <strong>Deploy</strong> button.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_custom_services_to_a_red_hat_managed_integration_solution_pattern">Adding custom services to a Red Hat Managed Integration Solution Pattern</h3>
+<div class="paragraph">
+<p>You can create services from the OpenShift catalog in the cluster as part of the Solution Pattern startup process.
+You can also link to the URLs associated with those services in your <code>walkthrough.adoc</code> file.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have created a repository using the Solution Pattern template.</p>
+</li>
+<li>
+<p>You have added the Solution Pattern repository to your cluster as described in <a href="#gs-publishing-walkthroughs-proc">Adding Solution Patterns to your Red Hat Managed Integration cluster</a>.</p>
+</li>
+<li>
+<p>Some experience with the <code>oc</code> command. See <a href="https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html">Getting Started with the OpenShift CLI</a> for more information about <code>oc</code> command.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Find the name of the service you want to provision:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Log in to the OpenShift console.</p>
+</li>
+<li>
+<p>Click your username in the top right corner and choose <strong>Copy Login Command</strong> from the menu.</p>
+</li>
+<li>
+<p>Log in to the OpenShift CLI using the <code>oc</code> on your clipboard.</p>
+</li>
+<li>
+<p>Run the following command to list all the service names available from your cluster catalog:</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc get clusterserviceclasses -o custom-columns="Display Name (From Service Catalog):.spec.externalMetadata.displayName, Identifier (clusterServiceClassExternalName):.spec.externalName"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output lists all the services available in two columns:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Display Name (From Service Catalog)</p>
+</li>
+<li>
+<p>Identifier (clusterServiceClassExternalName)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Choose the service you want to use, and note the value in the <code>Identifier (clusterServiceClassExternalName)</code> column.</p>
+<div class="paragraph">
+<p>For example, to use the <code>CakePHP + MySQL (Ephemeral)</code> service in your custom Solution Pattern, note the value <code>cakephp-mysql-example</code>.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Create a <code>walkthrough.json</code> with the following contents to provision the <code>cakephp-mysql-example</code> service:</p>
+<div class="listingblock">
+<div class="content">
+<pre>{
+    "dependencies": {
+        "repos": [],
+        "serviceInstances": [
+            {
+                "metadata": {
+                    "name": "cakephp-mysql-example"
+                },
+                "spec": {
+                    "clusterServiceClassExternalName": "cakephp-mysql-example",
+                    "clusterServicePlanExternalName": "default"
+                }
+            }
+        ]
+    }
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add your Solution Pattern to the cluster as described in <a href="#gs-publishing-walkthroughs-proc">Adding walkthroughs</a>.</p>
+</li>
+<li>
+<p>Navigate the Solution Pattern to trigger the provisioning of the custom service, for example, the <code>cakephp-mysql-example</code> service.</p>
+</li>
+<li>
+<p>Log in to the OpenShift console.</p>
+</li>
+<li>
+<p>Navigate to the custom project in OpenShift.The project is named using the pattern <code>&lt;username&gt;-&lt;walkthrough-id&gt;</code>.</p>
+</li>
+<li>
+<p>Open <strong>Routes</strong> from the <strong>Applications</strong> menu.</p>
+</li>
+<li>
+<p>Note the <strong>Name</strong> of the route you want to reference in your Solution Pattern tasks. For example, <code>cakephp-mysql-example</code>.</p>
+</li>
+<li>
+<p>Edit the <code>walkthrough.adoc</code> file and use the <code>{route-&lt;route-name&gt;-host}</code> pattern, whenever you want the route URL to appear.
+For example, to insert a step that asks the user of the Solution Pattern to log in to the CakePHP app:</p>
+<div class="listingblock">
+<div class="content">
+<pre>. Log into the link:{route-cakephp-mysql-example-host}[CakePHP app].</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If you want Asciidoc attributes to render values in code blocks, you must start the code block with <code>[subs="attributes"]</code>.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Redeploy the <strong>tutorial-web-app</strong> to pick up changes to your Solution Pattern.</p>
+</li>
+<li>
+<p>Log in to the Solution Explorer using a different username to test the Solution Pattern.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_defining_metadata_for_your_solution_pattern_repository">Defining metadata for your Solution Pattern repository</h3>
+<div class="paragraph">
+<p>By default, the Solution Patterns from a repository are displayed in Solution Explorer with a title corresponding to your repository name. You can add a <code>walkthroughs-config.json</code> file with the following contents if, for example, you want to title the group <code>My Solution Patterns</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+    "prettyName": "My Solution Patterns"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_previewing_your_solution_pattern">Previewing your Solution Pattern</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to the Solution Explorer</p>
+</li>
+<li>
+<p>Follow the steps described in <a href="#gs-publishing-walkthroughs-proc">Adding walkthroughs</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gs-using-nexus-proc">Managing Java artifacts using Nexus Repository Manager</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Managed Integration cluster includes a running instance of Nexus Repository Manager.
+If you are developing Java applications, you might want to use Nexus Repository Manager to cache and manage dependencies.</p>
+</div>
+<div class="sect2">
+<h3 id="_using_nexus_repository_manager_to_build_your_applications">Using Nexus Repository Manager to build your applications</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Set the <code>MAVEN_MIRROR_URL</code> environment variable in your BuildConfig:</p>
+<div class="listingblock">
+<div class="content">
+<pre>MAVEN_MIRROR_URL=http://nexus.openshift-nexus.svc:8081/nexus/content/groups/public</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This ensures that Maven uses Nexus Repository Manager.</p>
+</div>
+</li>
+<li>
+<p>Build your application.</p>
+</li>
+<li>
+<p>Test your application.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Subsequent builds should be faster due to the Nexus Repository Manager caching.</p>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://help.sonatype.com/repomanager3">Nexus Repository Manager</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gs-adding-custom-idp">Adding custom identity providers to Red Hat Managed Integration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By default, Managed Integration includes a Single Sign-On solution using Red Hat Single Sign-On (RHSSO).
+This lets users log in to all the middleware services using the same accounts.</p>
+</div>
+<div class="paragraph">
+<p>Red Hat Single Sign-On allows an administrator to use identity brokering for the Managed Integration realm.</p>
+</div>
+<div class="paragraph">
+<p>This section describes how to add a custom identity provider to Red Hat Single Sign-On.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>You are logged in to OpenShift as the <code>customer-admin</code> user.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the Red Hat Single Sign-On administration console using the URL and credentials you received in your welcome email.</p>
+</li>
+<li>
+<p>Make sure the <code>openshift</code> realm is selected on the top left drop down.</p>
+</li>
+<li>
+<p>In the menu navigate to <code>Identity Providers</code> and pick a provider from the drop down.</p>
+</li>
+<li>
+<p>Follow the instructions in the <a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html-single/server_administration_guide/index#identity_broker">Red Hat Single Sign-On documentation</a> to add a new identity provider.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gs-adding-custom-3scale-routes">Creating custom URLs for 3scale APIs</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+You cannot delete routes created using the procedure described below.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you use 3scale to manage your API, you might require that the API URL use a specific host and format.
+For example, you might want to expose an API as <code><a href="https://mydomain.com/v1/getStuff" class="bare">https://mydomain.com/v1/getStuff</a></code>.
+To use a custom domain, you must create a route in the OpenShift 3scale project as described below.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>the <code>customer-admin</code> user credentials</p>
+</li>
+<li>
+<p>a custom domain registration</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>A new OpenShift route for the public has to be created.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in as <code>customer-admin</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ oc login -u customer-admin</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a file named <code>custom-route.yaml</code> using the appropriate values for <code>&lt;route name&gt;</code> and <code>&lt;route host&gt;</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: &lt;route name&gt;
+  namespace: openshift-3scale
+spec:
+  host: &lt;route host&gt;
+  port:
+    targetPort: gateway
+  tls:
+    insecureEdgeTerminationPolicy: None
+    termination: edge
+  to:
+    kind: Service
+    name: apicast-staging
+    weight: 100
+  wildcardPolicy: None</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the route:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ oc create -f ./custom-route.yaml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Set up your public base URL in APIcast as described in the <a href="https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.4/html-single/deployment_options/index#configure_your_service">3scale documentation</a>.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p>See the <a href="https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.4/html-single/deployment_options/index#public_base_url">Public Base URL</a> documentation for an introduction to custom URLs.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gs-service-discovery-3scale">Enabling service discovery in 3scale</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By default, a Managed Integration user cannot perform service discovery in 3scale.</p>
+</div>
+<div class="paragraph">
+<p>To enable service discovery of APIs created in the shared Fuse Online instance:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to OpenShift as the <code>customer-admin</code> user from the command line.</p>
+</li>
+<li>
+<p>Enter the following command to enable the <code>&lt;username&gt;</code> user perform service discovery of Fuse Online APIs:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ oc adm policy add-role-to-user view &lt;user-name&gt; -n fuse</code></pre>
+</div>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_3scale_api_management/2.4/html/service_discovery/index">Service Discovery</a> 3scale documentation.</p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_fuse/7.3/html/designing_apis_with_apicurito/threescale-discover-service">Service Discovery</a> Fuse documentation.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gs-managing-images-proc">Managing images</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Managed Integration allows you to create and push images to your cluster.
+For the Managed Integration cluster, the registry is located at:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>registry.&lt;clusterid&gt;.openshift.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>&lt;clusterid&gt;</code> is the unique identifier for your cluster.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Use the instructions in the <a href="https://access.redhat.com/documentation/en-us/openshift_dedicated/3/html-single/developer_guide/index#accessing-the-internal-registry">OpenShift documentation</a> to access the registry.</p>
+</li>
+<li>
+<p>Follow the procedures for <a href="https://access.redhat.com/documentation/en-us/openshift_dedicated/3/html-single/developer_guide/index#dev-guide-managing-images">Managing Images</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2019-09-26 00:56:47 +0100
+</div>
+</div>
+</body>
+</html>
